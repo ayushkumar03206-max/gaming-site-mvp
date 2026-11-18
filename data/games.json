@@ -193,6 +193,55 @@
       "orientation": "portrait",
       "date_added": "2026-11-18",
       "multiplayer_model": "competitive-real-time"
+    },
+    {
+      "id": "gl-005",
+      "status": "published",
+      "entry": "play/brick-breaker/index.html",
+      "source_dir": "games/brick-breaker",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "rights_id": "rights-brick-breaker",
+      "slug": "brick-breaker",
+      "title": "Brick Breaker",
+      "categories": [
+        "arcade",
+        "action"
+      ],
+      "tags": [
+        "paddle",
+        "ball",
+        "bricks",
+        "power-ups",
+        "levels"
+      ],
+      "short_description": "Bounce the ball, smash every brick and catch power-ups across 8 hand-made levels.",
+      "description": "Brick Breaker is a paddle-and-ball arcade game. Angle your shots by hitting the ball with different parts of the paddle, chip through bricks that take one to three hits, and work around steel bricks that never break. Catch falling power-ups for a wider paddle, extra balls, a slower ball or an extra life. You have three lives to clear all 8 levels.",
+      "instructions": [
+        "Move the paddle to keep the ball in play. Launch the ball with Space, a click or a tap.",
+        "Where the ball hits the paddle sets its angle: the centre sends it straight up, the edges send it sideways.",
+        "Orange bricks break in one hit, yellow in two, red in three. Grey steel bricks never break. Green bricks always drop a power-up.",
+        "Power-ups: W wider paddle, M two extra balls, S slower ball, ♥ extra life (up to 5).",
+        "Losing every ball costs a life. Clear all breakable bricks to finish a level."
+      ],
+      "controls": {
+        "desktop": "Move the mouse or use Left/Right arrows (A/D). Space or click to launch. P / Esc to pause.",
+        "mobile": "Drag anywhere on the screen to move the paddle. Tap to launch the ball."
+      },
+      "orientation": "portrait",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "score-competition"
     }
   ]
 }

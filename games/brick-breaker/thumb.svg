@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#0c0a1c"/>
+  <rect x="40" y="20" width="560" height="380" fill="#15122e"/>
+  <g>
+    <g fill="#ff3f6c"><rect x="50" y="40" width="50" height="22" rx="4"/><rect x="106" y="40" width="50" height="22" rx="4"/><rect x="162" y="40" width="50" height="22" rx="4"/><rect x="218" y="40" width="50" height="22" rx="4"/><rect x="274" y="40" width="50" height="22" rx="4"/><rect x="330" y="40" width="50" height="22" rx="4"/><rect x="386" y="40" width="50" height="22" rx="4"/><rect x="442" y="40" width="50" height="22" rx="4"/><rect x="498" y="40" width="50" height="22" rx="4"/><rect x="554" y="40" width="40" height="22" rx="4"/></g>
+    <g fill="#ffb020"><rect x="50" y="68" width="50" height="22" rx="4"/><rect x="106" y="68" width="50" height="22" rx="4"/><rect x="218" y="68" width="50" height="22" rx="4"/><rect x="274" y="68" width="50" height="22" rx="4"/><rect x="330" y="68" width="50" height="22" rx="4"/><rect x="442" y="68" width="50" height="22" rx="4"/><rect x="498" y="68" width="50" height="22" rx="4"/></g>
+    <g fill="#ff7a3d"><rect x="50" y="96" width="50" height="22" rx="4"/><rect x="162" y="96" width="50" height="22" rx="4"/><rect x="274" y="96" width="50" height="22" rx="4"/><rect x="386" y="96" width="50" height="22" rx="4"/><rect x="498" y="96" width="50" height="22" rx="4"/></g>
+    <rect x="162" y="68" width="50" height="22" rx="4" fill="#b6ff3b"/><rect x="386" y="68" width="50" height="22" rx="4" fill="#6b7394"/>
+  </g>
+  <rect x="300" y="210" width="36" height="20" rx="9" fill="#29f0ff"/><text x="318" y="225" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="15" fill="#05060e">W</text>
+  <circle cx="230" cy="250" r="10" fill="#fff"/>
+  <path d="M232 250 L330 130" stroke="#fff" stroke-opacity=".25" stroke-width="3" stroke-dasharray="6 8"/>
+  <rect x="180" y="300" width="120" height="16" rx="8" fill="#ffb020"/>
+  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#ff7a3d" letter-spacing="2">BRICK<tspan fill="#ffd23f"> BREAKER</tspan></text>
+</svg>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Brick Breaker</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<style>:root { --accent: #ff7a3d; --accent2: #ffd23f; --bg: #0c0a1c; } .pw { display: inline-block; min-width: 1.6em; padding: 0 4px; border-radius: 5px; font-weight: 800; color: #05060e; }</style>
+</head>
+<body>
+<div class="stage"><canvas id="c" tabindex="-1" role="img" aria-label="Brick Breaker play field"></canvas></div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<div class="hud" id="hud" hidden>
+  <span class="pill"><small>SCORE</small><span id="hScore">0</span></span>
+  <span class="pill"><small>LV</small><span id="hLevel">1</span></span>
+  <span class="pill" aria-label="Lives"><span id="hLives">♥♥♥</span></span>
+  <span class="grow"></span>
+  <button type="button" class="icon-btn" data-mute></button>
+  <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
+</div>
+
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">BRICK<span> BREAKER</span></h1>
+    <p>Bounce the ball off your paddle and clear every brick across 8 levels. Steel bricks never break.</p>
+    <p class="hint">Power-ups: <span class="pw" style="background:#29f0ff">W</span> wide paddle · <span class="pw" style="background:#b6ff3b">M</span> multi-ball · <span class="pw" style="background:#b66dff">S</span> slow ball · <span class="pw" style="background:#ff5d8f">♥</span> extra life</p>
+    <p class="best" id="bestTitle"></p>
+    <button type="button" class="big" id="playBtn" data-start>Play</button>
+    <p class="hint"><span class="kbd-only">Mouse or <span class="kb">←</span> <span class="kb">→</span> to move · <span class="kb">Space</span> launch · <span class="kb">P</span> pause</span><span class="touch">Drag anywhere to move · tap to launch</span></p>
+  </div>
+</div>
+<div class="overlay" id="paused" hidden>
+  <div class="panel"><h2>Paused</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="restartBtn">Restart from level 1</button></div>
+</div>
+<div class="overlay" id="clear" hidden>
+  <div class="panel"><h2 id="clearTitle">Level cleared!</h2>
+    <p id="clearMsg"></p>
+    <button type="button" class="big" id="nextBtn">Next level</button></div>
+</div>
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel">
+    <h2 id="overTitle">Game over</h2>
+    <p class="final"><span id="finalScore">0</span><small>points</small></p>
+    <p id="overMsg"></p>
+    <p class="best" id="bestOver"></p>
+    <button type="button" class="big" id="againBtn">Play again</button>
+  </div>
+</div>
+<noscript><p>Brick Breaker needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="brick-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
