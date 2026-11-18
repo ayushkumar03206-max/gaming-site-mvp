@@ -46,7 +46,7 @@ plus a real-input check on desktop). Emulated viewports in desktop Chrome, **not
 
 ## Known limitations (development phase)
 
-- Rights records for games 04–15 are **pending** owner approval, so they are not deployable yet.
+- Rights records for games 04–15 were approved by the owner on 2026-11-18.
 - Online play exists for Tic Tac Toe and Chess but **only locally**: no server is deployed, `multiplayer.server_url` is empty, so the public build shows no online buttons or badges.
 - The Privacy Policy does not yet mention online play; update it before enabling online play publicly.
 - Not tested on real Android/iOS devices, Safari or Firefox, with a screen reader, or on low-end hardware.

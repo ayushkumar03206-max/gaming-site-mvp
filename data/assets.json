@@ -71,9 +71,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:19:59Z",
       "evidence": "Written from scratch for this project. Graphics are drawn at runtime with the Canvas API; sound effects are generated with the Web Audio API. No third-party code, art, fonts or audio."
     },
     {
@@ -86,9 +86,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:19:59Z",
       "evidence": "Written from scratch for this project. Level layouts are original. Graphics are drawn with the Canvas API and sounds generated with the Web Audio API. No third-party code, art, fonts or audio."
     },
     {
@@ -101,9 +101,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:19:59Z",
       "evidence": "Written from scratch for this project. Graphics are drawn with the Canvas API and sounds generated with the Web Audio API. No third-party code, art, fonts or audio."
     },
     {
@@ -116,9 +116,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:20:00Z",
       "evidence": "Written from scratch for this project. Graphics are drawn with the Canvas API and sounds generated with the Web Audio API. No third-party code, art, fonts or audio."
     },
     {
@@ -131,9 +131,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:20:00Z",
       "evidence": "Written from scratch for this project. The card symbols are simple original SVG shapes defined in game.js. No third-party code, art, fonts or audio."
     },
     {
@@ -146,9 +146,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:20:00Z",
       "evidence": "Written from scratch for this project. Tic Tac Toe itself is a traditional public-domain game; the implementation, AI and visuals are original. No third-party code, art, fonts or audio."
     },
     {
@@ -161,9 +161,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:20:00Z",
       "evidence": "Written from scratch for this project. Snake is a long-standing public game genre; this implementation and its visuals are original. No third-party code, art, fonts or audio."
     },
     {
@@ -176,9 +176,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:20:01Z",
       "evidence": "Written from scratch for this project. Uses the widely implemented sliding-merge number mechanic under an original name and original visual design; no code, name, art or assets copied from any existing game."
     },
     {
@@ -191,9 +191,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:20:01Z",
       "evidence": "Written from scratch for this project. Graphics are drawn with the Canvas API and sounds generated with the Web Audio API. No third-party code, art, fonts or audio."
     },
     {
@@ -206,9 +206,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:20:01Z",
       "evidence": "Written from scratch for this project. Bubble shooting is a common puzzle genre; the implementation, rules tuning and visuals are original. No third-party code, art, fonts or audio."
     },
     {
@@ -221,9 +221,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:20:01Z",
       "evidence": "Written from scratch for this project. Level layouts are original. Graphics are drawn with the Canvas API and sounds generated with the Web Audio API. No third-party code, art, fonts or audio."
     },
     {
@@ -236,9 +236,9 @@
       "license_url": null,
       "source_url": null,
       "third_party_components": [],
-      "status": "pending",
-      "reviewed_by": null,
-      "reviewed_at": null,
+      "status": "approved",
+      "reviewed_by": "ayushkumar03206-max (site owner)",
+      "reviewed_at": "2026-11-18T10:20:01Z",
       "evidence": "Chess is a public-domain game. The rules engine (verified against published perft counts), AI and interface were written from scratch for this project. Pieces are standard Unicode chess symbols rendered with the visitor's system fonts. No third-party code, art, fonts or audio."
     }
   ]
