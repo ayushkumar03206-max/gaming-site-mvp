@@ -13,7 +13,7 @@ jobs:
           python-version: "3.12"
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
       # Branch CI reports the rights gate and builds a PREVIEW (pending games included, banner + noindex).
       # The strict gate is enforced where it matters: pages.yml refuses to deploy anything not approved.
       - name: Rights gate (report)
