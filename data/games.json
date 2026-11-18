@@ -486,6 +486,54 @@
       "orientation": "square",
       "date_added": "2026-11-18",
       "multiplayer_model": "competitive-real-time"
+    },
+    {
+      "id": "gl-011",
+      "status": "published",
+      "entry": "play/tile-fusion/index.html",
+      "source_dir": "games/tile-fusion",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "rights_id": "rights-tile-fusion",
+      "slug": "tile-fusion",
+      "title": "Tile Fusion",
+      "categories": [
+        "puzzle",
+        "brain"
+      ],
+      "tags": [
+        "number puzzle",
+        "sliding tiles",
+        "merge",
+        "2048 tile"
+      ],
+      "short_description": "Slide numbered tiles, fuse equal pairs and build your way up to the 2048 tile.",
+      "description": "Tile Fusion is a sliding-merge number puzzle on a 4×4 grid. Every swipe moves all the tiles at once; when two tiles with the same number collide they fuse into one tile worth double. A new 2 or 4 appears after every move, so plan ahead to keep space free. Reach the 2048 tile to win, then keep going for a higher score. You get three undos per game, and an unfinished game is saved on your device.",
+      "instructions": [
+        "Swipe or press an arrow key: every tile slides as far as it can in that direction.",
+        "Two tiles with the same number that collide fuse into one tile with their sum. Each fusion adds that value to your score.",
+        "After every move a new 2 (sometimes a 4) appears in an empty square.",
+        "Reach a 2048 tile to win. You can keep playing after that.",
+        "The game ends when the grid is full and no neighbouring tiles match. You have 3 undos per game."
+      ],
+      "controls": {
+        "desktop": "Arrow keys or WASD to slide. Z or U to undo.",
+        "mobile": "Swipe on the grid to slide. Tap Undo to take back a move."
+      },
+      "orientation": "portrait",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "shared-challenge"
     }
   ]
 }

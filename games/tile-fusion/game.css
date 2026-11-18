@@ -1,0 +1,25 @@
+:root { --accent: #7aa2ff; --accent2: #29f0ff; --bg: #0a0c1d; }
+body { overflow: auto; }
+.app { min-height: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 12px 14px; }
+.top, .actions { width: var(--size); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.actions { justify-content: flex-start; flex-wrap: nowrap; }
+.actions .icon-btn { margin-left: auto; }
+:root { --size: max(200px, min(92vw, calc(100vh - 150px), 460px)); }
+.actions .ghost { padding: 6px 14px; min-height: 38px; font-size: .9rem; }
+.actions .icon-btn { width: 38px; height: 38px; }
+@media (max-height: 420px) { .app { gap: 6px; padding-top: 6px; } .hint { display: none; } }
+.logo.small { font-size: clamp(1.3rem, 6vw, 1.9rem); margin: 0; }
+.scores { display: flex; gap: 6px; }
+.box { background: #151a3a; border: 1px solid var(--line); border-radius: 10px; padding: 4px 12px; text-align: center; display: grid; min-width: 64px; }
+.box span { font-size: .65rem; color: var(--muted); font-weight: 800; letter-spacing: .08em; }
+.box b { font-size: 1.15rem; }
+.ghost:disabled { opacity: .4; cursor: default; }
+.board { width: var(--size); height: var(--size); display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); gap: calc(var(--size) * .025); padding: calc(var(--size) * .025); border-radius: 16px; background: #141834; touch-action: none; }
+.board:focus-visible { outline: 3px solid #ffe066; }
+.cell { border-radius: 10px; background: #1e2349; display: grid; place-items: center; font-weight: 900; font-size: calc(var(--size) / 8.5); color: #fff; }
+.cell.n3 { font-size: calc(var(--size) / 10); } .cell.n4 { font-size: calc(var(--size) / 12.5); } .cell.n5 { font-size: calc(var(--size) / 15); }
+.cell.pop { animation: pop .18s ease-out; } .cell.merge { animation: merge .22s ease-out; }
+@keyframes pop { from { transform: scale(.4); opacity: .4; } }
+@keyframes merge { 50% { transform: scale(1.14); } }
+@media (prefers-reduced-motion: reduce) { .cell.pop, .cell.merge { animation: none; } }
+.hint { width: var(--size); margin: 0; color: var(--muted); font-size: .85rem; text-align: center; }

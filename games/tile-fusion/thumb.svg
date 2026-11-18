@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#0a0c1d"/>
+  <rect x="180" y="16" width="280" height="280" rx="18" fill="#141834"/>
+  <g font-family="Segoe UI, Arial, sans-serif" font-weight="900" text-anchor="middle" fill="#fff">
+    <rect x="190" y="26" width="60" height="60" rx="9" fill="#1e2349"/><rect x="258" y="26" width="60" height="60" rx="9" fill="hsl(244 70% 56%)"/><text x="288" y="66" font-size="28">2</text>
+    <rect x="326" y="26" width="60" height="60" rx="9" fill="#1e2349"/><rect x="394" y="26" width="60" height="60" rx="9" fill="hsl(268 70% 55%)"/><text x="424" y="66" font-size="28">4</text>
+    <rect x="190" y="94" width="60" height="60" rx="9" fill="hsl(292 70% 53%)"/><text x="220" y="134" font-size="28">8</text>
+    <rect x="258" y="94" width="60" height="60" rx="9" fill="#1e2349"/><rect x="326" y="94" width="60" height="60" rx="9" fill="hsl(316 70% 52%)"/><text x="356" y="134" font-size="26">16</text>
+    <rect x="394" y="94" width="60" height="60" rx="9" fill="#1e2349"/>
+    <rect x="190" y="162" width="60" height="60" rx="9" fill="#1e2349"/><rect x="258" y="162" width="60" height="60" rx="9" fill="hsl(340 70% 50%)"/><text x="288" y="202" font-size="26">32</text>
+    <rect x="326" y="162" width="60" height="60" rx="9" fill="hsl(4 70% 48%)"/><text x="356" y="202" font-size="26">64</text><rect x="394" y="162" width="60" height="60" rx="9" fill="#1e2349"/>
+    <rect x="190" y="230" width="60" height="60" rx="9" fill="#1e2349"/><rect x="258" y="230" width="60" height="60" rx="9" fill="#1e2349"/>
+    <rect x="326" y="230" width="60" height="60" rx="9" fill="hsl(28 70% 47%)"/><text x="356" y="268" font-size="20">128</text>
+    <rect x="394" y="230" width="60" height="60" rx="9" fill="hsl(76 70% 42%)"/><text x="424" y="267" font-size="16">2048</text>
+  </g>
+  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#7aa2ff" letter-spacing="2">TILE<tspan fill="#29f0ff"> FUSION</tspan></text>
+</svg>

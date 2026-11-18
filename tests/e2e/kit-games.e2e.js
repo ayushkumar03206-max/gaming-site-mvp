@@ -81,6 +81,13 @@ const INTERACT = {
     const st = await frame.evaluate(() => GLDebug.state());
     assert.ok(st.dir === 'up' || st.over, 'turned up: ' + JSON.stringify(st));
   },
+  'tile-fusion': async (page, frame) => {
+    for (const k of ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown']) await page.keyboard.press(k);
+    const st = await frame.evaluate(() => GLDebug.state());
+    assert.ok(st.moves >= 2, 'keyboard slides registered: ' + JSON.stringify(st));
+    await frame.click('#undoBtn');
+    assert.strictEqual((await frame.evaluate(() => GLDebug.state())).undosLeft, 2);
+  },
   'fruit-slice': async (page, frame) => {
     const b = await frameBox(page);
     for (let i = 0; i < 30; i++) {

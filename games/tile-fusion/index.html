@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Tile Fusion</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<main class="app">
+  <div class="top">
+    <h1 class="logo small">TILE<span> FUSION</span></h1>
+    <div class="scores">
+      <div class="box"><span>SCORE</span><b id="score">0</b></div>
+      <div class="box"><span>BEST</span><b id="best">0</b></div>
+    </div>
+  </div>
+  <div class="actions">
+    <button type="button" class="ghost" id="newBtn">New game</button>
+    <button type="button" class="ghost" id="undoBtn">↶ Undo <span id="undoLeft">3</span></button>
+    <button type="button" class="icon-btn" data-mute></button>
+  </div>
+  <div class="board" id="board" role="grid" aria-label="Tile grid" tabindex="0"></div>
+  <p class="hint"><span class="kbd-only">Arrow keys or WASD slide every tile. Z undoes.</span><span class="touch">Swipe on the grid to slide every tile.</span> Join equal numbers to reach <b>2048</b>.</p>
+</main>
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">TILE<span> FUSION</span></h1>
+    <p>Slide all tiles at once. When two equal numbers touch, they fuse into one tile with double the value. Keep fusing to build a 2048 tile.</p>
+    <p class="best" id="bestTitle"></p>
+    <button type="button" class="big" id="playBtn" data-start>Start</button>
+    <button type="button" class="ghost" id="resumeSaved" hidden>Continue saved game</button>
+  </div>
+</div>
+<div class="overlay" id="won" hidden role="dialog" aria-labelledby="wonTitle">
+  <div class="panel"><h2 id="wonTitle">2048 reached!</h2><p>You can stop here or keep fusing for a higher score.</p>
+    <button type="button" class="big" id="keepBtn">Keep going</button>
+    <button type="button" class="ghost" id="newBtn2">New game</button></div>
+</div>
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel"><h2 id="overTitle">No moves left</h2>
+    <p class="final"><span id="finalScore">0</span><small>points</small></p>
+    <p id="overMax"></p>
+    <p class="best" id="bestOver"></p>
+    <button type="button" class="big" id="againBtn">New game</button>
+    <button type="button" class="ghost" id="undoBtn2">↶ Undo last move</button></div>
+</div>
+<noscript><p>Tile Fusion needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="fusion-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

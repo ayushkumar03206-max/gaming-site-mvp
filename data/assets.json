@@ -165,6 +165,21 @@
       "reviewed_by": null,
       "reviewed_at": null,
       "evidence": "Written from scratch for this project. Snake is a long-standing public game genre; this implementation and its visuals are original. No third-party code, art, fonts or audio."
+    },
+    {
+      "id": "rights-tile-fusion",
+      "kind": "game",
+      "title": "Tile Fusion (code, CSS visuals, synthesised sounds, thumbnail)",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "pending",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "evidence": "Written from scratch for this project. Uses the widely implemented sliding-merge number mechanic under an original name and original visual design; no code, name, art or assets copied from any existing game."
     }
   ]
 }
