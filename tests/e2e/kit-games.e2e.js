@@ -36,6 +36,16 @@ const INTERACT = {
     const st = await frame.evaluate(() => GLDebug.state());
     assert.ok(st.score > 0 || st.lives < 3, 'ball launched and interacted: ' + JSON.stringify(st));
   },
+  'space-shooter': async (page, frame) => {
+    // wave 1 arrives in columns; auto-fire is on by default. Sweep left and right with the keyboard.
+    for (let i = 0; i < 8; i++) {
+      const key = i % 2 ? 'ArrowRight' : 'ArrowLeft';
+      await page.keyboard.down(key); await page.waitForTimeout(i === 0 ? 120 : 280); await page.keyboard.up(key);
+      await page.waitForTimeout(500);
+    }
+    const st = await frame.evaluate(() => GLDebug.state());
+    assert.ok(st.wave >= 1 && (st.kills > 0 || st.score > 0), 'auto-fire destroyed enemies: ' + JSON.stringify(st));
+  },
   'fruit-slice': async (page, frame) => {
     const b = await frameBox(page);
     for (let i = 0; i < 30; i++) {
@@ -69,8 +79,10 @@ async function launch(page, slug) {
   await page.click('[data-play]');
   await page.waitForFunction(() => document.querySelector('[data-state=loading]').hidden, null, { timeout: 20000 });
   assert.strictEqual(await page.isHidden('[data-state=error]'), true, 'launcher error state for ' + slug);
-  const frame = page.frame({ url: new RegExp('/play/' + slug + '/') });
-  assert.ok(frame, 'iframe for ' + slug);
+  const handle = await page.waitForSelector('[data-player] iframe');
+  const frame = await handle.contentFrame();
+  assert.ok(frame && new RegExp('/play/' + slug + '/').test(frame.url()), 'iframe for ' + slug);
+  await frame.waitForFunction(() => !!window.GLDebug);
   return frame;
 }
 

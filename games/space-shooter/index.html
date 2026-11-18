@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Space Shooter</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<style>
+:root { --accent: #29f0ff; --accent2: #7aa2ff; --bg: #04050c; }
+.hp { width: 70px; height: 9px; border-radius: 9px; background: #2b3266; overflow: hidden; display: inline-block; vertical-align: middle; }
+.hp i { display: block; height: 100%; background: linear-gradient(90deg, #ff4d6d, #3ddc84); }
+@media (max-width: 420px) { #hWeapon { display: none; } .hp { width: 48px; } }
+.pw { display: inline-block; min-width: 1.5em; border-radius: 50%; font-weight: 900; color: #05060e; text-align: center; }
+</style>
+</head>
+<body>
+<div class="stage"><canvas id="c" tabindex="-1" role="img" aria-label="Space Shooter play field"></canvas></div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<div class="hud" id="hud" hidden>
+  <span class="pill"><small>SCORE</small><span id="hScore">0</span></span>
+  <span class="pill"><small>WAVE</small><span id="hWave">0</span></span>
+  <span class="pill" aria-label="Hull"><span class="hp"><i id="hHp" style="width:100%"></i></span></span>
+  <span class="pill" id="hWeapon">Blaster 1</span>
+  <span class="grow"></span>
+  <button type="button" class="icon-btn" data-mute></button>
+  <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
+</div>
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">SPACE<span> SHOOTER</span></h1>
+    <p>Hold off waves of drones, zig-zaggers and tanks. Every fifth wave a boss arrives.</p>
+    <p class="hint">Pick-ups: <span class="pw" style="background:#29f0ff">B</span> blaster · <span class="pw" style="background:#b6ff3b">S</span> spread · <span class="pw" style="background:#ff3fb4">P</span> piercing pulse · <span class="pw" style="background:#3ddc84">+</span> repair · <span class="pw" style="background:#7aa2ff">O</span> shield. Same weapon again = level up (max 3).</p>
+    <button type="button" class="ghost" id="autoBtn" aria-pressed="true">Auto-fire: on</button>
+    <p class="best" id="bestTitle"></p>
+    <button type="button" class="big" id="playBtn" data-start>Launch</button>
+    <p class="hint"><span class="kbd-only">Arrows / WASD move · <span class="kb">Space</span> fire · <span class="kb">F</span> auto-fire · <span class="kb">P</span> pause. Or drag with the mouse.</span><span class="touch">Drag anywhere to fly. Your ship follows your finger's movement.</span></p>
+  </div>
+</div>
+<div class="overlay" id="paused" hidden>
+  <div class="panel"><h2>Paused</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="restartBtn">Restart</button></div>
+</div>
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel">
+    <h2 id="overTitle">Ship destroyed</h2>
+    <p class="final"><span id="finalScore">0</span><small>points</small></p>
+    <div class="stats"><div><b id="oWave">0</b><span>wave reached</span></div><div><b id="oKills">0</b><span>enemies destroyed</span></div></div>
+    <p class="best" id="bestOver"></p>
+    <button type="button" class="big" id="againBtn">Fly again</button>
+  </div>
+</div>
+<noscript><p>Space Shooter needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="shooter-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

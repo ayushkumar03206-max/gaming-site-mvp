@@ -290,6 +290,57 @@
       "orientation": "landscape",
       "date_added": "2026-11-18",
       "multiplayer_model": "score-competition"
+    },
+    {
+      "id": "gl-007",
+      "status": "published",
+      "entry": "play/space-shooter/index.html",
+      "source_dir": "games/space-shooter",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "rights_id": "rights-space-shooter",
+      "slug": "space-shooter",
+      "title": "Space Shooter",
+      "categories": [
+        "shooting",
+        "action",
+        "arcade"
+      ],
+      "tags": [
+        "shoot em up",
+        "waves",
+        "boss",
+        "power-ups",
+        "weapons"
+      ],
+      "short_description": "Blast through enemy waves, upgrade three weapons and take down a boss every fifth wave.",
+      "description": "Space Shooter is a vertical wave shooter. Drones dive straight down, zig-zaggers weave and shoot back, and armoured tanks soak up damage. Every fifth wave a boss arrives with two attack phases. Collect pick-ups to switch between the rapid blaster, the wide spread gun and the piercing pulse cannon, and grab the same weapon again to upgrade it to level 3. Repair kits and shields help you survive as the waves get harder.",
+      "instructions": [
+        "Fly your ship around the lower half of the screen and shoot everything that comes down.",
+        "Auto-fire is on by default; turn it off on the title screen (or press F) to fire with Space instead.",
+        "Collect pick-ups: B blaster, S spread, P pulse (pierces through enemies), + repair, O shield.",
+        "Picking up the weapon you already have upgrades it, up to level 3. Heavy hits can knock a level off.",
+        "Every fifth wave is a boss. When its health bar is below half it changes its attack pattern.",
+        "Your hull bar is shown at the top. The run ends when it reaches zero."
+      ],
+      "controls": {
+        "desktop": "Arrow keys or WASD to fly, Space to fire, F toggles auto-fire, P / Esc pauses. You can also drag with the mouse.",
+        "mobile": "Drag anywhere on the screen. The ship follows your finger's movement so your finger never covers it. Auto-fire is on."
+      },
+      "orientation": "portrait",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "cooperative"
     }
   ]
 }
