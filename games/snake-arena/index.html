@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Snake Arena</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<style>
+:root { --accent: #3ddc84; --accent2: #b6ff3b; --bg: #081210; }
+/* one row of arrows keeps the arena large on short screens */
+.dpad { position: fixed; z-index: 10; bottom: max(8px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+.dpad button { width: 58px; height: 52px; border-radius: 14px; border: 1px solid var(--line); background: rgba(18, 22, 50, .6); font-size: 1.2rem; touch-action: none; }
+@media (max-width: 300px) { .dpad button { width: 50px; } }
+html:not(.has-touch) .dpad { display: none !important; }
+</style>
+</head>
+<body>
+<div class="stage"><canvas id="c" tabindex="-1" role="img" aria-label="Snake Arena grid"></canvas></div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<div class="hud" id="hud" hidden>
+  <span class="pill"><small>SCORE</small><span id="hScore">0</span></span>
+  <span class="pill"><small>LENGTH</small><span id="hLen">3</span></span>
+  <span class="pill"><small>SPEED</small><span id="hSpeed">8</span></span>
+  <span class="grow"></span>
+  <button type="button" class="icon-btn" data-mute></button>
+  <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
+</div>
+<div class="dpad" id="pad" hidden aria-label="Direction buttons">
+  <button type="button" data-dir="left" aria-label="Left">◀</button>
+  <button type="button" data-dir="up" aria-label="Up">▲</button>
+  <button type="button" data-dir="down" aria-label="Down">▼</button>
+  <button type="button" data-dir="right" aria-label="Right">▶</button>
+</div>
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">SNAKE<span> ARENA</span></h1>
+    <p>Eat the red food to grow. Don't hit the walls or yourself. Every 4 meals the snake speeds up; every 5th meal a gold bonus appears for a short time.</p>
+    <div><p class="label">Speed</p>
+      <div class="seg" role="group" aria-label="Speed">
+        <button type="button" data-speed="relaxed" aria-pressed="false">Relaxed</button>
+        <button type="button" data-speed="classic" aria-pressed="true">Classic</button>
+        <button type="button" data-speed="fast" aria-pressed="false">Fast</button>
+      </div></div>
+    <p class="best" id="bestTitle"></p>
+    <button type="button" class="big" id="playBtn" data-start>Play</button>
+    <p class="hint"><span class="kbd-only">Arrows / WASD to steer · <span class="kb">P</span> or <span class="kb">Space</span> pause</span><span class="touch">Swipe on the arena or use the arrow pad</span></p>
+  </div>
+</div>
+<div class="overlay" id="paused" hidden>
+  <div class="panel"><h2>Paused</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="restartBtn">Restart</button>
+    <button type="button" class="ghost" id="menuBtn">Change speed</button></div>
+</div>
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel">
+    <h2 id="overTitle">Game over</h2>
+    <p class="final"><span id="finalScore">0</span><small>points</small></p>
+    <div class="stats"><div><b id="oLen">0</b><span>length</span></div><div><b id="oFood">0</b><span>meals</span></div></div>
+    <p class="best" id="bestOver"></p>
+    <button type="button" class="big" id="againBtn">Play again</button>
+    <button type="button" class="ghost" id="menuBtn2">Change speed</button>
+  </div>
+</div>
+<noscript><p>Snake Arena needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="snake-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

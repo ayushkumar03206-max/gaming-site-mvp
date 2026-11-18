@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#081210"/>
+  <rect x="120" y="14" width="400" height="320" fill="#0d1f1a" stroke="#2f6b5a" stroke-width="4"/>
+  <g fill="#3ddc84">
+    <rect x="164" y="244" width="36" height="36" rx="10" fill-opacity=".6"/><rect x="204" y="244" width="36" height="36" rx="10" fill-opacity=".65"/><rect x="244" y="244" width="36" height="36" rx="10" fill-opacity=".7"/>
+    <rect x="284" y="244" width="36" height="36" rx="10" fill-opacity=".75"/><rect x="284" y="204" width="36" height="36" rx="10" fill-opacity=".8"/><rect x="284" y="164" width="36" height="36" rx="10" fill-opacity=".85"/>
+    <rect x="324" y="164" width="36" height="36" rx="10" fill-opacity=".9"/><rect x="364" y="164" width="36" height="36" rx="10" fill-opacity=".95"/>
+  </g>
+  <rect x="402" y="162" width="40" height="40" rx="11" fill="#b6ff3b"/><circle cx="430" cy="174" r="4" fill="#081210"/><circle cx="430" cy="190" r="4" fill="#081210"/>
+  <circle cx="460" cy="102" r="15" fill="#ff4d6d"/><rect x="458" y="82" width="4" height="9" fill="#3ddc84"/>
+  <circle cx="200" cy="80" r="16" fill="#ffd23f"/>
+  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#3ddc84" letter-spacing="2">SNAKE<tspan fill="#b6ff3b"> ARENA</tspan></text>
+</svg>

@@ -76,6 +76,11 @@ const INTERACT = {
     await frame.click('#nextBtn');
     assert.strictEqual((await frame.evaluate(() => GLDebug.state())).winner, null);
   },
+  'snake-arena': async (page, frame) => {
+    await page.keyboard.press('ArrowUp'); await page.waitForTimeout(200);
+    const st = await frame.evaluate(() => GLDebug.state());
+    assert.ok(st.dir === 'up' || st.over, 'turned up: ' + JSON.stringify(st));
+  },
   'fruit-slice': async (page, frame) => {
     const b = await frameBox(page);
     for (let i = 0; i < 30; i++) {

@@ -150,6 +150,21 @@
       "reviewed_by": null,
       "reviewed_at": null,
       "evidence": "Written from scratch for this project. Tic Tac Toe itself is a traditional public-domain game; the implementation, AI and visuals are original. No third-party code, art, fonts or audio."
+    },
+    {
+      "id": "rights-snake-arena",
+      "kind": "game",
+      "title": "Snake Arena (code, Canvas-drawn graphics, synthesised sounds, thumbnail)",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "pending",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "evidence": "Written from scratch for this project. Snake is a long-standing public game genre; this implementation and its visuals are original. No third-party code, art, fonts or audio."
     }
   ]
 }

@@ -439,6 +439,53 @@
       "orientation": "square",
       "date_added": "2026-11-18",
       "multiplayer_model": "turn-based"
+    },
+    {
+      "id": "gl-010",
+      "status": "published",
+      "entry": "play/snake-arena/index.html",
+      "source_dir": "games/snake-arena",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "rights_id": "rights-snake-arena",
+      "slug": "snake-arena",
+      "title": "Snake Arena",
+      "categories": [
+        "arcade"
+      ],
+      "tags": [
+        "snake",
+        "classic",
+        "grid",
+        "high score"
+      ],
+      "short_description": "Steer the snake, eat to grow and survive as it speeds up inside a walled arena.",
+      "description": "Snake Arena is a take on the classic snake game. Guide your snake around a 20×20 walled arena, eat food to grow longer and pick up gold bonus food before it vanishes. The snake speeds up every four meals, so the arena gets crowded fast. Choose relaxed, classic or fast speed; each keeps its own best score.",
+      "instructions": [
+        "The snake moves on its own. Change its direction to reach the red food.",
+        "Each meal is worth 10 points and makes the snake one segment longer.",
+        "Every 5th meal a gold bonus appears for a few seconds: +50 points and 3 extra segments.",
+        "Hitting a wall or your own body ends the game. You cannot reverse straight back into yourself.",
+        "The snake speeds up every 4 meals."
+      ],
+      "controls": {
+        "desktop": "Arrow keys or WASD to steer. P, Space or Esc to pause. Enter or R to play again.",
+        "mobile": "Swipe on the arena or use the on-screen arrow pad."
+      },
+      "orientation": "square",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "competitive-real-time"
     }
   ]
 }
