@@ -4,15 +4,29 @@ A static, mobile-first website for **original HTML5 browser games**. A small Pyt
 generator turns JSON data into a fast static site. Before anything is published, it
 runs a **rights gate**, and it ships with a **consent manager**.
 
-Three original games are included:
+Fifteen original games are included. Pathforge, Neon Dodge and Chroma Shift are live; games 04–15
+are built and tested but their rights records are **pending** the owner's approval, so the deploy
+refuses to publish them until then. See `docs/GAME_CATALOG.md` and `docs/GAME_DEVELOPMENT_STATUS.md`.
 
 | Game | Genre | Highlights |
 |---|---|---|
-| **Pathforge** | Strategy / board | Cell-blocking race, BFS pathfinding with path-sealing prevention, vault rule, spark pickups, AI (Easy/Normal/Hard), local 2-player, undo, 7×7 or 9×9 |
-| **Neon Dodge** | Arcade / action | Canvas graphics drawn at runtime, bars/shards/telegraphed lasers, difficulty ramp every 15 s, cores, pause, saved high score, keyboard + relative-drag touch |
-| **Chroma Shift** | Puzzle / brain | Tap-to-shift color puzzle, 30 generated levels that are always solvable, move limit, stars, hints, saved progress, a symbol on every color for colorblind play |
+| **Pathforge** | Strategy / board | Cell-blocking race, BFS pathfinding with path-sealing prevention, AI (Easy/Normal/Hard), local 2-player |
+| **Neon Dodge** | Arcade / action | Telegraphed lasers, difficulty ramp, saved high score, relative-drag touch |
+| **Chroma Shift** | Puzzle / brain | 30 generated levels that are always solvable, stars, hints, colour-blind symbols |
+| Highway Rush | Racing | 4-lane traffic that always leaves a reachable gap, coins, near misses, 3 difficulties |
+| Brick Breaker | Arcade | 8 levels, multi-hit and steel bricks, 4 power-ups, lives |
+| Fruit Slice | Action | 60-second swipe rounds, combos up to ×5, bombs |
+| Space Shooter | Shooting | Enemy waves, a two-phase boss every 5th wave, 3 upgradable weapons, shields |
+| Memory Match | Brain | 3 board sizes, solo scoring or 2 players on one device |
+| Tic Tac Toe | Board | Easy/medium/unbeatable AI, local 2-player, scoreboard |
+| Snake Arena | Arcade | 3 speeds, bonus food, swipe and d-pad |
+| Tile Fusion | Number puzzle | Sliding-merge to the 2048 tile, undo, saved game (original name for the requested "2048") |
+| Tower Builder | Skill | One-tap stacking, sliced overhangs, perfect-drop streaks |
+| Bubble Shooter | Puzzle | Hex grid, bank shots, falling clusters, bomb and rainbow bubbles |
+| Car Parking Challenge | Simulation | Real steering, 9 solver-verified levels, star times |
+| Chess | Board | Own perft-verified rules engine (all rules and draws), 3 AI levels, local 2-player |
 
-No frameworks, no paid services, no third-party runtime libraries, no web fonts.
+No frameworks, no paid services, no third-party runtime libraries, no web fonts. New games share a small kit in `games/_kit/`.
 
 ## Quick start
 
@@ -21,14 +35,15 @@ Requirements: **Python 3.10+** (stdlib only). Node 18+ is optional, needed only 
 ```bash
 python scripts/build_static_site.py --strict   # build into dist/
 python scripts/check_site.py                   # broken-link and page-quality check
-python -m http.server -d dist 8000             # preview at http://localhost:8000
+python scripts/serve.py 8000 dist              # preview at http://localhost:8000
+python scripts/build_static_site.py --preview-pending   # local preview incl. games with pending rights (banner + noindex)
 ```
 
 Run the tests:
 
 ```bash
 python -m unittest discover -s tests -v
-node --test tests/js/games.test.js
+node --test tests/js/*.test.js
 ```
 
 Browser end-to-end tests use Playwright (`playwright-core`, open source, Apache-2.0) with
@@ -37,7 +52,7 @@ viewports. That is **not** the same as testing on real Android or iPhone devices
 
 ```bash
 npm install
-python -m http.server 8766 -d dist        # in another terminal
+python scripts/serve.py 8766 dist          # in another terminal
 BASE_URL=http://localhost:8766/ npm run test:e2e
 BASE_URL=https://ayushkumar03206-max.github.io/gaming-site-mvp/ npm run test:e2e   # live site
 ```
