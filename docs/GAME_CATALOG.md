@@ -1,8 +1,8 @@
 # Game catalog
 
 All 15 games are original code written for Gridlight Arcade. `data/games.json` is the source of truth;
-this table summarises it. "Local 2P" means two players on one device. **No game has online play yet**
-(see `GAME_DEVELOPMENT_STATUS.md`).
+this table summarises it. "Local 2P" means two players on one device. Online play is built for Tic Tac Toe and
+Chess but is **not live**: no multiplayer server is deployed yet (see `DEPLOYMENT_GUIDE.md`).
 
 | # | Game | Slug | Category | Modes today | Rights record |
 |---|---|---|---|---|---|
@@ -14,13 +14,13 @@ this table summarises it. "Local 2P" means two players on one device. **No game 
 | 06 | Fruit Slice | `fruit-slice` | Action | Solo, 60 s rounds | **pending** |
 | 07 | Space Shooter | `space-shooter` | Shooting | Solo, endless waves + bosses | **pending** |
 | 08 | Memory Match | `memory-match` | Brain | Solo, local 2P, 3 boards | **pending** |
-| 09 | Tic Tac Toe | `tic-tac-toe` | Board | Solo vs AI (3 levels), local 2P | **pending** |
+| 09 | Tic Tac Toe | `tic-tac-toe` | Board | Solo vs AI (3 levels), local 2P, online (local only) | **pending** |
 | 10 | Snake Arena | `snake-arena` | Arcade | Solo, 3 speeds | **pending** |
 | 11 | Tile Fusion | `tile-fusion` | Puzzle | Solo (requested as "2048") | **pending** |
 | 12 | Tower Builder | `tower-builder` | Skill | Solo | **pending** |
 | 13 | Bubble Shooter | `bubble-shooter` | Puzzle | Solo, levels | **pending** |
 | 14 | Car Parking Challenge | `car-parking` | Simulation | Solo, 9 levels in 3 difficulties | **pending** |
-| 15 | Chess | `chess` | Board | Solo vs AI (3 levels), local 2P | **pending** |
+| 15 | Chess | `chess` | Board | Solo vs AI (3 levels), local 2P, online (local only) | **pending** |
 
 ## Naming note: Tile Fusion
 

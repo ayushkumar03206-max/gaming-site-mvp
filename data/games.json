@@ -403,7 +403,7 @@
       "modes": {
         "single": true,
         "local": true,
-        "online": false
+        "online": true
       },
       "players": {
         "min": 1,
@@ -430,11 +430,12 @@
         "The first to get three in a row (across, down or diagonally) wins the round.",
         "If all nine squares fill up with no line, the round is a draw.",
         "Who moves first alternates every round. The scoreboard counts wins and draws until you reset it.",
-        "Against the computer, pick Easy, Medium or Hard. Hard never loses: a draw is a great result."
+        "Against the computer, pick Easy, Medium or Hard. Hard never loses: a draw is a great result.",
+        "Play with a friend online: create a private room, send the 6-character code or invite link, both press Ready and the host starts. Every move is checked by the server."
       ],
       "controls": {
         "desktop": "Click a square, or move with the arrow keys and press Enter/Space. Esc opens the menu.",
-        "mobile": "Tap a square."
+        "mobile": "Tap a square. Online play uses the same taps."
       },
       "orientation": "square",
       "date_added": "2026-11-18",
@@ -693,7 +694,7 @@
       "modes": {
         "single": true,
         "local": true,
-        "online": false
+        "online": true
       },
       "players": {
         "min": 1,
@@ -720,7 +721,8 @@
         "All standard rules apply: castling (move the king two squares), en passant and promotion (you choose the new piece).",
         "Checkmate wins. Stalemate, threefold repetition, the 50-move rule and insufficient material are draws.",
         "Undo takes back your last move (against the computer it takes back both your move and its reply). Flip turns the board around.",
-        "Choose the computer's strength and your colour before you start, or play a friend on the same device."
+        "Choose the computer's strength and your colour before you start, or play a friend on the same device.",
+        "Play with a friend online: create a private room and share the code or invite link. Colours swap every game; you can offer a draw or resign, and the server checks every move."
       ],
       "controls": {
         "desktop": "Click a piece, then click where it should go. Or move around the board with the arrow keys and press Enter/Space. Esc opens the menu.",

@@ -158,6 +158,26 @@ class BuildTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             build_static_site.build(self.tmp / "both", data_dir=ROOT / "data", strict=True, preview_pending=True)
 
+    def test_multiplayer_config_is_off_without_a_server(self):
+        js = self.read("play/_kit/mp-config.js")
+        self.assertIn('"serverUrl": ""', js)
+        self.assertIn('"games": []', js)
+
+    def test_multiplayer_config_with_a_server(self):
+        out = self.tmp / "mp"
+        try:
+            build_static_site.build(out, data_dir=ROOT / "data", preview_pending=True, mp_server="https://mp.example.test")
+            js = (out / "play" / "_kit" / "mp-config.js").read_text(encoding="utf-8")
+            self.assertIn("https://mp.example.test", js)
+            self.assertIn("tic-tac-toe", js); self.assertIn("chess", js)
+            self.assertNotIn("neon-dodge", js)
+            page = (out / "games" / "chess" / "index.html").read_text(encoding="utf-8")
+            self.assertIn("Online with a friend", page)
+            with self.assertRaises(SystemExit):  # plain http is refused except for localhost
+                build_static_site.build(self.tmp / "mp2", data_dir=ROOT / "data", preview_pending=True, mp_server="http://mp.example.test")
+        finally:
+            build_static_site.DATA = ROOT / "data"
+
     def test_sitemap_lists_game_pages(self):
         sm = self.read("sitemap.xml")
         self.assertIn("/games/pathforge/", sm)

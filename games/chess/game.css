@@ -24,3 +24,4 @@ body { overflow: auto; }
 .moves { margin: 0; padding: 8px 10px; list-style: none; max-height: min(40vh, 420px); overflow-y: auto; background: #12162f; border: 1px solid var(--line); border-radius: 12px; font-variant-numeric: tabular-nums; font-size: .92rem; }
 .moves li span { color: var(--muted); display: inline-block; min-width: 2.2em; }
 .promo .ghost { min-width: 110px; }
+.opp-off { margin: 0; color: #ff8fa3; font-weight: 700; font-size: .85rem; }

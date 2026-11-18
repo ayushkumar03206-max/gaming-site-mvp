@@ -22,6 +22,7 @@
     <div class="so"><b id="sO">0</b><span id="nO">O</span></div>
   </div>
   <p class="status" id="status">X to move</p>
+  <p class="opp-off" id="oppOff" role="status" hidden>Your opponent disconnected. Waiting for them to come back (up to about a minute)…</p>
   <div class="board" id="board" role="grid" aria-label="Tic Tac Toe board"></div>
   <div class="row"><button type="button" class="big" id="nextBtn" hidden>Next round</button></div>
 </main>
@@ -48,6 +49,7 @@
       </div>
     </div>
     <button type="button" class="big" id="playBtn" data-start>Start</button>
+    <button type="button" class="ghost" id="onlineBtn" hidden>Play with a friend online</button>
     <p class="hint">Get three in a row. The first move alternates each round.</p>
   </div>
 </div>
@@ -59,6 +61,8 @@
 </div>
 <noscript><p>Tic Tac Toe needs JavaScript enabled.</p></noscript>
 <script src="../_kit/gl-kit.js"></script>
+<script src="../_kit/mp-config.js"></script>
+<script src="../_kit/gl-mp.js"></script>
 <script src="ttt-logic.js"></script>
 <script src="game.js"></script>
 </body>

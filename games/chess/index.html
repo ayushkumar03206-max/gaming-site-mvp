@@ -13,6 +13,7 @@
 <main class="app" id="app" hidden>
   <div class="bar">
     <p class="status" id="status">White to move</p>
+    <p class="opp-off" id="oppOff" role="status" hidden>Opponent disconnected. Waiting for them to return…</p>
     <button type="button" class="icon-btn" data-mute></button>
     <button type="button" class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
   </div>
@@ -22,6 +23,7 @@
       <div class="row">
         <button type="button" class="ghost" id="undoBtn">↶ Undo</button>
         <button type="button" class="ghost" id="flipBtn">⇅ Flip</button>
+        <button type="button" class="ghost" id="drawBtn" hidden>Offer draw</button>
         <button type="button" class="ghost" id="resignBtn">Resign</button>
       </div>
       <ol class="moves" id="moves" aria-label="Move history"></ol>
@@ -50,6 +52,7 @@
       </div>
     </div>
     <button type="button" class="big" id="playBtn" data-start>Start game</button>
+    <button type="button" class="ghost" id="onlineBtn" hidden>Play with a friend online</button>
     <p class="hint">Full rules: castling, en passant, promotion, check, checkmate, stalemate and draws by repetition, the 50-move rule and insufficient material.</p>
   </div>
 </div>
@@ -74,6 +77,8 @@
 </div>
 <noscript><p>Chess needs JavaScript enabled.</p></noscript>
 <script src="../_kit/gl-kit.js"></script>
+<script src="../_kit/mp-config.js"></script>
+<script src="../_kit/gl-mp.js"></script>
 <script src="chess-rules.js"></script>
 <script src="game.js"></script>
 </body>

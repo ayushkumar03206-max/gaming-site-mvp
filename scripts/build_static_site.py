@@ -614,6 +614,13 @@ def copy_games(ctx: Ctx) -> None:
     kit = ROOT / "games" / "_kit"
     if kit.exists():
         shutil.copytree(kit, ctx.out / "play" / "_kit", dirs_exist_ok=True)
+        # Multiplayer config for the games. Online play is offered only for games whose registry entry has
+        # modes.online = true AND when a server URL is configured; the game still checks /health before showing it.
+        mp = ctx.site.get("multiplayer") or {}
+        cfg = {"serverUrl": (mp.get("server_url") or "").rstrip("/"),
+               "games": [g["slug"] for g in ctx.games if modes(g)["online"]] if mp.get("server_url") else []}
+        (ctx.out / "play" / "_kit" / "mp-config.js").write_text(
+            "window.GL_MP=" + json.dumps(cfg) + ";\n", encoding="utf-8")
     for g in ctx.games:
         src = ROOT / g["source_dir"]
         if not (src / "index.html").exists():
@@ -634,7 +641,8 @@ def build_meta(ctx: Ctx) -> None:
 
 
 def build(out: Path, data_dir: Path = None, strict: bool = False, today: date | None = None,
-          base_url: str | None = None, base_path: str | None = None, preview_pending: bool = False) -> Ctx:
+          base_url: str | None = None, base_path: str | None = None, preview_pending: bool = False,
+          mp_server: str | None = None) -> Ctx:
     if strict and preview_pending:
         raise SystemExit("--preview-pending cannot be combined with --strict: preview builds are never publishable.")
     ctx = Ctx(data_dir or ROOT / "data", out, today, preview_pending)
@@ -644,6 +652,11 @@ def build(out: Path, data_dir: Path = None, strict: bool = False, today: date | 
         ctx.site["base_url"] = base_url.rstrip("/")
     if base_path:
         ctx.site["base_path"] = base_path if base_path.endswith("/") else base_path + "/"
+    if mp_server is not None:
+        ctx.site["multiplayer"] = dict(ctx.site.get("multiplayer") or {}, server_url=mp_server)
+    mp_url = (ctx.site.get("multiplayer") or {}).get("server_url") or ""
+    if mp_url and not (mp_url.startswith("https://") or mp_url.startswith("http://localhost") or mp_url.startswith("http://127.0.0.1")):
+        raise SystemExit("multiplayer server_url must be https:// (or http://localhost for local testing)")
     if ctx.gate.errors or ctx.gate.withheld:
         for g, why in ctx.gate.withheld:
             print(f"WARNING: withholding {g.get('slug')}: {why}")
@@ -678,9 +691,10 @@ def main(argv=None) -> int:
     ap.add_argument("--base-path", help="override site.json base_path (e.g. /repo/)")
     ap.add_argument("--preview-pending", action="store_true",
                     help="LOCAL PREVIEW ONLY: also build games whose rights record is pending (adds a banner and noindex)")
+    ap.add_argument("--mp-server", help="override site.json multiplayer.server_url (e.g. http://localhost:3001 for local testing)")
     args = ap.parse_args(argv)
     ctx = build(args.out, strict=args.strict, base_url=args.base_url, base_path=args.base_path,
-                preview_pending=args.preview_pending)
+                preview_pending=args.preview_pending, mp_server=args.mp_server)
     print(f"Built {len(ctx.pages) + 1} pages and {len(ctx.games)} games into {args.out}")
     return 0
 

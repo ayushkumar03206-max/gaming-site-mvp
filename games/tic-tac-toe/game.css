@@ -9,7 +9,7 @@ body { overflow: auto; }
 .score span { font-size: .78rem; color: var(--muted); font-weight: 700; }
 .score .sx b { color: var(--x); } .score .so b { color: var(--o); }
 .status { margin: 0; font-weight: 800; font-size: 1.1rem; min-height: 1.4em; text-align: center; }
-.board { --size: min(88vw, calc(100vh - 230px), 420px); width: var(--size); height: var(--size); display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.board { --size: min(88vw, calc(100vh - 230px), 420px); width: var(--size); height: var(--size); display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; }
 .cell { border: 0; border-radius: 16px; background: #151a3a; font-size: calc(var(--size) / 4.2); font-weight: 900; line-height: 1; display: grid; place-items: center; transition: background .15s; }
 .cell:not([aria-disabled="true"]):hover { background: #1d2450; }
 .cell.x { color: var(--x); text-shadow: 0 0 16px rgba(41, 240, 255, .5); }
@@ -17,3 +17,4 @@ body { overflow: auto; }
 .cell.win { background: #283a2f; animation: pulse .8s ease-in-out 2; }
 @keyframes pulse { 50% { transform: scale(1.06); } }
 @media (prefers-reduced-motion: reduce) { .cell.win { animation: none; } }
+.opp-off { margin: 0; color: #ff8fa3; font-weight: 700; text-align: center; max-width: 420px; }

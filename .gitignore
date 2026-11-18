@@ -6,3 +6,5 @@ data/*.bak
 data/*.tmp
 .DS_Store
 Thumbs.db
+.env
+server/.env

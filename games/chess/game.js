@@ -10,6 +10,8 @@
   var opp = K.load('gl_chess_opp', 'ai'), level = K.load('gl_chess_level', 2), human = K.load('gl_chess_color', 'w');
   var g = null, mode = 'title', sel = null, targets = [], lastMove = null, flipped = false, aiTimer = null, pendingPromo = null, focusSq = 'e2', resigned = null;
   var screens = K.screens(['title', 'menu', 'promo', 'over']);
+  var online = null, shownResultFor = null; // latest server snapshot while playing online (server is authoritative)
+  function myColor() { return online ? online.match.colors[online.you.seat] : null; }
 
   function seg(attr, val) { Array.prototype.forEach.call(document.querySelectorAll('[' + attr + ']'), function (b) { b.setAttribute('aria-pressed', String(b.getAttribute(attr) === String(val))); }); }
   function syncTitle() { seg('data-opp', opp); seg('data-level', level); seg('data-color', human); $('aiOpts').hidden = opp !== 'ai'; }
@@ -29,7 +31,7 @@
       board.appendChild(b); squares[alg] = b;
     }
   }
-  function aiTurn() { return opp === 'ai' && g && !C.status(g).over && !resigned && g.turn !== human; }
+  function aiTurn() { return !online && opp === 'ai' && g && !C.status(g).over && !resigned && g.turn !== human; }
   function render() {
     var st = C.status(g), kingInCheck = st.check ? findKing(g.turn) : null;
     Object.keys(squares).forEach(function (a) {
@@ -42,16 +44,53 @@
       el.classList.toggle('check', a === kingInCheck);
       el.setAttribute('aria-label', a + ': ' + (p ? (C.color(p) === 'w' ? 'white ' : 'black ') + NAMES[p.toLowerCase()] : 'empty') + (targets.indexOf(a) >= 0 ? ', legal move' : ''));
     });
-    var moves = C.moveList(g), html = '';
+    var moves = online ? online.match.moves : C.moveList(g), html = '';
     for (var i = 0; i < moves.length; i += 2) html += '<li><span>' + (i / 2 + 1) + '.</span> ' + moves[i] + (moves[i + 1] ? ' &nbsp;' + moves[i + 1] : '') + '</li>';
     $('moves').innerHTML = html || '<li class="muted">No moves yet</li>';
     $('moves').scrollTop = 1e6;
     var who = g.turn === 'w' ? 'White' : 'Black', txt;
-    if (resigned) txt = (resigned === 'w' ? 'White' : 'Black') + ' resigned.';
+    if (online) {
+      var opName = (online.players.filter(function (p) { return p.seat !== online.you.seat; })[0] || {}).name || 'Opponent';
+      if (online.status === 'finished') txt = GLMP.resultText();
+      else txt = (g.turn === myColor() ? 'Your move' : opName + ' to move') + ' (you are ' + (myColor() === 'w' ? 'white' : 'black') + ')' + (st.check ? ' — check!' : '');
+      if (online.status === 'playing' && online.match.drawOffer !== null) txt += online.match.drawOffer === online.you.seat ? ' · Draw offered' : ' · ' + opName + ' offers a draw';
+    } else if (resigned) txt = (resigned === 'w' ? 'White' : 'Black') + ' resigned.';
     else if (st.over) txt = st.reason === 'checkmate' ? 'Checkmate! ' + (st.result === '1-0' ? 'White' : 'Black') + ' wins.' : 'Draw by ' + st.reason + '.';
     else txt = (aiTurn() ? 'Computer is thinking…' : who + ' to move') + (st.check ? ' — check!' : '');
     $('status').textContent = txt;
     $('undoBtn').disabled = !g.history.length || st.over || !!resigned || aiTurn();
+    $('undoBtn').hidden = !!online; $('flipBtn').hidden = false;
+    $('drawBtn').hidden = !online || online.status !== 'playing';
+    if (online) {
+      var offer = online.match.drawOffer;
+      $('drawBtn').textContent = offer !== null && offer !== online.you.seat ? 'Accept draw' : 'Offer draw';
+      $('drawBtn').disabled = offer === online.you.seat;
+      $('resignBtn').disabled = online.status !== 'playing';
+    } else $('resignBtn').disabled = false;
+    $('oppOff').hidden = !online || online.status !== 'playing' || GLMP.opponentConnected();
+  }
+
+  // ---- online play: the board is drawn from the server's FEN; moves are requests the server validates
+  function onlineMatch(room) {
+    var newMatch = !online || online.matchNo !== room.matchNo;
+    online = room; clearTimeout(aiTimer);
+    g = C.fromFen(room.match.fen); lastMove = room.match.last; resigned = null;
+    if (newMatch) { sel = null; targets = []; flipped = myColor() === 'b'; buildBoard(); }
+    else if (g.turn !== myColor()) { sel = null; targets = []; }
+    mode = 'play'; $('app').hidden = false; screens.show(null); render();
+    if (newMatch) K.announce('Online game started. You play ' + (myColor() === 'w' ? 'white' : 'black') + '.');
+    else if (room.match.moves.length) K.announce(room.match.moves[room.match.moves.length - 1].replace('#', ' checkmate').replace('+', ' check'));
+    if (room.status === 'finished' && shownResultFor !== room.matchNo) {
+      shownResultFor = room.matchNo; mode = 'over';
+      $('overTitle').textContent = GLMP.resultText(); $('overMsg').textContent = room.match.moves.length + ' half-moves played.';
+      $('againBtn').textContent = 'Back to the room'; $('toTitleBtn2').textContent = 'Leave online game';
+      K.sound.play(room.result.winnerSeat === room.you.seat ? 'win' : room.result.winnerSeat === null ? 'pop' : 'lose');
+      setTimeout(function () { screens.show('over'); }, 500);
+    }
+  }
+  function startOnline() {
+    GLMP.open({ gameId: 'chess', title: 'Chess', howTo: 'Colours swap every game. The server checks every move with the full rules, including draws.',
+      onMatch: onlineMatch, onExit: function () { online = null; toTitle(); } });
   }
   function findKing(c) { var k = c === 'w' ? 'K' : 'k'; for (var a in squares) if (C.pieceAt(g, a) === k) return a; return null; }
 
@@ -72,7 +111,8 @@
       if (piece.toLowerCase() === 'p' && a[1] === lastRank) { pendingPromo = { from: sel, to: a }; mode = 'promo'; screens.show('promo'); return; }
       play({ from: sel, to: a }); return;
     }
-    if (p && C.color(p) === g.turn && (opp === 'local' || g.turn === human)) {
+    var mine = online ? (online.status === 'playing' && g.turn === myColor()) : (opp === 'local' || g.turn === human);
+    if (p && C.color(p) === g.turn && mine) {
       sel = a; targets = C.legalMoves(g, C.sq(a)).map(function (m) { return C.name(m.to); }).filter(function (v, i, arr) { return arr.indexOf(v) === i; });
       K.sound.play('blip');
       if (!targets.length) K.announce('That piece has no legal moves.');
@@ -80,6 +120,11 @@
     render();
   }
   function play(m) {
+    if (online) {
+      sel = null; targets = []; render();
+      GLMP.act({ type: 'move', from: m.from, to: m.to, promotion: m.promotion }).then(function (r) { if (!r.ok) K.announce(r.message || 'Move not accepted.'); else K.sound.play('place'); });
+      return;
+    }
     var r = C.move(g, m);
     if (!r.ok) { K.announce('Illegal move.'); return; }
     sel = null; targets = []; lastMove = { from: r.move.from, to: r.move.to };
@@ -116,14 +161,32 @@
     sel = null; targets = []; render();
   });
   $('flipBtn').addEventListener('click', function () { flipped = !flipped; buildBoard(); render(); });
-  $('resignBtn').addEventListener('click', function () { if (mode !== 'play' || C.status(g).over) return; resigned = opp === 'ai' ? human : g.turn; render(); endGame(); });
-  $('playBtn').addEventListener('click', newGame); $('againBtn').addEventListener('click', newGame); $('newBtn').addEventListener('click', newGame);
-  $('menuBtn').addEventListener('click', function () { if (mode === 'play') { mode = 'menu'; clearTimeout(aiTimer); screens.show('menu'); } });
+  $('drawBtn').addEventListener('click', function () {
+    if (!online) return;
+    var offer = online.match.drawOffer;
+    GLMP.act({ type: offer !== null && offer !== online.you.seat ? 'accept-draw' : 'offer-draw' }).then(function (r) { if (!r.ok) K.announce(r.message || 'Not accepted.'); });
+  });
+  $('resignBtn').addEventListener('click', function () {
+    if (online) { if (online.status === 'playing') GLMP.act({ type: 'resign' }); return; }
+    if (mode !== 'play' || C.status(g).over) return; resigned = opp === 'ai' ? human : g.turn; render(); endGame(); });
+  $('playBtn').addEventListener('click', function () { online = null; newGame(); });
+  $('againBtn').addEventListener('click', function () { if (online) { GLMP.showLobby(); return; } newGame(); });
+  $('newBtn').addEventListener('click', function () { if (online) { mode = 'play'; screens.show(null); return; } newGame(); });
+  $('onlineBtn').addEventListener('click', startOnline);
+  if (window.GLMP) GLMP.available('chess').then(function (yes) { $('onlineBtn').hidden = !yes; if (yes && GLMP.inviteCode()) startOnline(); });
+  $('menuBtn').addEventListener('click', function () {
+    if (mode !== 'play') return;
+    mode = 'menu'; clearTimeout(aiTimer);
+    $('newBtn').textContent = online ? 'Back to the game' : 'Restart game';
+    $('toTitleBtn').textContent = online ? 'Leave online game' : 'Change opponent';
+    screens.show('menu');
+  });
   $('resumeBtn').addEventListener('click', function () { mode = 'play'; screens.show(null); if (aiTurn()) scheduleAI(); });
-  function toTitle() { clearTimeout(aiTimer); mode = 'title'; $('app').hidden = true; syncTitle(); screens.show('title'); }
-  $('toTitleBtn').addEventListener('click', toTitle); $('toTitleBtn2').addEventListener('click', toTitle);
+  function toTitle() { clearTimeout(aiTimer); mode = 'title'; $('app').hidden = true; $('againBtn').textContent = 'New game'; $('toTitleBtn2').textContent = 'Change opponent'; syncTitle(); screens.show('title'); }
+  function leaveOrTitle() { if (online) { online = null; GLMP.exit(); return; } toTitle(); }
+  $('toTitleBtn').addEventListener('click', leaveOrTitle); $('toTitleBtn2').addEventListener('click', leaveOrTitle);
   $('reviewBtn').addEventListener('click', function () { screens.show(null); });
-  K.onRestart(newGame); K.muteButton();
+  K.onRestart(function () { if (!online) newGame(); }); K.muteButton();
 
   // keyboard: arrows move focus across squares (respecting flip), Enter/Space selects
   $('board').addEventListener('keydown', function (e) {
@@ -138,6 +201,6 @@
   window.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mode === 'play') $('menuBtn').click(); });
 
   syncTitle(); screens.show('title');
-  window.GLDebug = { state: function () { return g ? { mode: mode, fen: C.toFen(g), turn: g.turn, moves: C.moveList(g), status: C.status(g), opp: opp, human: human } : { mode: mode }; } };
+  window.GLDebug = { state: function () { return g ? { mode: mode, fen: C.toFen(g), turn: g.turn, moves: online ? online.match.moves : C.moveList(g), status: C.status(g), opp: online ? 'online' : opp, human: online ? myColor() : human, roomStatus: online ? online.status : null, result: online ? online.result : null } : { mode: mode }; } };
   K.ready();
 })();

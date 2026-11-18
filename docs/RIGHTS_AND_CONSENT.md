@@ -71,3 +71,13 @@ run by default; pass `--write` to apply. It writes a backup and logs every migra
 | `gl_consent_v1` | the consent choice itself |
 
 All of these stay in the visitor's browser. The Privacy page describes them.
+
+## Online play (Batch 3, not live yet)
+
+- Browser storage: `gl_mp_name` (localStorage, the display name you typed) and `gl_mp_session` (sessionStorage,
+  room code + reconnect token for the current tab only). Both are needed for the feature itself; no tracking.
+- Data sent to the multiplayer server: display name, room actions, and (as with any connection) the IP address.
+  Kept in memory only, deleted when the room closes or the server restarts.
+- Third-party code on the **server only**: express 5.1.0 and socket.io 4.8.1 (MIT). The browser loads the
+  Socket.IO client from the project's own server at runtime; the static site bundles no third-party code.
+- Before enabling online play publicly, the Privacy Policy must describe the above (owner/legal review).
