@@ -36,6 +36,7 @@ class GateResult:
     publishable: list = field(default_factory=list)
     withheld: list = field(default_factory=list)  # (game, reason)
     errors: list = field(default_factory=list)    # data problems
+    pending: list = field(default_factory=list)   # preview builds only: built although rights are pending
 
     @property
     def ok(self) -> bool:
@@ -84,7 +85,9 @@ def check_record(rec: dict | None) -> str | None:
     return None
 
 
-def evaluate(games_doc: dict, assets_doc: dict) -> GateResult:
+def evaluate(games_doc: dict, assets_doc: dict, allow_pending: bool = False) -> GateResult:
+    """allow_pending is ONLY for local preview builds (build_static_site.py --preview-pending).
+    Pending games are then built but listed in result.pending; rejected/revoked games are still withheld."""
     result = GateResult()
     records, errors = index_records(assets_doc)
     result.errors.extend(errors)
@@ -99,8 +102,13 @@ def evaluate(games_doc: dict, assets_doc: dict) -> GateResult:
         seen_slugs.add(slug)
         if game.get("status") != "published":
             continue  # drafts are simply not built; not an error
-        reason = check_record(records.get(game.get("rights_id")))
-        if reason:
+        rec = records.get(game.get("rights_id"))
+        reason = check_record(rec)
+        if reason and allow_pending and rec is not None and rec.get("status") == "pending" \
+                and check_record({**rec, "status": APPROVED}) is None:
+            result.pending.append(game)
+            result.publishable.append(game)
+        elif reason:
             result.withheld.append((game, reason))
         else:
             result.publishable.append(game)

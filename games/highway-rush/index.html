@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Highway Rush</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<div class="stage"><canvas id="c" tabindex="-1" role="img" aria-label="Highway Rush road"></canvas></div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+
+<div class="hud" id="hud" hidden>
+  <span class="pill"><small>M</small><span id="hMeters">0</span></span>
+  <span class="pill"><small>●</small><span id="hCoins">0</span></span>
+  <span class="pill"><small>KM/H</small><span id="hSpeed">0</span></span>
+  <span class="grow"></span>
+  <button type="button" class="icon-btn" data-mute></button>
+  <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
+</div>
+<div class="touch-pad" id="pad" hidden>
+  <div class="grp"><button type="button" data-hold="left" aria-label="Steer left">◀</button></div>
+  <div class="grp"><button type="button" data-hold="right" aria-label="Steer right">▶</button></div>
+</div>
+
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">HIGHWAY<span> RUSH</span></h1>
+    <p>Weave through traffic, grab <b class="coin">●</b> coins, and see how far you get as the road speeds up.</p>
+    <div><p class="label">Difficulty</p>
+      <div class="seg" id="diffSeg" role="group" aria-label="Difficulty">
+        <button type="button" data-diff="easy" aria-pressed="false">Easy</button>
+        <button type="button" data-diff="normal" aria-pressed="true">Normal</button>
+        <button type="button" data-diff="hard" aria-pressed="false">Hard</button>
+      </div></div>
+    <p class="best" id="bestTitle"></p>
+    <button type="button" class="big" id="playBtn" data-start>Start engine</button>
+    <p class="hint"><span class="kbd-only"><span class="kb">←</span> <span class="kb">→</span> or <span class="kb">A</span> <span class="kb">D</span> to steer · <span class="kb">P</span> pause</span><span class="touch">Hold ◀ ▶ or drag on the road to steer</span></p>
+  </div>
+</div>
+
+<div class="overlay" id="paused" hidden>
+  <div class="panel">
+    <h2>Paused</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="restartBtn">Restart</button>
+    <button type="button" class="ghost" id="menuBtn">Change difficulty</button>
+  </div>
+</div>
+
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel">
+    <h2 id="overTitle">Crashed!</h2>
+    <p class="final"><span id="finalScore">0</span><small>points</small></p>
+    <div class="stats"><div><b id="oMeters">0</b><span>meters</span></div><div><b id="oCoins">0</b><span>coins</span></div><div><b id="oNear">0</b><span>near misses</span></div></div>
+    <p class="best" id="bestOver"></p>
+    <button type="button" class="big" id="againBtn">Drive again</button>
+    <button type="button" class="ghost" id="menuBtn2">Change difficulty</button>
+  </div>
+</div>
+<noscript><p>Highway Rush needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="rush-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

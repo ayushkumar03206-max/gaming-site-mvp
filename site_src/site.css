@@ -241,3 +241,7 @@ thead th { background: var(--surface-2); }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
   .hero-card { transform: none; }
 }
+
+/* Local preview builds only (build_static_site.py --preview-pending) */
+.preview-banner { background: #5a3b00; color: #ffe3a3; padding: 8px 16px; text-align: center; font-size: .9rem; border-bottom: 1px solid #a86f00; }
+

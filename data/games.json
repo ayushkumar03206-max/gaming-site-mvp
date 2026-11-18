@@ -1,13 +1,22 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "games": [
     {
       "id": "gl-001",
       "slug": "pathforge",
       "title": "Pathforge",
       "status": "published",
-      "categories": ["strategy", "puzzle", "multiplayer"],
-      "tags": ["board game", "pathfinding", "vs AI", "two player"],
+      "categories": [
+        "strategy",
+        "puzzle",
+        "multiplayer"
+      ],
+      "tags": [
+        "board game",
+        "pathfinding",
+        "vs AI",
+        "two player"
+      ],
       "short_description": "Race your runner across the grid while forging crystal blocks to reroute your rival.",
       "description": "Pathforge is a turn-based race on a glowing grid. Each turn you choose: step your runner one cell, or forge a crystal block on any free cell to lengthen your rival's route. You can never seal a runner in completely, so every block is a trade-off between slowing them down and saving blocks for later. Grab spark cells along the way to earn extra blocks. Play against an AI with three difficulty levels or challenge a friend on the same device.",
       "instructions": [
@@ -30,15 +39,32 @@
       "featured": true,
       "curated_trending": true,
       "date_added": "2026-11-17",
-      "rights_id": "rights-pathforge"
+      "rights_id": "rights-pathforge",
+      "modes": {
+        "single": true,
+        "local": true,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 2
+      },
+      "multiplayer_model": "turn-based"
     },
     {
       "id": "gl-002",
       "slug": "neon-dodge",
       "title": "Neon Dodge",
       "status": "published",
-      "categories": ["arcade", "action"],
-      "tags": ["reflex", "endless", "high score"],
+      "categories": [
+        "arcade",
+        "action"
+      ],
+      "tags": [
+        "reflex",
+        "endless",
+        "high score"
+      ],
       "short_description": "Weave a light-orb through falling bars, spinning shards and laser sweeps. How long can you last?",
       "description": "Neon Dodge is an endless survival game. Steer your orb around a dark arena while bars rain down, shards spin across the field and laser lines sweep after a short warning. Every few seconds the pace picks up. Collect energy cores for bonus points and chase your personal best, which is saved on your device.",
       "instructions": [
@@ -60,15 +86,32 @@
       "featured": true,
       "curated_trending": true,
       "date_added": "2026-11-17",
-      "rights_id": "rights-neon-dodge"
+      "rights_id": "rights-neon-dodge",
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "multiplayer_model": "score-competition"
     },
     {
       "id": "gl-003",
       "slug": "chroma-shift",
       "title": "Chroma Shift",
       "status": "published",
-      "categories": ["puzzle", "brain"],
-      "tags": ["color matching", "levels", "logic"],
+      "categories": [
+        "puzzle",
+        "brain"
+      ],
+      "tags": [
+        "color matching",
+        "levels",
+        "logic"
+      ],
       "short_description": "Tap a tile to shift its color and its neighbors'. Turn the whole board one color before you run out of moves.",
       "description": "Chroma Shift is a color-matching logic puzzle. Tapping a tile shifts it and the four tiles touching it one step along the color wheel. Your goal is to make every tile the same color within the move limit. Boards grow larger and use more colors as you progress through 30 levels. Your unlocked levels and stars are saved on your device. Every color also has its own symbol, so you can play without telling colors apart.",
       "instructions": [
@@ -90,7 +133,66 @@
       "featured": false,
       "curated_trending": true,
       "date_added": "2026-11-17",
-      "rights_id": "rights-chroma-shift"
+      "rights_id": "rights-chroma-shift",
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "multiplayer_model": "shared-challenge"
+    },
+    {
+      "id": "gl-004",
+      "status": "published",
+      "entry": "play/highway-rush/index.html",
+      "source_dir": "games/highway-rush",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "rights_id": "rights-highway-rush",
+      "slug": "highway-rush",
+      "title": "Highway Rush",
+      "categories": [
+        "racing",
+        "arcade"
+      ],
+      "tags": [
+        "driving",
+        "traffic",
+        "endless",
+        "high score",
+        "coins"
+      ],
+      "short_description": "Weave through four lanes of traffic, grab coins and survive as the highway keeps speeding up.",
+      "description": "Highway Rush is a top-down endless racer. Your car keeps accelerating while rows of traffic fill the lanes ahead. Every row leaves a gap you can reach, but at higher speeds you need to read the road early. Collect coins for bonus points, earn extra points for close passes, and set a best score on each of three difficulty levels.",
+      "instructions": [
+        "Steer between the four lanes to avoid every car. One crash ends the run.",
+        "Your speed increases the longer you drive. The traffic always leaves at least one gap you can reach.",
+        "Collect coins for +25 points. Passing a car in the next lane over is a near miss worth +5.",
+        "Score = meters driven + coin and near-miss bonuses. Each difficulty keeps its own best score.",
+        "Press P or Esc to pause."
+      ],
+      "controls": {
+        "desktop": "Left/Right arrows or A/D to steer. P / Esc to pause. Enter or R to drive again after a crash.",
+        "mobile": "Hold the on-screen arrow buttons, or touch and drag on the road to steer toward your finger."
+      },
+      "orientation": "portrait",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "competitive-real-time"
     }
   ]
 }

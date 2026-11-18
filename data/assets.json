@@ -60,6 +60,21 @@
       "reviewed_by": "initial-import",
       "reviewed_at": "2026-11-17T00:00:00Z",
       "evidence": "Original templates and inline SVG. Uses the visitor's system fonts, so no web fonts are downloaded or licensed."
+    },
+    {
+      "id": "rights-highway-rush",
+      "kind": "game",
+      "title": "Highway Rush (code and Canvas-drawn graphics, synthesised sounds, thumbnail)",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "pending",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "evidence": "Written from scratch for this project. Graphics are drawn at runtime with the Canvas API; sound effects are generated with the Web Audio API. No third-party code, art, fonts or audio."
     }
   ]
 }

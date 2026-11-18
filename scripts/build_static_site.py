@@ -41,15 +41,16 @@ def load(name: str):
 # Context
 # --------------------------------------------------------------------------
 class Ctx:
-    def __init__(self, data_dir: Path, out: Path, today: date | None = None):
+    def __init__(self, data_dir: Path, out: Path, today: date | None = None, preview_pending: bool = False):
         global DATA
         DATA = data_dir
         self.out = out
+        self.preview = preview_pending
         self.site = load("site.json")
         self.categories = load("categories.json")["categories"]
         self.cat_by_slug = {c["slug"]: c for c in self.categories}
         self.tracking = load("tracking.json")
-        gate = rights_gate.evaluate(load("games.json"), load("assets.json"))
+        gate = rights_gate.evaluate(load("games.json"), load("assets.json"), allow_pending=preview_pending)
         self.gate = gate
         self.games = sorted(gate.publishable, key=lambda g: (g.get("date_added", ""), g["title"]), reverse=True)
         self.assets = {r["id"]: r for r in load("assets.json")["records"]}
@@ -104,7 +105,7 @@ def head(ctx: Ctx, root: str, title: str, desc: str, rel_path: str, extra_head: 
 <meta property="og:url" content="{e(canonical)}">
 {og}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0b0d1a">
+<meta name="theme-color" content="#0b0d1a">{'<meta name="robots" content="noindex">' if ctx.preview else ''}
 <link rel="icon" href="{root}assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{root}assets/site.css">
 {extra_head}
@@ -116,8 +117,13 @@ def header(ctx: Ctx, root: str, active: str) -> str:
         cur = ' aria-current="page"' if key == active else ""
         return f'<a href="{root}{href}"{cur}>{label}</a>'
 
+    banner = ""
+    if ctx.preview:
+        names = ", ".join(g["title"] for g in ctx.gate.pending) or "none"
+        banner = (f'<div class="preview-banner" role="note"><strong>Preview build, not for publishing.</strong> '
+                  f'Includes games whose rights review is still pending: {e(names)}.</div>')
     return f"""<body data-root="{root}">
-<a class="skip" href="#main">Skip to content</a>
+{banner}<a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="{root}index.html">{LOGO_SVG}<span>{e(ctx.site['name'])}</span></a>
@@ -205,13 +211,37 @@ def cat_name(ctx: Ctx, slug: str) -> str:
     return c["name"] if c else slug.title()
 
 
+def modes(g) -> dict:
+    m = g.get("modes") or {}
+    return {"single": bool(m.get("single", True)), "local": bool(m.get("local", False)), "online": bool(m.get("online", False))}
+
+
+def online_live(ctx: Ctx, g) -> bool:
+    """Online play is only advertised when the game says so AND a multiplayer server is configured."""
+    return modes(g)["online"] and bool((ctx.site.get("multiplayer") or {}).get("server_url"))
+
+
 def badges(ctx: Ctx, g) -> str:
+    m = modes(g)
     out = ['<span class="badge badge-play">Playable now</span>']
+    if m["single"]:
+        out.append('<span class="badge">1 player</span>')
+    if m["local"]:
+        out.append('<span class="badge">2P same device</span>')
+    if online_live(ctx, g):
+        out.append('<span class="badge badge-new">Online</span>')
     if ctx.is_new(g):
         out.append('<span class="badge badge-new">New</span>')
     if g.get("saves_progress"):
         out.append('<span class="badge">Saves progress</span>')
     return "".join(out)
+
+
+def mode_text(ctx: Ctx, g) -> str:
+    m = modes(g)
+    parts = (["Single player"] if m["single"] else []) + (["2 players on one device"] if m["local"] else [])
+    parts.append("Online with a friend" if online_live(ctx, g) else "Online play not available yet")
+    return " · ".join(parts)
 
 
 def card(ctx: Ctx, g, root: str) -> str:
@@ -428,6 +458,7 @@ def build_game_pages(ctx: Ctx) -> None:
     <dl class="facts-list">
       <dt>Categories</dt><dd class="chips">{cats}</dd>
       <dt>Platform</dt><dd>Desktop, tablet &amp; mobile browsers</dd>
+      <dt>Modes</dt><dd>{e(mode_text(ctx, g))}</dd>
       <dt>Progress</dt><dd>{'Saved on this device' if g.get('saves_progress') else 'Not saved'}</dd>
       <dt>Added</dt><dd><time datetime="{e(g.get('date_added', ''))}">{e(g.get('date_added', ''))}</time></dd>
       <dt>Made by</dt><dd>{e(rec.get('owner', ctx.site['operator']))}</dd>
@@ -580,6 +611,9 @@ def copy_assets(ctx: Ctx) -> None:
 
 
 def copy_games(ctx: Ctx) -> None:
+    kit = ROOT / "games" / "_kit"
+    if kit.exists():
+        shutil.copytree(kit, ctx.out / "play" / "_kit", dirs_exist_ok=True)
     for g in ctx.games:
         src = ROOT / g["source_dir"]
         if not (src / "index.html").exists():
@@ -595,13 +629,17 @@ def build_meta(ctx: Ctx) -> None:
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n',
         encoding="utf-8")
     (ctx.out / "robots.txt").write_text(
-        f"User-agent: *\nAllow: /\nSitemap: {ctx.site['base_url'].rstrip('/')}/sitemap.xml\n", encoding="utf-8")
+        f"User-agent: *\n{'Disallow: /' if ctx.preview else 'Allow: /'}\nSitemap: {ctx.site['base_url'].rstrip('/')}/sitemap.xml\n", encoding="utf-8")
     (ctx.out / ".nojekyll").write_text("", encoding="utf-8")
 
 
 def build(out: Path, data_dir: Path = None, strict: bool = False, today: date | None = None,
-          base_url: str | None = None, base_path: str | None = None) -> Ctx:
-    ctx = Ctx(data_dir or ROOT / "data", out, today)
+          base_url: str | None = None, base_path: str | None = None, preview_pending: bool = False) -> Ctx:
+    if strict and preview_pending:
+        raise SystemExit("--preview-pending cannot be combined with --strict: preview builds are never publishable.")
+    ctx = Ctx(data_dir or ROOT / "data", out, today, preview_pending)
+    for g in ctx.gate.pending:
+        print(f"PREVIEW: including {g['slug']} although its rights record is pending")
     if base_url:
         ctx.site["base_url"] = base_url.rstrip("/")
     if base_path:
@@ -638,8 +676,11 @@ def main(argv=None) -> int:
     ap.add_argument("--strict", action="store_true", help="fail if the rights gate withholds anything")
     ap.add_argument("--base-url", help="override site.json base_url (e.g. https://user.github.io/repo)")
     ap.add_argument("--base-path", help="override site.json base_path (e.g. /repo/)")
+    ap.add_argument("--preview-pending", action="store_true",
+                    help="LOCAL PREVIEW ONLY: also build games whose rights record is pending (adds a banner and noindex)")
     args = ap.parse_args(argv)
-    ctx = build(args.out, strict=args.strict, base_url=args.base_url, base_path=args.base_path)
+    ctx = build(args.out, strict=args.strict, base_url=args.base_url, base_path=args.base_path,
+                preview_pending=args.preview_pending)
     print(f"Built {len(ctx.pages) + 1} pages and {len(ctx.games)} games into {args.out}")
     return 0
 
