@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#0b0a1f"/>
+  <rect x="170" y="0" width="300" height="340" fill="#141236"/>
+  <g>
+    <circle cx="190" cy="20" r="18" fill="#ff4d6d"/><circle cx="230" cy="20" r="18" fill="#ff4d6d"/><circle cx="270" cy="20" r="18" fill="#29b6ff"/><circle cx="310" cy="20" r="18" fill="#3ddc84"/><circle cx="350" cy="20" r="18" fill="#3ddc84"/><circle cx="390" cy="20" r="18" fill="#ffd23f"/><circle cx="430" cy="20" r="18" fill="#b66dff"/>
+    <circle cx="210" cy="54" r="18" fill="#29b6ff"/><circle cx="250" cy="54" r="18" fill="#29b6ff"/><circle cx="290" cy="54" r="18" fill="#ffd23f"/><circle cx="330" cy="54" r="18" fill="#3ddc84"/><circle cx="370" cy="54" r="18" fill="#b66dff"/><circle cx="410" cy="54" r="18" fill="#b66dff"/><circle cx="450" cy="54" r="18" fill="#ff8a3d"/>
+    <circle cx="190" cy="88" r="18" fill="#ffd23f"/><circle cx="270" cy="88" r="18" fill="#ff4d6d"/><circle cx="350" cy="88" r="18" fill="#ff8a3d"/><circle cx="430" cy="88" r="18" fill="#29b6ff"/>
+  </g>
+  <line x1="170" y1="290" x2="470" y2="290" stroke="#ff4d6d" stroke-opacity=".6" stroke-dasharray="8 8" stroke-width="3"/>
+  <g fill="#fff" fill-opacity=".6"><circle cx="330" cy="300" r="3"/><circle cx="344" cy="268" r="3"/><circle cx="358" cy="236" r="3"/><circle cx="372" cy="204" r="3"/><circle cx="386" cy="172" r="3"/><circle cx="400" cy="140" r="3"/></g>
+  <circle cx="320" cy="320" r="20" fill="#3ddc84"/><circle cx="370" cy="322" r="13" fill="#ff4d6d"/>
+  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#29b6ff" letter-spacing="2">BUBBLE<tspan fill="#ff4d6d"> SHOOTER</tspan></text>
+</svg>

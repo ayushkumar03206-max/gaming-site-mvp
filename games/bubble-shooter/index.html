@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Bubble Shooter</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<style>:root { --accent: #29b6ff; --accent2: #ff4d6d; --bg: #0b0a1f; }</style>
+</head>
+<body>
+<div class="stage"><canvas id="c" tabindex="-1" role="img" aria-label="Bubble Shooter board"></canvas></div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<div class="hud" id="hud" hidden>
+  <span class="pill"><small>SCORE</small><span id="hScore">0</span></span>
+  <span class="pill"><small>LV</small><span id="hLevel">1</span></span>
+  <span class="pill" title="Shots without a pop before the ceiling drops"><small>DROP IN</small><span id="hDrop">5</span></span>
+  <span class="grow"></span>
+  <button type="button" class="icon-btn" id="swapBtn" aria-label="Swap bubbles">⇄</button>
+  <button type="button" class="icon-btn" data-mute></button>
+  <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
+</div>
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">BUBBLE<span> SHOOTER</span></h1>
+    <p>Aim and fire bubbles. Connect three or more of the same colour to pop them; anything left hanging falls for bonus points. Bounce shots off the side walls.</p>
+    <p>Every 5 shots that pop nothing, the ceiling drops one row. Don't let the bubbles reach the red line. Watch for ✹ bombs and rainbow bubbles.</p>
+    <p class="best" id="bestTitle"></p>
+    <button type="button" class="big" id="playBtn" data-start>Play</button>
+    <p class="hint"><span class="kbd-only">Mouse aims, click fires · <span class="kb">←</span><span class="kb">→</span> aim, <span class="kb">Space</span> fire, <span class="kb">X</span> swap</span><span class="touch">Drag to aim, release to fire · tap the small bubble to swap</span></p>
+  </div>
+</div>
+<div class="overlay" id="paused" hidden>
+  <div class="panel"><h2>Paused</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="restartBtn">Restart</button></div>
+</div>
+<div class="overlay" id="clear" hidden>
+  <div class="panel"><h2 id="clearTitle">Level cleared!</h2><p id="clearMsg"></p>
+    <button type="button" class="big" id="nextBtn">Next level</button></div>
+</div>
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel">
+    <h2 id="overTitle">Game over</h2>
+    <p class="final"><span id="finalScore">0</span><small>points</small></p>
+    <p id="overMsg"></p>
+    <p class="best" id="bestOver"></p>
+    <button type="button" class="big" id="againBtn">Play again</button>
+  </div>
+</div>
+<noscript><p>Bubble Shooter needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="bubble-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

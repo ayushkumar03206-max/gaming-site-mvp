@@ -582,6 +582,55 @@
       "orientation": "portrait",
       "date_added": "2026-11-18",
       "multiplayer_model": "alternating-turns"
+    },
+    {
+      "id": "gl-013",
+      "status": "published",
+      "entry": "play/bubble-shooter/index.html",
+      "source_dir": "games/bubble-shooter",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "rights_id": "rights-bubble-shooter",
+      "slug": "bubble-shooter",
+      "title": "Bubble Shooter",
+      "categories": [
+        "puzzle",
+        "arcade"
+      ],
+      "tags": [
+        "bubbles",
+        "aim",
+        "match three",
+        "levels"
+      ],
+      "short_description": "Aim, bank shots off the walls and pop groups of three before the ceiling comes down.",
+      "description": "Bubble Shooter is an aim-and-match puzzle. Fire coloured bubbles into the cluster at the top of the board; three or more of the same colour pop, and any bubbles left hanging fall for bonus points. Bank shots off the side walls to reach tight spots. Every five shots that pop nothing, the ceiling drops a row. Levels add more colours and rows, and special bomb and rainbow bubbles show up to help. Every colour also has its own symbol.",
+      "instructions": [
+        "Aim with the mouse (or drag on a touch screen) and fire. The dotted guide shows your path, including wall bounces.",
+        "A shot sticks where it touches the ceiling or another bubble. Three or more of the same colour connected together pop.",
+        "Bubbles no longer connected to the ceiling fall: +20 each.",
+        "Five shots in a row without a pop lower the ceiling by one row. If any bubble reaches the red line, the game ends.",
+        "✹ Bomb bubbles pop everything they touch. Rainbow bubbles take the colour of the first bubble they touch.",
+        "You can swap your current bubble with the next one."
+      ],
+      "controls": {
+        "desktop": "Move the mouse to aim, click to fire. Or Left/Right arrows to aim, Space to fire. X or Shift swaps. P / Esc pauses.",
+        "mobile": "Drag to aim and release to fire. Tap the small 'next' bubble (or the ⇄ button) to swap."
+      },
+      "orientation": "portrait",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "score-competition"
     }
   ]
 }

@@ -98,6 +98,14 @@ const INTERACT = {
     const st = await frame.evaluate(() => GLDebug.state());
     assert.ok(st.floors >= 3 && !st.over, 'stacked 3 floors: ' + JSON.stringify(st));
   },
+  'bubble-shooter': async (page, frame) => {
+    const b = await frameBox(page);
+    await page.mouse.move(b.x + b.width * 0.3, b.y + b.height * 0.3);
+    await page.mouse.down(); await page.mouse.up();
+    await frame.waitForFunction(() => GLDebug.state().shots === 1 && !GLDebug.state().flying, null, { timeout: 5000 });
+    const st = await frame.evaluate(() => GLDebug.state());
+    assert.ok(st.angle < 0, 'aimed left: ' + JSON.stringify(st));
+  },
   'fruit-slice': async (page, frame) => {
     const b = await frameBox(page);
     for (let i = 0; i < 30; i++) {
