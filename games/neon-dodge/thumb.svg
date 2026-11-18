@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1030"/><stop offset="1" stop-color="#05060e"/></linearGradient>
+    <radialGradient id="orb" cx="35%" cy="30%"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#29f0ff"/><stop offset="1" stop-color="#0a7f8c"/></radialGradient>
+    <filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#7a7dff" stroke-opacity=".12"/></pattern>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <rect width="640" height="400" fill="url(#grid)"/>
+  <g fill="#ff3fb4" filter="url(#gl)">
+    <rect x="60" y="60" width="170" height="16" rx="8"/>
+    <rect x="380" y="110" width="200" height="16" rx="8"/>
+    <rect x="120" y="190" width="130" height="16" rx="8"/>
+    <rect x="430" y="250" width="150" height="16" rx="8"/>
+  </g>
+  <g filter="url(#gl)">
+    <line x1="0" y1="330" x2="640" y2="330" stroke="#ff4d4d" stroke-width="12"/>
+    <line x1="0" y1="330" x2="640" y2="330" stroke="#fff" stroke-width="4"/>
+  </g>
+  <path d="M520 170 l20 26 l-20 26 l-20 -26z" fill="#ff8a3d" filter="url(#gl)" transform="rotate(20 520 196)"/>
+  <circle cx="300" cy="140" r="11" fill="#ffd23f" filter="url(#gl)"/>
+  <circle cx="330" cy="262" r="24" fill="url(#orb)" filter="url(#gl)"/>
+  <g stroke="#29f0ff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"><path d="M290 270h-30M292 258h-44M296 282h-24"/></g>
+  <text x="34" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#b6ff3b" letter-spacing="3">NEON<tspan fill="#ff3fb4">DODGE</tspan></text>
+</svg>

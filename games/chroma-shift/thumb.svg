@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="0%" r="100%"><stop offset="0" stop-color="#3a2678"/><stop offset="1" stop-color="#0c0b1d"/></radialGradient>
+    <filter id="sh"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".45"/></filter>
+    <linearGradient id="t" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#29f0ff"/><stop offset=".33" stop-color="#b6ff3b"/><stop offset=".66" stop-color="#ffd23f"/><stop offset="1" stop-color="#ff3fb4"/></linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <g transform="translate(330 30) rotate(6)" filter="url(#sh)" font-family="Segoe UI Symbol, Arial, sans-serif" font-size="34" text-anchor="middle" fill="#000" fill-opacity=".45">
+    <rect x="0" y="0" width="86" height="86" rx="16" fill="#29f0ff"/><text x="43" y="55">●</text>
+    <rect x="96" y="0" width="86" height="86" rx="16" fill="#ff3fb4"/><text x="139" y="55">▲</text>
+    <rect x="192" y="0" width="86" height="86" rx="16" fill="#29f0ff"/><text x="235" y="55">●</text>
+    <rect x="0" y="96" width="86" height="86" rx="16" fill="#ffd23f"/><text x="43" y="151">■</text>
+    <rect x="96" y="96" width="86" height="86" rx="16" fill="#29f0ff" stroke="#fff" stroke-width="6"/><text x="139" y="151">●</text>
+    <rect x="192" y="96" width="86" height="86" rx="16" fill="#b6ff3b"/><text x="235" y="151">◆</text>
+    <rect x="0" y="192" width="86" height="86" rx="16" fill="#29f0ff"/><text x="43" y="247">●</text>
+    <rect x="96" y="192" width="86" height="86" rx="16" fill="#9b7bff"/><text x="139" y="247">★</text>
+    <rect x="192" y="192" width="86" height="86" rx="16" fill="#29f0ff"/><text x="235" y="247">●</text>
+  </g>
+  <text x="34" y="200" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="54" fill="url(#t)" letter-spacing="2">CHROMA</text>
+  <text x="34" y="256" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="54" fill="url(#t)" letter-spacing="2">SHIFT</text>
+  <text x="36" y="296" font-family="Segoe UI, Arial, sans-serif" font-weight="600" font-size="20" fill="#b0a9e0">Make it one color.</text>
+</svg>

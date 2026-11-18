@@ -1,0 +1,10 @@
+{
+  "categories": [
+    {"slug": "strategy", "name": "Strategy", "icon": "♜", "description": "Think a few moves ahead. Board games and tactical duels that reward planning."},
+    {"slug": "puzzle", "name": "Puzzle", "icon": "◆", "description": "Logic and pattern games you can solve at your own pace."},
+    {"slug": "arcade", "name": "Arcade", "icon": "★", "description": "Fast reflex games built for one more try."},
+    {"slug": "action", "name": "Action", "icon": "⚡", "description": "Quick, intense games about movement and timing."},
+    {"slug": "brain", "name": "Brain", "icon": "✦", "description": "Short challenges that train focus, memory and reasoning."},
+    {"slug": "multiplayer", "name": "Two Player", "icon": "⇄", "description": "Games you can play with a friend on the same device."}
+  ]
+}

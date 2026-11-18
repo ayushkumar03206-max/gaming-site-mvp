@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Pathforge</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<div id="app" class="app">
+  <!-- Menu -->
+  <section class="screen" id="menu" aria-labelledby="menu-title">
+    <div class="menu-card">
+      <h1 id="menu-title" class="logo">PATH<span>FORGE</span></h1>
+      <p class="tag">Race across. Forge blocks. Never seal a path.</p>
+      <div class="opt-group" role="radiogroup" aria-label="Opponent">
+        <span class="opt-label">Opponent</span>
+        <div class="seg">
+          <button type="button" data-opp="easy" role="radio">AI · Easy</button>
+          <button type="button" data-opp="normal" role="radio">AI · Normal</button>
+          <button type="button" data-opp="hard" role="radio">AI · Hard</button>
+          <button type="button" data-opp="human" role="radio">2 Players</button>
+        </div>
+      </div>
+      <div class="opt-group" role="radiogroup" aria-label="Board size">
+        <span class="opt-label">Board</span>
+        <div class="seg">
+          <button type="button" data-size="7" role="radio">7 × 7 · quick</button>
+          <button type="button" data-size="9" role="radio">9 × 9 · deep</button>
+        </div>
+      </div>
+      <button type="button" class="big" id="start">Start match</button>
+      <p class="record" id="record"></p>
+      <details class="rules"><summary>How to play</summary>
+        <ul>
+          <li>Cyan reaches the <b>top row</b>. Magenta reaches the <b>bottom row</b>.</li>
+          <li>Each turn: <b>move</b> one cell, <b>or forge</b> a crystal block on an empty cell.</li>
+          <li>A block can't fully cut off anyone's route.</li>
+          <li>Rival right next to you? <b>Vault</b> straight over them.</li>
+          <li><b>✦ Sparks</b> give +1 block when you step on them.</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- Game -->
+  <section class="screen" id="game" hidden>
+    <div class="hud">
+      <div class="side p0" id="hud0"><span class="dot"></span><span class="who">You</span><span class="stock" aria-label="Blocks left"></span></div>
+      <div class="turn" id="turn" role="status" aria-live="polite"></div>
+      <div class="side p1" id="hud1"><span class="stock" aria-label="Blocks left"></span><span class="who">AI</span><span class="dot"></span></div>
+    </div>
+    <div class="board-wrap"><div class="board" id="board" role="grid" aria-label="Game board"></div></div>
+    <div class="controls">
+      <button type="button" class="ctl mode" id="mode" aria-pressed="false"><span class="ico">◆</span><span class="lbl">Forge</span></button>
+      <button type="button" class="ctl" id="hint" aria-pressed="false"><span class="ico">⇢</span><span class="lbl">Path</span></button>
+      <button type="button" class="ctl" id="undo"><span class="ico">↶</span><span class="lbl">Undo</span></button>
+      <button type="button" class="ctl" id="tomenu"><span class="ico">☰</span><span class="lbl">Menu</span></button>
+    </div>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- Result -->
+  <div class="overlay" id="result" hidden role="dialog" aria-modal="true" aria-labelledby="result-title">
+    <div class="menu-card">
+      <h2 id="result-title"></h2>
+      <p id="result-text" class="tag"></p>
+      <button type="button" class="big" id="again">Play again</button>
+      <button type="button" class="ghost" id="result-menu">Change settings</button>
+    </div>
+  </div>
+  <noscript><p class="msg">Pathforge needs JavaScript enabled.</p></noscript>
+</div>
+<script src="pathforge-core.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

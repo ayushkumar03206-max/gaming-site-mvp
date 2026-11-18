@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "games": [
+    {
+      "id": "gl-001",
+      "slug": "pathforge",
+      "title": "Pathforge",
+      "status": "published",
+      "categories": ["strategy", "puzzle", "multiplayer"],
+      "tags": ["board game", "pathfinding", "vs AI", "two player"],
+      "short_description": "Race your runner across the grid while forging crystal blocks to reroute your rival.",
+      "description": "Pathforge is a turn-based race on a glowing grid. Each turn you choose: step your runner one cell, or forge a crystal block on any free cell to lengthen your rival's route. You can never seal a runner in completely, so every block is a trade-off between slowing them down and saving blocks for later. Grab spark cells along the way to earn extra blocks. Play against an AI with three difficulty levels or challenge a friend on the same device.",
+      "instructions": [
+        "Cyan starts at the bottom and must reach the top row. Magenta starts at the top and must reach the bottom row.",
+        "On your turn either move one cell (up, down, left or right) or forge one crystal block on an empty cell.",
+        "A block can never cut off every route to a goal. Invalid cells are not highlighted.",
+        "If your rival stands directly next to you, you may vault straight over them when the landing cell is free.",
+        "Step on a spark cell to collect it and gain one extra block.",
+        "First runner to reach their goal row wins."
+      ],
+      "controls": {
+        "desktop": "Click a highlighted cell to move. Press F (or the Forge button) to switch to block mode, then click an empty cell. Arrow keys / WASD move your runner. H shows your shortest path. U undoes.",
+        "mobile": "Tap a highlighted cell to move. Tap Forge, then tap an empty cell to place a block."
+      },
+      "entry": "play/pathforge/index.html",
+      "source_dir": "games/pathforge",
+      "thumbnail": "thumb.svg",
+      "orientation": "square",
+      "saves_progress": true,
+      "featured": true,
+      "curated_trending": true,
+      "date_added": "2026-11-17",
+      "rights_id": "rights-pathforge"
+    },
+    {
+      "id": "gl-002",
+      "slug": "neon-dodge",
+      "title": "Neon Dodge",
+      "status": "published",
+      "categories": ["arcade", "action"],
+      "tags": ["reflex", "endless", "high score"],
+      "short_description": "Weave a light-orb through falling bars, spinning shards and laser sweeps. How long can you last?",
+      "description": "Neon Dodge is an endless survival game. Steer your orb around a dark arena while bars rain down, shards spin across the field and laser lines sweep after a short warning. Every few seconds the pace picks up. Collect energy cores for bonus points and chase your personal best, which is saved on your device.",
+      "instructions": [
+        "Move your orb to avoid every obstacle. One hit ends the run.",
+        "Your score grows every second you survive. Energy cores give a +50 bonus.",
+        "A flashing line warns you where a laser is about to fire. Get clear before it turns solid.",
+        "The game speeds up every 15 seconds.",
+        "Press P or Esc to pause at any time."
+      ],
+      "controls": {
+        "desktop": "Arrow keys or WASD to move. P / Esc to pause. Enter or R to restart after a crash.",
+        "mobile": "Touch and drag anywhere. The orb follows your finger's movement, so your finger never covers it."
+      },
+      "entry": "play/neon-dodge/index.html",
+      "source_dir": "games/neon-dodge",
+      "thumbnail": "thumb.svg",
+      "orientation": "landscape",
+      "saves_progress": true,
+      "featured": true,
+      "curated_trending": true,
+      "date_added": "2026-11-17",
+      "rights_id": "rights-neon-dodge"
+    },
+    {
+      "id": "gl-003",
+      "slug": "chroma-shift",
+      "title": "Chroma Shift",
+      "status": "published",
+      "categories": ["puzzle", "brain"],
+      "tags": ["color matching", "levels", "logic"],
+      "short_description": "Tap a tile to shift its color and its neighbors'. Turn the whole board one color before you run out of moves.",
+      "description": "Chroma Shift is a color-matching logic puzzle. Tapping a tile shifts it and the four tiles touching it one step along the color wheel. Your goal is to make every tile the same color within the move limit. Boards grow larger and use more colors as you progress through 30 levels. Your unlocked levels and stars are saved on your device. Every color also has its own symbol, so you can play without telling colors apart.",
+      "instructions": [
+        "Tap a tile: it and its up/down/left/right neighbors move one step along the color wheel shown above the board.",
+        "Make every tile the same color. Any color counts.",
+        "Finish within the move limit to clear the level. Fewer moves earn more stars.",
+        "Stuck? Use a hint. It highlights a useful tile but caps the level at 2 stars.",
+        "Your progress is saved automatically on this device."
+      ],
+      "controls": {
+        "desktop": "Click a tile. Arrow keys move the focus and Enter/Space taps. R restarts the level.",
+        "mobile": "Tap a tile."
+      },
+      "entry": "play/chroma-shift/index.html",
+      "source_dir": "games/chroma-shift",
+      "thumbnail": "thumb.svg",
+      "orientation": "portrait",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": true,
+      "date_added": "2026-11-17",
+      "rights_id": "rights-chroma-shift"
+    }
+  ]
+}

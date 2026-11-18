@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "_comment": "Optional third-party scripts. Nothing here loads until the visitor opts in through the consent banner. Set enabled=true and fill script_src to activate one. Game progress in localStorage is strictly functional and is not listed here.",
+  "trackers": [
+    {
+      "id": "analytics",
+      "category": "analytics",
+      "name": "Privacy-friendly analytics",
+      "purpose": "Count page views and game launches so we know which games people enjoy.",
+      "enabled": false,
+      "script_src": null
+    }
+  ]
+}

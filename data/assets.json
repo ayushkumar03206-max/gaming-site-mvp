@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "records": [
+    {
+      "id": "rights-pathforge",
+      "kind": "game",
+      "title": "Pathforge (code, rules, Canvas/CSS graphics, thumbnail)",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "approved",
+      "reviewed_by": "initial-import",
+      "reviewed_at": "2026-11-17T00:00:00Z",
+      "evidence": "Written from scratch for this project. No third-party code, art, fonts or audio. Rules are an original cell-blocking design; the reference game was used for genre inspiration only."
+    },
+    {
+      "id": "rights-neon-dodge",
+      "kind": "game",
+      "title": "Neon Dodge (code and Canvas-generated graphics, thumbnail)",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "approved",
+      "reviewed_by": "initial-import",
+      "reviewed_at": "2026-11-17T00:00:00Z",
+      "evidence": "Written from scratch for this project. All graphics are drawn at runtime with the Canvas API."
+    },
+    {
+      "id": "rights-chroma-shift",
+      "kind": "game",
+      "title": "Chroma Shift (code, level generator, CSS graphics, thumbnail)",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "approved",
+      "reviewed_by": "initial-import",
+      "reviewed_at": "2026-11-17T00:00:00Z",
+      "evidence": "Written from scratch for this project. Levels are generated procedurally from a seeded random generator."
+    },
+    {
+      "id": "rights-site-ui",
+      "kind": "site",
+      "title": "Website templates, CSS, icons and logo mark",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "approved",
+      "reviewed_by": "initial-import",
+      "reviewed_at": "2026-11-17T00:00:00Z",
+      "evidence": "Original templates and inline SVG. Uses the visitor's system fonts, so no web fonts are downloaded or licensed."
+    }
+  ]
+}

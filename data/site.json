@@ -1,0 +1,10 @@
+{
+  "name": "Gridlight Arcade",
+  "tagline": "Original browser games. No downloads, no sign-up.",
+  "base_url": "https://example.com",
+  "base_path": "/",
+  "contact_email": "hello@example.com",
+  "operator": "Gridlight Arcade",
+  "default_locale": "en",
+  "new_game_window_days": 60
+}

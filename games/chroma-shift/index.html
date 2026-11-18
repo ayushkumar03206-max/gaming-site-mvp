@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Chroma Shift</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<div class="app">
+  <section id="home" class="screen">
+    <div class="panel">
+      <h1 class="logo">CHROMA<span>SHIFT</span></h1>
+      <p class="muted">Tap a tile to shift it and its neighbors. Make the board one color.</p>
+      <p class="total" id="total"></p>
+      <button type="button" class="big" id="continueBtn">Play</button>
+      <h2 class="sub">Levels</h2>
+      <div class="levels" id="levels" aria-label="Choose level"></div>
+      <button type="button" class="linkbtn" id="resetProgress">Reset progress</button>
+    </div>
+  </section>
+
+  <section id="play" class="screen" hidden>
+    <div class="top">
+      <button type="button" class="icon" id="backBtn" aria-label="Levels">☰</button>
+      <div class="info"><strong id="lvl">Level 1</strong><span id="moves" role="status" aria-live="polite">0 / 3 moves</span></div>
+      <button type="button" class="icon" id="restartBtn" aria-label="Restart level">↻</button>
+    </div>
+    <div class="wheel" id="wheel" aria-label="Color order"></div>
+    <div class="board" id="board" role="grid" aria-label="Puzzle board"></div>
+    <div class="actions">
+      <button type="button" class="ghost" id="hintBtn">💡 Hint</button>
+    </div>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </section>
+
+  <div class="overlay" id="result" hidden role="dialog" aria-modal="true" aria-labelledby="resTitle">
+    <div class="panel">
+      <h2 id="resTitle"></h2>
+      <p class="stars" id="resStars" aria-hidden="true"></p>
+      <p class="muted" id="resText"></p>
+      <button type="button" class="big" id="resPrimary"></button>
+      <button type="button" class="ghost" id="resSecondary"></button>
+    </div>
+  </div>
+  <noscript><p>Chroma Shift needs JavaScript enabled.</p></noscript>
+</div>
+<script src="chroma-core.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
