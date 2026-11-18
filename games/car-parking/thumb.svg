@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#2a2e38"/>
+  <g stroke="#fff" stroke-opacity=".5" stroke-width="4"><path d="M120 40v130M220 40v130M320 40v130M420 40v130M520 40v130"/></g>
+  <rect x="324" y="44" width="92" height="122" fill="#3ddc84" fill-opacity=".25" stroke="#3ddc84" stroke-width="4"/>
+  <text x="370" y="118" text-anchor="middle" font-family="Segoe UI, Arial" font-weight="900" font-size="40" fill="#3ddc84" fill-opacity=".7">P</text>
+  <g fill="#5a6478"><rect x="140" y="55" width="60" height="100" rx="12"/><rect x="240" y="55" width="60" height="100" rx="12"/><rect x="440" y="55" width="60" height="100" rx="12"/></g>
+  <g transform="translate(330 260) rotate(-25)"><rect x="-30" y="-52" width="60" height="104" rx="12" fill="#ffb020"/><rect x="-24" y="-30" width="48" height="20" rx="4" fill="#141c2d" fill-opacity=".85"/><rect x="-24" y="28" width="48" height="14" rx="4" fill="#141c2d" fill-opacity=".85"/></g>
+  <path d="M360 200 q 10 -20 10 -40" stroke="#ffb020" stroke-width="4" fill="none" stroke-dasharray="8 8"/>
+  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#ffb020" letter-spacing="2">CAR<tspan fill="#3ddc84"> PARKING</tspan></text>
+</svg>

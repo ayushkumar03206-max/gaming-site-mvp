@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Car Parking Challenge</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<style>
+:root { --accent: #ffb020; --accent2: #3ddc84; --bg: #0b0d1a; }
+.panel { width: min(460px, 100%); }
+.lvgrp { text-align: left; }
+.lvrow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.lv { border: 1px solid var(--line); border-radius: 12px; background: #151a3a; padding: 6px; display: grid; gap: 2px; text-align: center; min-height: 64px; }
+.lv b { font-size: 1.1rem; } .lv span { font-size: .72rem; color: var(--muted); } .lv i { font-style: normal; color: var(--gold); font-size: .8rem; }
+.stars { font-size: 2rem; color: var(--gold) !important; margin: 0; letter-spacing: .2em; }
+.touch-pad button { width: 64px; height: 64px; }
+</style>
+</head>
+<body>
+<div class="stage"><canvas id="c" tabindex="-1" role="img" aria-label="Parking lot"></canvas></div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<div class="hud" id="hud" hidden>
+  <span class="pill" id="hLevel">1</span>
+  <span class="pill"><small>TIME</small><span id="hTime">0.0</span></span>
+  <span class="pill"><small>PAR</small><span id="hPar">0</span></span>
+  <span class="grow"></span>
+  <button type="button" class="icon-btn" data-mute></button>
+  <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
+</div>
+<div class="touch-pad" id="pad" hidden>
+  <div class="grp"><button type="button" data-hold="left" aria-label="Steer left">↶</button><button type="button" data-hold="right" aria-label="Steer right">↷</button></div>
+  <div class="grp"><button type="button" data-hold="rev" aria-label="Reverse">R</button><button type="button" data-hold="gas" aria-label="Drive forward">▲</button></div>
+</div>
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">CAR<span> PARKING</span></h1>
+    <p>Drive into the green bay, line up with it and stop. Don't touch walls or other cars. Beat the par time for 3 stars.</p>
+    <div id="levels"></div>
+    <p class="hint"><span class="kbd-only"><span class="kb">↑</span> drive · <span class="kb">↓</span> reverse · <span class="kb">←</span><span class="kb">→</span> steer · <span class="kb">Space</span> brake · <span class="kb">R</span> retry</span><span class="touch">Left buttons steer · right buttons drive forward / reverse</span></p>
+  </div>
+</div>
+<div class="overlay" id="paused" hidden>
+  <div class="panel"><h2>Paused</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="restartBtn">Restart level</button>
+    <button type="button" class="ghost" id="menuBtn">Level select</button></div>
+</div>
+<div class="overlay" id="result" hidden role="dialog" aria-labelledby="resTitle">
+  <div class="panel">
+    <h2 id="resTitle">Parked!</h2>
+    <p class="stars" id="resStars"></p>
+    <p id="resMsg"></p>
+    <button type="button" class="big" id="nextBtn">Next level</button>
+    <button type="button" class="ghost" id="retryBtn">Retry</button>
+    <button type="button" class="ghost" id="menuBtn2">Level select</button>
+  </div>
+</div>
+<noscript><p>Car Parking Challenge needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="parking-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

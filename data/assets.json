@@ -210,6 +210,21 @@
       "reviewed_by": null,
       "reviewed_at": null,
       "evidence": "Written from scratch for this project. Bubble shooting is a common puzzle genre; the implementation, rules tuning and visuals are original. No third-party code, art, fonts or audio."
+    },
+    {
+      "id": "rights-car-parking",
+      "kind": "game",
+      "title": "Car Parking Challenge (code, level layouts, Canvas-drawn graphics, synthesised sounds, thumbnail)",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "pending",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "evidence": "Written from scratch for this project. Level layouts are original. Graphics are drawn with the Canvas API and sounds generated with the Web Audio API. No third-party code, art, fonts or audio."
     }
   ]
 }

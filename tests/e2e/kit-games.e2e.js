@@ -106,6 +106,18 @@ const INTERACT = {
     const st = await frame.evaluate(() => GLDebug.state());
     assert.ok(st.angle < 0, 'aimed left: ' + JSON.stringify(st));
   },
+  'car-parking': async (page, frame) => {
+    // level 1: the bay is straight ahead. Drive forward with the keyboard, then brake and wait.
+    await page.keyboard.down('ArrowUp');
+    // brake when the predicted stopping point (v^2 / 2*46) reaches the bay centre (y = 40)
+    await frame.waitForFunction(() => { const s = GLDebug.state(); return s.y - s.speed * s.speed / 92 < 40.5 || s.state !== 'driving'; }, null, { timeout: 8000, polling: 'raf' });
+    await page.keyboard.up('ArrowUp');
+    await page.keyboard.down('Space');
+    await frame.waitForFunction(() => GLDebug.state().state !== 'driving', null, { timeout: 6000 });
+    await page.keyboard.up('Space');
+    const st = await frame.evaluate(() => GLDebug.state());
+    assert.strictEqual(st.state, 'parked', JSON.stringify(st));
+  },
   'fruit-slice': async (page, frame) => {
     const b = await frameBox(page);
     for (let i = 0; i < 30; i++) {

@@ -631,6 +631,55 @@
       "orientation": "portrait",
       "date_added": "2026-11-18",
       "multiplayer_model": "score-competition"
+    },
+    {
+      "id": "gl-014",
+      "status": "published",
+      "entry": "play/car-parking/index.html",
+      "source_dir": "games/car-parking",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "rights_id": "rights-car-parking",
+      "slug": "car-parking",
+      "title": "Car Parking Challenge",
+      "categories": [
+        "simulation",
+        "skill"
+      ],
+      "tags": [
+        "driving",
+        "parking",
+        "steering",
+        "levels",
+        "stars"
+      ],
+      "short_description": "Steer, reverse and squeeze into tight bays across 9 parking levels without touching a thing.",
+      "description": "Car Parking Challenge is a top-down driving puzzle. Your car steers like a real one: the front wheels turn, so you need room to swing around, and reversing changes everything. Drive into the green bay, line up with it and come to a stop. Touch a wall or another car and the attempt is over. Nine levels go from a simple straight-in bay to parallel parking and reversing into tight gaps; beat the par time on each for three stars. Every level has been checked by an automatic solver to make sure it can be completed.",
+      "instructions": [
+        "Drive into the green bay marked P, line the car up with it and stop. Hold still for a moment to finish.",
+        "The car turns with its front wheels, like a real car. Use reverse to straighten up.",
+        "Touching a wall, a barrier or another car fails the level. Retry instantly with R or the Retry button.",
+        "Finish at or under the par time for 3 stars. Your best stars on each level are saved on this device.",
+        "Levels are grouped into Easy, Medium and Hard. You can play any level."
+      ],
+      "controls": {
+        "desktop": "Up arrow / W drive forward, Down arrow / S reverse, Left/Right (A/D) steer, Space brakes, R retries, P / Esc pauses.",
+        "mobile": "Hold the left buttons to steer, the right buttons to drive forward (▲) or reverse (R)."
+      },
+      "orientation": "portrait",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "shared-challenge"
     }
   ]
 }
