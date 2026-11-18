@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#0b0d1a"/>
+  <g fill="#151a3a"><rect x="170" y="20" width="96" height="96" rx="14"/><rect x="272" y="20" width="96" height="96" rx="14"/><rect x="374" y="20" width="96" height="96" rx="14"/>
+    <rect x="170" y="122" width="96" height="96" rx="14"/><rect x="272" y="122" width="96" height="96" rx="14" fill="#283a2f"/><rect x="374" y="122" width="96" height="96" rx="14"/>
+    <rect x="170" y="224" width="96" height="96" rx="14" fill="#283a2f"/><rect x="272" y="224" width="96" height="96" rx="14"/><rect x="374" y="224" width="96" height="96" rx="14"/></g>
+  <rect x="374" y="20" width="96" height="96" rx="14" fill="#283a2f"/>
+  <g stroke="#29f0ff" stroke-width="14" stroke-linecap="round"><path d="M398 44l48 48M446 44l-48 48"/><path d="M296 146l48 48M344 146l-48 48"/><path d="M194 248l48 48M242 248l-48 48"/></g>
+  <g fill="none" stroke="#ff3fb4" stroke-width="13"><circle cx="218" cy="68" r="26"/><circle cx="422" cy="272" r="26"/><circle cx="320" cy="68" r="26"/></g>
+  <path d="M218 272 L422 68" stroke="#b6ff3b" stroke-width="6" stroke-linecap="round" stroke-opacity=".8"/>
+  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#29f0ff" letter-spacing="2">TIC TAC<tspan fill="#ff3fb4"> TOE</tspan></text>
+</svg>

@@ -60,6 +60,22 @@ const INTERACT = {
     const st = await frame.evaluate(() => GLDebug.state());
     assert.ok(st.over && st.matched === st.pairs, JSON.stringify(st));
   },
+  'tic-tac-toe': async (page, frame) => {
+    // vs computer (medium by default): play the first free cell until the round ends
+    for (let i = 0; i < 6; i++) {
+      const st = await frame.evaluate(() => GLDebug.state());
+      if (st.winner) break;
+      await frame.waitForFunction(() => { const s = GLDebug.state(); return s.winner || s.turn === s.human; });
+      const s2 = await frame.evaluate(() => GLDebug.state());
+      if (s2.winner) break;
+      await frame.click(`.cell[data-i="${s2.board.indexOf(null)}"]`);
+    }
+    await frame.waitForFunction(() => !!GLDebug.state().winner, null, { timeout: 5000 });
+    const end = await frame.evaluate(() => GLDebug.state());
+    assert.strictEqual(end.scores.X + end.scores.O + end.scores.D, 1, JSON.stringify(end));
+    await frame.click('#nextBtn');
+    assert.strictEqual((await frame.evaluate(() => GLDebug.state())).winner, null);
+  },
   'fruit-slice': async (page, frame) => {
     const b = await frameBox(page);
     for (let i = 0; i < 30; i++) {

@@ -390,6 +390,55 @@
       "orientation": "square",
       "date_added": "2026-11-18",
       "multiplayer_model": "turn-based"
+    },
+    {
+      "id": "gl-009",
+      "status": "published",
+      "entry": "play/tic-tac-toe/index.html",
+      "source_dir": "games/tic-tac-toe",
+      "thumbnail": "thumb.svg",
+      "saves_progress": false,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": true,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 2
+      },
+      "rights_id": "rights-tic-tac-toe",
+      "slug": "tic-tac-toe",
+      "title": "Tic Tac Toe",
+      "categories": [
+        "board",
+        "strategy",
+        "multiplayer"
+      ],
+      "tags": [
+        "noughts and crosses",
+        "vs AI",
+        "two player",
+        "classic"
+      ],
+      "short_description": "Three in a row against a friend or a computer opponent with easy, medium and an unbeatable hard mode.",
+      "description": "The classic 3×3 game of noughts and crosses. Play a friend on the same device or take on the computer: easy makes plenty of mistakes, medium always takes a win and blocks yours, and hard plays perfectly and cannot be beaten. The first move alternates every round and a scoreboard keeps track of wins and draws for the session.",
+      "instructions": [
+        "Players take turns placing X and O on the 3×3 grid.",
+        "The first to get three in a row (across, down or diagonally) wins the round.",
+        "If all nine squares fill up with no line, the round is a draw.",
+        "Who moves first alternates every round. The scoreboard counts wins and draws until you reset it.",
+        "Against the computer, pick Easy, Medium or Hard. Hard never loses: a draw is a great result."
+      ],
+      "controls": {
+        "desktop": "Click a square, or move with the arrow keys and press Enter/Space. Esc opens the menu.",
+        "mobile": "Tap a square."
+      },
+      "orientation": "square",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "turn-based"
     }
   ]
 }

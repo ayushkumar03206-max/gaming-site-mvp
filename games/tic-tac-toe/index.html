@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Tic Tac Toe</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<main class="app" id="app" hidden>
+  <div class="bar">
+    <span class="grow"></span>
+    <button type="button" class="icon-btn" data-mute></button>
+    <button type="button" class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+  </div>
+  <div class="score" aria-label="Scoreboard">
+    <div class="sx"><b id="sX">0</b><span id="nX">X</span></div>
+    <div class="sd"><b id="sD">0</b><span>Draws</span></div>
+    <div class="so"><b id="sO">0</b><span id="nO">O</span></div>
+  </div>
+  <p class="status" id="status">X to move</p>
+  <div class="board" id="board" role="grid" aria-label="Tic Tac Toe board"></div>
+  <div class="row"><button type="button" class="big" id="nextBtn" hidden>Next round</button></div>
+</main>
+
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">TIC TAC<span> TOE</span></h1>
+    <div><p class="label">Opponent</p>
+      <div class="seg" role="group" aria-label="Opponent">
+        <button type="button" data-opp="ai" aria-pressed="true">Computer</button>
+        <button type="button" data-opp="local" aria-pressed="false">Friend, same device</button>
+      </div></div>
+    <div id="aiOpts">
+      <p class="label">Difficulty</p>
+      <div class="seg" role="group" aria-label="Difficulty">
+        <button type="button" data-level="easy" aria-pressed="false">Easy</button>
+        <button type="button" data-level="medium" aria-pressed="true">Medium</button>
+        <button type="button" data-level="hard" aria-pressed="false">Hard</button>
+      </div>
+      <p class="label" style="margin-top:10px">You play</p>
+      <div class="seg" role="group" aria-label="Your mark">
+        <button type="button" data-mark="X" aria-pressed="true">X</button>
+        <button type="button" data-mark="O" aria-pressed="false">O</button>
+      </div>
+    </div>
+    <button type="button" class="big" id="playBtn" data-start>Start</button>
+    <p class="hint">Get three in a row. The first move alternates each round.</p>
+  </div>
+</div>
+<div class="overlay" id="menu" hidden>
+  <div class="panel"><h2>Menu</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="resetBtn">Reset scores</button>
+    <button type="button" class="ghost" id="toTitleBtn">Change opponent</button></div>
+</div>
+<noscript><p>Tic Tac Toe needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="ttt-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
