@@ -46,6 +46,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .cell.block::before { content: ""; width: 38%; height: 38%; transform: rotate(45deg); background: rgba(255, 255, 255, .35); border-radius: 3px; }
 .cell.target { background: rgba(182, 255, 59, .18); box-shadow: 0 0 0 2px rgba(182, 255, 59, .65) inset; }
 .cell.target:hover { background: rgba(182, 255, 59, .32); }
+.forge .cell.can-block { box-shadow: 0 0 0 2px rgba(123, 108, 255, .55) inset; background: rgba(123, 108, 255, .12); }
+.forge .cell:not(.can-block):not(.block) { opacity: .55; }
 .forge .cell.can-block:hover, .cell.cursor { background: rgba(123, 108, 255, .45); box-shadow: 0 0 0 2px var(--block) inset; }
 .cell.path { box-shadow: 0 0 0 2px rgba(255, 255, 255, .45) inset; }
 .cell.path::before { content: ""; width: 18%; height: 18%; border-radius: 50%; background: rgba(255, 255, 255, .7); }

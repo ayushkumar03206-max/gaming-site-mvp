@@ -85,6 +85,35 @@ class BuildTests(unittest.TestCase):
         problems = check_site.check(self.out)
         self.assertEqual(problems, [], "\n".join(problems))
 
+    def test_placeholder_contact_email_is_never_rendered(self):
+        # site.json ships with hello@example.com until the owner sets a real address
+        for rel in ("contact/index.html", "privacy/index.html", "terms/index.html", "licensing/index.html"):
+            html = self.read(rel)
+            self.assertNotIn("example.com", html, rel)
+            self.assertIn("contact email not yet published", html, rel)
+
+    def test_real_contact_email_is_linked(self):
+        site = {"contact_email": "owner@realdomain.test", "base_url": "https://x.test"}
+        self.assertEqual(build_static_site.config_warnings(site), [])
+        self.assertIn('href="mailto:owner@realdomain.test"', build_static_site.contact_html(site))
+        self.assertTrue(build_static_site.is_placeholder_email("hello@example.com"))
+        self.assertTrue(build_static_site.is_placeholder_email(""))
+
+    def test_player_has_error_states_and_no_fake_ready(self):
+        page = self.read("games/neon-dodge/index.html")
+        for marker in ('data-state="loading"', 'data-state="error"', "data-retry", "data-notice", "data-exit-fs"):
+            self.assertIn(marker, page)
+        js = self.read("assets/player.js")
+        self.assertIn("LOAD_GRACE", js)
+        self.assertIn("gl:ready", js)
+
+    def test_games_announce_ready_and_errors(self):
+        for slug in ("pathforge", "neon-dodge", "chroma-shift"):
+            js = (self.out / "play" / slug / "game.js").read_text(encoding="utf-8")
+            self.assertIn("gl:ready", js, slug)
+            self.assertIn("gl:error", js, slug)
+            self.assertIn("gl:restart", js, slug)
+
     def test_sitemap_lists_game_pages(self):
         sm = self.read("sitemap.xml")
         self.assertIn("/games/pathforge/", sm)

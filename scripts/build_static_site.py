@@ -174,6 +174,32 @@ def footer(ctx: Ctx, root: str, extra_js: str = "") -> str:
 """
 
 
+PLACEHOLDER_DOMAINS = ("example.com", "example.org", "example.net")
+
+
+def is_placeholder_email(addr: str | None) -> bool:
+    addr = (addr or "").strip().lower()
+    return not addr or "@" not in addr or addr.split("@")[-1] in PLACEHOLDER_DOMAINS
+
+
+def config_warnings(site: dict) -> list[str]:
+    """Placeholder values that must be replaced by the owner before a public launch."""
+    out = []
+    if is_placeholder_email(site.get("contact_email")):
+        out.append("data/site.json contact_email is a placeholder; the site shows 'contact email not yet published' instead of a mailto link")
+    if any(d in (site.get("base_url") or "") for d in PLACEHOLDER_DOMAINS):
+        out.append("data/site.json base_url is a placeholder; canonical/OG/sitemap URLs will be wrong unless --base-url is passed")
+    return out
+
+
+def contact_html(site: dict) -> str:
+    """Never render a fake address: placeholder emails become an explicit notice."""
+    addr = site.get("contact_email")
+    if is_placeholder_email(addr):
+        return '<span class="muted">contact email not yet published</span>'
+    return f'<a href="mailto:{e(addr)}">{e(addr)}</a>'
+
+
 def cat_name(ctx: Ctx, slug: str) -> str:
     c = ctx.cat_by_slug.get(slug)
     return c["name"] if c else slug.title()
@@ -311,8 +337,8 @@ def build_home(ctx: Ctx) -> None:
 
 def build_all_games(ctx: Ctx) -> None:
     root = "../"
-    chips = '<button type="button" class="chip is-on" data-filter="all">All</button>' + "".join(
-        f'<button type="button" class="chip" data-filter="{c["slug"]}">{e(c["name"])}</button>'
+    chips = '<button type="button" class="chip is-on" data-filter="all" aria-pressed="true">All</button>' + "".join(
+        f'<button type="button" class="chip" data-filter="{c["slug"]}" aria-pressed="false">{e(c["name"])}</button>'
         for c in ctx.categories if ctx.games_in(c["slug"]))
     cards = "".join(card(ctx, g, root).replace('<article class="card">',
                     f'<article class="card" data-cats="{" ".join(g["categories"])}">', 1) for g in ctx.games)
@@ -375,13 +401,15 @@ def build_game_pages(ctx: Ctx) -> None:
     </div>
     <div class="player-state" data-state="loading" hidden><div class="spinner" aria-hidden="true"></div><p role="status">Loading {e(g['title'])}…</p></div>
     <div class="player-state" data-state="error" hidden><p role="alert"><strong>The game didn't load.</strong><br><span data-error-msg>Check your connection and try again.</span></p><button type="button" class="btn btn-primary" data-retry>Try again</button></div>
+    <div class="player-notice" data-notice hidden role="alert"><span data-notice-msg></span><button type="button" class="btn btn-primary btn-sm" data-notice-restart>Restart</button><button type="button" class="btn btn-ghost btn-sm" data-notice-close aria-label="Dismiss">✕</button></div>
+    <button type="button" class="exit-fs btn btn-ghost btn-sm" data-exit-fs hidden>✕ Exit fullscreen</button>
   </div>
   <div class="player-bar">
     <div class="pb-title"><img src="{root}play/{slug}/{g['thumbnail']}" alt="" width="40" height="40"><span><strong>{e(g['title'])}</strong><span class="muted small">{e(cat_name(ctx, g['categories'][0]))}</span></span></div>
     <div class="pb-actions">
       <button type="button" class="btn btn-ghost btn-sm" data-restart disabled>↻ Restart</button>
       <button type="button" class="btn btn-ghost btn-sm" data-share>⤴ Share</button>
-      <button type="button" class="btn btn-primary btn-sm" data-fullscreen>⛶ Fullscreen</button>
+      <button type="button" class="btn btn-primary btn-sm" data-fullscreen aria-pressed="false">⛶ Fullscreen</button>
     </div>
   </div>
   <p class="share-msg muted small" data-share-msg role="status" aria-live="polite"></p>
@@ -403,7 +431,7 @@ def build_game_pages(ctx: Ctx) -> None:
       <dt>Progress</dt><dd>{'Saved on this device' if g.get('saves_progress') else 'Not saved'}</dd>
       <dt>Added</dt><dd><time datetime="{e(g.get('date_added', ''))}">{e(g.get('date_added', ''))}</time></dd>
       <dt>Made by</dt><dd>{e(rec.get('owner', ctx.site['operator']))}</dd>
-      <dt>Rights</dt><dd><a href="{root}licensing/index.html#{e(g['rights_id'])}">Original work · reviewed</a></dd>
+      <dt>Rights</dt><dd><a href="{root}licensing/index.html#{e(g['rights_id'])}">Rights record ({e(rec.get('status', 'unknown'))})</a></dd>
     </dl>
   </aside>
 </div></section>
@@ -438,7 +466,7 @@ def text_page(ctx: Ctx, slug: str, title: str, desc: str, inner: str, active="")
 
 def build_info_pages(ctx: Ctx) -> None:
     s = ctx.site
-    email = e(s["contact_email"])
+    mail = contact_html(s)
     updated = "2026-11-17"
     text_page(ctx, "about", "About us", f"Who runs {s['name']} and how we build games.", f"""
 <p class="lead">{e(s['name'])} is an independent home for original browser games.</p>
@@ -456,7 +484,7 @@ def build_info_pages(ctx: Ctx) -> None:
 <li><strong>Rights or takedown requests:</strong> include the work concerned, proof of ownership, and the page URL. We act on these first.</li>
 <li><strong>Privacy requests:</strong> see the <a href="../privacy/index.html">Privacy policy</a>.</li>
 <li><strong>Partnerships:</strong> game licensing and distribution.</li></ul>
-<p class="callout">Email: <a href="mailto:{email}">{email}</a></p>
+<p class="callout">Email: {mail}</p>
 <p class="muted small">We don't run a contact form, so we don't store your message on this website.</p>""")
 
     text_page(ctx, "privacy", "Privacy policy", "What data this site stores and why.", f"""
@@ -472,7 +500,7 @@ def build_info_pages(ctx: Ctx) -> None:
 <p>Optional analytics scripts are only loaded if you opt in through <button type="button" class="linklike" data-consent-open>Privacy settings</button>. At the moment no optional scripts are enabled.</p>
 <h2>Server logs</h2><p>Our hosting provider may keep standard access logs (IP address, time, page requested) for security and reliability.</p>
 <h2>Children</h2><p>Our games are designed to be suitable for a general audience. We don't knowingly collect personal data from anyone.</p>
-<h2>Contact</h2><p>Questions: <a href="mailto:{email}">{email}</a>.</p>""")
+<h2>Contact</h2><p>Questions: {mail}.</p>""")
 
     text_page(ctx, "terms", "Terms & conditions", "Rules for using this website.", f"""
 <p class="muted">Last updated {updated}. This is a template. Have it reviewed before launch.</p>
@@ -481,7 +509,7 @@ def build_info_pages(ctx: Ctx) -> None:
 <h2>No warranty</h2><p>Games are provided “as is”. We work hard to keep them bug-free but can't guarantee uninterrupted availability. Locally saved progress can be lost if you clear your browser data.</p>
 <h2>Limitation of liability</h2><p>To the extent permitted by law, we are not liable for indirect losses arising from use of the site.</p>
 <h2>Changes</h2><p>We may update these terms. The date above shows the latest version.</p>
-<h2>Contact</h2><p><a href="mailto:{email}">{email}</a></p>""")
+<h2>Contact</h2><p>{mail}</p>""")
 
     rows = []
     for g in ctx.games:
@@ -496,7 +524,7 @@ def build_info_pages(ctx: Ctx) -> None:
 <div class="table-scroll"><table><thead><tr><th>Game</th><th>Owner</th><th>Origin</th><th>Licence</th><th>Third-party parts</th><th>Status</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table></div>
 <h2>Fonts &amp; libraries</h2><p>The site uses your device's system fonts and no third-party JavaScript libraries.</p>
-<h2>Rights concerns</h2><p>If you believe something here infringes your rights, email <a href="mailto:{email}">{email}</a> with details. We review takedown requests promptly and can withdraw a game from the site within one build.</p>""")
+<h2>Rights concerns</h2><p>If you believe something here infringes your rights, contact us ({mail}) with details. We review takedown requests promptly and can withdraw a game from the site within one build.</p>""")
 
     faqs = [
         ("Are the games free?", "Yes. Every game is free to play in your browser."),
@@ -585,6 +613,9 @@ def build(out: Path, data_dir: Path = None, strict: bool = False, today: date | 
             print(f"WARNING: {err}")
         if strict:
             raise SystemExit("Build stopped by rights gate (--strict).")
+    ctx.warnings = config_warnings(ctx.site)
+    for w in ctx.warnings:
+        print("CONFIG WARNING: " + w)
     if out.exists():
         shutil.rmtree(out)
     out.mkdir(parents=True)

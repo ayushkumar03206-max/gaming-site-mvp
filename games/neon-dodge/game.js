@@ -27,7 +27,7 @@
 
   function reset() {
     player = { x: W / 2, y: H * 0.75, vx: 0, vy: 0, r: 2.4 * U, tx: null, ty: null };
-    things = []; particles = []; t = 0; bonus = 0; shake = 0;
+    things = []; particles = []; t = 0; bonus = 0; shake = 0; lastLevel = 1;
     timers = { bar: 0.6, shard: 2, laser: 3, core: 2.5 };
   }
   function makeStars() {
@@ -91,9 +91,9 @@
 
   // ---------------- flow ----------------
   function show(id) { ['title', 'paused', 'over'].forEach(function (x) { $(x).hidden = x !== id; }); $('pauseBtn').hidden = id !== null; }
-  function start() { reset(); mode = 'play'; show(null); keys = {}; last = performance.now(); }
+  function start() { reset(); mode = 'play'; show(null); keys = {}; drag = null; last = performance.now(); try { canvas.focus(); } catch (e) { /* ignore */ } }
   function togglePause() {
-    if (mode === 'play') { mode = 'paused'; show('paused'); $('resumeBtn').focus(); }
+    if (mode === 'play') { mode = 'paused'; keys = {}; drag = null; if (player) player.tx = null; show('paused'); $('resumeBtn').focus(); }
     else if (mode === 'paused') { mode = 'play'; show(null); last = performance.now(); }
   }
   function gameOver() {
@@ -102,7 +102,10 @@
     if (isBest) { best = s; try { localStorage.setItem(BEST_KEY, String(best)); } catch (e) { /* ignore */ } }
     $('finalScore').textContent = s;
     $('overTitle').textContent = isBest && s > 0 ? 'New best!' : 'Crashed!';
+    announce('Crashed. Score ' + s + '. Best ' + best + '.');
     $('bestOver').textContent = 'Best: ' + best;
+    $('bestTitle').textContent = 'Your best: ' + best;
+    keys = {}; drag = null;
     setTimeout(function () { if (mode === 'over') { show('over'); $('againBtn').focus(); } }, 650);
   }
   $('playBtn').addEventListener('click', start);
@@ -115,11 +118,16 @@
   window.addEventListener('message', function (ev) { if (ev.data && ev.data.type === 'gl:restart') start(); });
 
   // ---------------- update ----------------
+  var lastLevel = 1;
+  function announce(txt) { var lv = $('live'); if (lv) lv.textContent = txt; }
   function update(dt) {
     var d = L.difficulty(t);
     t += dt;
+    if (d.level !== lastLevel) {
+      lastLevel = d.level;
+      if (d.level > 1) { floatText('LEVEL ' + d.level, W / 2, H * 0.3); announce('Level ' + d.level); }
+    }
     // player
-    var acc = 70 * U;
     if (player.tx != null) {
       player.x += (player.tx - player.x) * Math.min(1, dt * 18);
       player.y += (player.ty - player.y) * Math.min(1, dt * 18);
@@ -133,7 +141,6 @@
     }
     player.x = L.clamp(player.x, player.r, W - player.r);
     player.y = L.clamp(player.y, player.r, H - player.r);
-    void acc;
 
     // spawn
     timers.bar -= dt; if (timers.bar <= 0) { spawnBar(d); timers.bar = d.barEvery * rand(0.7, 1.3); }
@@ -167,7 +174,8 @@
   }
   var floats = [];
   function floatText(txt, x, y) { floats.push({ t: txt, x: x, y: y, age: 0 }); }
-  function crash() { burst(player.x, player.y, '#29f0ff', 40); burst(player.x, player.y, '#ff3fb4', 30); shake = 0.35; gameOver(); }
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function crash() { burst(player.x, player.y, '#29f0ff', reduceMotion ? 12 : 40); burst(player.x, player.y, '#ff3fb4', reduceMotion ? 8 : 30); shake = reduceMotion ? 0.26 : 0.35; gameOver(); }
 
   function updateFx(dt) {
     for (var i = particles.length - 1; i >= 0; i--) {
@@ -181,7 +189,7 @@
   // ---------------- draw ----------------
   function draw() {
     ctx.save();
-    if (shake > 0) ctx.translate(rand(-1, 1) * U * shake * 4, rand(-1, 1) * U * shake * 4);
+    if (shake > 0 && !reduceMotion) ctx.translate(rand(-1, 1) * U * shake * 4, rand(-1, 1) * U * shake * 4);
     var g = ctx.createLinearGradient(0, 0, 0, H);
     g.addColorStop(0, '#0b0d22'); g.addColorStop(1, '#05060e');
     ctx.fillStyle = g; ctx.fillRect(-20, -20, W + 40, H + 40);
@@ -280,5 +288,11 @@
   $('bestTitle').textContent = best ? 'Your best: ' + best : '';
   show('title'); $('pauseBtn').hidden = true;
   requestAnimationFrame(frame);
+
+  // Read-only state + a crash trigger for automated QA (tests/e2e). Does not affect normal play.
+  window.NeonDodgeDebug = {
+    state: function () { return { mode: mode, t: t, score: L.score(t, bonus), x: player.x, y: player.y, things: things.length, level: L.difficulty(t).level }; },
+    crash: function () { if (mode === 'play') crash(); }
+  };
   post({ type: 'gl:ready' });
 })();

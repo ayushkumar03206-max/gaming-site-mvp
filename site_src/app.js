@@ -9,10 +9,22 @@
 
   // Mobile menu
   var btn = document.querySelector('.menu-btn'), nav = document.getElementById('main-nav');
-  if (btn && nav) btn.addEventListener('click', function () {
-    var open = nav.classList.toggle('open');
+  function setMenu(open) {
+    nav.classList.toggle('open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
+  }
+  if (btn && nav) {
+    btn.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); btn.focus(); }
+    });
+    document.addEventListener('click', function (ev) {
+      if (nav.classList.contains('open') && !nav.contains(ev.target) && !btn.contains(ev.target)) setMenu(false);
+    });
+  }
+  // Keep the header search box filled on the search page
+  var hq = document.getElementById('q'), qv = new URLSearchParams(location.search).get('q');
+  if (hq && qv && document.querySelector('[data-search-results]')) hq.value = qv;
 
   // Card rendering for client-side lists (mirrors the server-side card)
   function card(g) {

@@ -56,7 +56,17 @@ def is_external(url: str) -> bool:
     return url.startswith(("http://", "https://", "//", "mailto:", "tel:", "data:", "javascript:")) or url.startswith("#")
 
 
-def check(out: Path, base_path: str = "/") -> list[str]:
+def default_base_path() -> str:
+    import json
+    try:
+        bp = json.loads((ROOT / "data" / "site.json").read_text(encoding="utf-8")).get("base_path", "/")
+    except (OSError, ValueError):
+        bp = "/"
+    return bp if bp.endswith("/") else bp + "/"
+
+
+def check(out: Path, base_path: str | None = None) -> list[str]:
+    base_path = base_path or default_base_path()
     problems: list[str] = []
     if not out.exists():
         return [f"{out} does not exist; build the site first"]
@@ -102,8 +112,10 @@ def check(out: Path, base_path: str = "/") -> list[str]:
 def main(argv=None) -> int:
     argv = sys.argv[1:] if argv is None else argv
     out = Path(argv[0]) if argv else ROOT / "dist"
-    base_path = argv[1] if len(argv) > 1 else "/"
-    problems = check(out, base_path if base_path.endswith("/") else base_path + "/")
+    base_path = argv[1] if len(argv) > 1 else None
+    if base_path and not base_path.endswith("/"):
+        base_path += "/"
+    problems = check(out, base_path)
     pages = len([p for p in out.rglob("*.html") if not p.relative_to(out).as_posix().startswith("play/")]) if out.exists() else 0
     if problems:
         print(f"check_site: {len(problems)} problem(s) in {pages} pages")

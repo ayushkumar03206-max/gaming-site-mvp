@@ -31,6 +31,20 @@ python -m unittest discover -s tests -v
 node --test tests/js/games.test.js
 ```
 
+Browser end-to-end tests use Playwright (`playwright-core`, open source, Apache-2.0) with
+your **installed Chrome**, so no browser download is needed. They emulate desktop, tablet and phone
+viewports. That is **not** the same as testing on real Android or iPhone devices.
+
+```bash
+npm install
+python -m http.server 8766 -d dist        # in another terminal
+BASE_URL=http://localhost:8766/ npm run test:e2e
+BASE_URL=https://ayushkumar03206-max.github.io/gaming-site-mvp/ npm run test:e2e   # live site
+```
+
+Locally the custom 404 page links to `base_path` (`/gaming-site-mvp/`). Every other page uses
+relative links and works at any path.
+
 ## Project layout
 
 ```

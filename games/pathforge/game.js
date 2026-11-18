@@ -167,7 +167,7 @@
     if (on && state.stock[state.turn] <= 0) { say('No blocks left. Collect a ✦ spark to earn one.'); return; }
     forge = on;
     cursor = forge ? state.pawns[1 - state.turn] : -1;
-    say(forge ? 'Forge mode: pick an empty cell. Cells that would seal a route are not allowed.' : '');
+    say(forge ? 'Forge mode: tap an outlined cell. Dimmed cells would seal a route or are occupied.' : '');
     render();
   }
 

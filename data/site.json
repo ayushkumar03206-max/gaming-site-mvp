@@ -1,8 +1,8 @@
 {
   "name": "Gridlight Arcade",
   "tagline": "Original browser games. No downloads, no sign-up.",
-  "base_url": "https://example.com",
-  "base_path": "/",
+  "base_url": "https://ayushkumar03206-max.github.io/gaming-site-mvp",
+  "base_path": "/gaming-site-mvp/",
   "contact_email": "hello@example.com",
   "operator": "Gridlight Arcade",
   "default_locale": "en",
