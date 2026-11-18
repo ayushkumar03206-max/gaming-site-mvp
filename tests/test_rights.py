@@ -24,9 +24,23 @@ class RightsGateTests(unittest.TestCase):
         self.assets = load("assets.json")
 
     def test_repo_data_passes_gate(self):
+        """Repo data is valid: the original games are publishable, and anything withheld is withheld ONLY
+        because its rights review is still pending (no missing, rejected or malformed records)."""
         res = rights_gate.evaluate(self.games, self.assets)
-        self.assertTrue(res.ok, (res.withheld, res.errors))
-        self.assertEqual({g["slug"] for g in res.publishable}, {"pathforge", "neon-dodge", "chroma-shift"})
+        self.assertEqual(res.errors, [])
+        self.assertTrue({"pathforge", "neon-dodge", "chroma-shift"} <= {g["slug"] for g in res.publishable})
+        for g, why in res.withheld:
+            self.assertEqual(why, "rights status is 'pending', not approved", g["slug"])
+        # preview mode builds exactly the pending games in addition
+        prev = rights_gate.evaluate(self.games, self.assets, allow_pending=True)
+        self.assertEqual(len(prev.publishable), len(self.games["games"]))
+        self.assertEqual({g["slug"] for g in prev.pending}, {g["slug"] for g, _ in res.withheld})
+
+    def test_preview_never_includes_rejected_or_revoked(self):
+        assets = copy.deepcopy(self.assets)
+        assets["records"][0]["status"] = "rejected"
+        res = rights_gate.evaluate(self.games, assets, allow_pending=True)
+        self.assertNotIn("pathforge", [g["slug"] for g in res.publishable])
 
     def test_pending_record_is_withheld(self):
         assets = copy.deepcopy(self.assets)
@@ -50,9 +64,12 @@ class RightsGateTests(unittest.TestCase):
     def test_draft_game_is_skipped_not_error(self):
         games = copy.deepcopy(self.games)
         games["games"][0]["status"] = "draft"
+        base = rights_gate.evaluate(self.games, self.assets)
         res = rights_gate.evaluate(games, self.assets)
-        self.assertTrue(res.ok)
-        self.assertEqual(len(res.publishable), 2)
+        self.assertEqual(res.errors, [])
+        self.assertNotIn("pathforge", [g["slug"] for g in res.publishable])
+        self.assertNotIn("pathforge", [g["slug"] for g, _ in res.withheld])
+        self.assertEqual(len(res.publishable), len(base.publishable) - 1)
 
     def test_duplicate_slug_is_error(self):
         games = copy.deepcopy(self.games)

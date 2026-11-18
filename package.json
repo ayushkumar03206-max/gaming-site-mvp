@@ -5,8 +5,8 @@
   "description": "Static site for original HTML5 browser games. Node is only used for tests.",
   "license": "UNLICENSED",
   "scripts": {
-    "test": "node --test tests/js/games.test.js",
-    "test:e2e": "node --test tests/e2e/browser.e2e.js"
+    "test": "node --test tests/js/*.test.js",
+    "test:e2e": "node --test tests/e2e/browser.e2e.js tests/e2e/kit-games.e2e.js"
   },
   "devDependencies": {
     "playwright-core": "1.49.1"

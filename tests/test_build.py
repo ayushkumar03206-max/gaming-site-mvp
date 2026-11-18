@@ -19,7 +19,9 @@ class BuildTests(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = Path(tempfile.mkdtemp())
         cls.out = cls.tmp / "dist"
-        cls.ctx = build_static_site.build(cls.out, data_dir=ROOT / "data", strict=True, today=date(2026, 11, 18))
+        # preview build: includes games whose rights are still pending, so every registered game is checked
+        cls.ctx = build_static_site.build(cls.out, data_dir=ROOT / "data", today=date(2026, 11, 18), preview_pending=True)
+        cls.registry = json.loads((ROOT / "data" / "games.json").read_text(encoding="utf-8"))["games"]
 
     @classmethod
     def tearDownClass(cls):
@@ -36,7 +38,7 @@ class BuildTests(unittest.TestCase):
             self.assertTrue((self.out / rel).exists(), rel)
 
     def test_each_game_has_page_and_playable_bundle(self):
-        for slug in ("pathforge", "neon-dodge", "chroma-shift"):
+        for slug in [g["slug"] for g in self.registry]:
             page = self.read(f"games/{slug}/index.html")
             self.assertIn(f'data-src="../../play/{slug}/index.html"', page)
             self.assertIn("How to play", page)
@@ -79,7 +81,7 @@ class BuildTests(unittest.TestCase):
         js = self.read("assets/site-data.js")
         m = re.search(r"window\.GL_GAMES=(\[.*?\]);", js)
         games = json.loads(m.group(1))
-        self.assertEqual(sorted(g["slug"] for g in games), ["chroma-shift", "neon-dodge", "pathforge"])
+        self.assertEqual(sorted(g["slug"] for g in games), sorted(g["slug"] for g in self.registry))
 
     def test_no_broken_links(self):
         problems = check_site.check(self.out)
@@ -113,6 +115,48 @@ class BuildTests(unittest.TestCase):
             self.assertIn("gl:ready", js, slug)
             self.assertIn("gl:error", js, slug)
             self.assertIn("gl:restart", js, slug)
+        # kit-based games get the protocol from games/_kit/gl-kit.js
+        kit = (self.out / "play" / "_kit" / "gl-kit.js").read_text(encoding="utf-8")
+        for msg in ("gl:ready", "gl:error", "gl:restart"):
+            self.assertIn(msg, kit)
+        for g in self.registry:
+            html = (self.out / "play" / g["slug"] / "index.html").read_text(encoding="utf-8")
+            if "../_kit/gl-kit.js" in html:
+                js = (self.out / "play" / g["slug"] / "game.js").read_text(encoding="utf-8")
+                self.assertIn("K.ready()", js, g["slug"])
+                self.assertIn("K.init(", js, g["slug"])
+
+    def test_registry_is_consistent(self):
+        ids, slugs = set(), set()
+        for g in self.registry:
+            self.assertNotIn(g["id"], ids); self.assertNotIn(g["slug"], slugs)
+            ids.add(g["id"]); slugs.add(g["slug"])
+            self.assertIn("modes", g, g["slug"])
+            self.assertTrue((ROOT / g["source_dir"] / g["thumbnail"]).exists(), g["slug"])
+        self.assertEqual(len(self.registry), 15)
+
+    def test_no_online_badge_without_a_server(self):
+        # online play must never be advertised until a multiplayer server is configured
+        for page in self.out.rglob("*.html"):
+            text = page.read_text(encoding="utf-8")
+            self.assertNotIn('badge-new">Online<', text, page)
+            self.assertNotIn("Online with a friend", text, page)
+        self.assertIn("2P same device", self.read("games/chess/index.html"))
+        self.assertIn("Online play not available yet", self.read("games/chess/index.html"))
+
+    def test_preview_build_is_marked_and_not_indexable(self):
+        self.assertIn("Preview build, not for publishing", self.read("index.html"))
+        self.assertIn('name="robots" content="noindex"', self.read("index.html"))
+        self.assertIn("Disallow: /", self.read("robots.txt"))
+
+    def test_strict_build_refuses_pending_rights_and_preview_cannot_be_strict(self):
+        pending = [g for g in self.ctx.gate.pending]
+        if pending:  # while the owner has not approved new games, a publishable build must stop
+            with self.assertRaises(SystemExit):
+                build_static_site.build(self.tmp / "strict", data_dir=ROOT / "data", strict=True)
+        build_static_site.DATA = ROOT / "data"
+        with self.assertRaises(SystemExit):
+            build_static_site.build(self.tmp / "both", data_dir=ROOT / "data", strict=True, preview_pending=True)
 
     def test_sitemap_lists_game_pages(self):
         sm = self.read("sitemap.xml")

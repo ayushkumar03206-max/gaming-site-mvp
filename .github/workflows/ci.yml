@@ -14,14 +14,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Rights gate (strict)
-        run: python scripts/rights_gate.py --strict
+      # Branch CI reports the rights gate and builds a PREVIEW (pending games included, banner + noindex).
+      # The strict gate is enforced where it matters: pages.yml refuses to deploy anything not approved.
+      - name: Rights gate (report)
+        run: python scripts/rights_gate.py
       - name: Python tests
         run: python -m unittest discover -s tests -v
       - name: Game logic tests
-        run: node --test tests/js/games.test.js
-      - name: Build
-        run: python scripts/build_static_site.py --strict
+        run: node --test tests/js/*.test.js
+      - name: Multiplayer server tests
+        run: if [ -d server ]; then cd server && npm ci && npm test; fi
+      - name: Build (preview)
+        run: python scripts/build_static_site.py --preview-pending
       - name: Link check
         run: python scripts/check_site.py
       - uses: actions/upload-artifact@v4

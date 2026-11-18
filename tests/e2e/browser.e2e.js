@@ -1,7 +1,7 @@
 // Browser end-to-end tests (Playwright + the locally installed Chrome).
 //
 //   npm install                     # installs playwright-core (no browser download)
-//   python -m http.server 8765 -d dist   (in another terminal, after building)
+//   python scripts/serve.py 8765 dist   (in another terminal, after building; plain http.server drops bursts of requests on Windows)
 //   BASE_URL=http://localhost:8765/ node --test tests/e2e/browser.e2e.js
 //
 // BASE_URL may also be the live site, e.g. https://<owner>.github.io/gaming-site-mvp/
@@ -120,7 +120,10 @@ test('search and category filter', async () => {
   await page.goto(BASE + 'games/index.html');
   await page.click('[data-filter="arcade"]');
   const visible = await page.$$eval('[data-filter-grid] .card:not([hidden]) h3', h => h.map(x => x.textContent));
-  assert.deepStrictEqual(visible, ['Neon Dodge']);
+  assert.ok(visible.includes('Neon Dodge'), visible.join());
+  assert.ok(!visible.includes('Pathforge') && !visible.includes('Chroma Shift'), 'non-arcade games hidden: ' + visible.join());
+  const cats = await page.$$eval('[data-filter-grid] .card:not([hidden])', c => c.map(x => x.getAttribute('data-cats')));
+  assert.ok(cats.every(c => c.split(' ').includes('arcade')), 'only arcade cards visible');
   assert.strictEqual(await page.getAttribute('[data-filter="arcade"]', 'aria-pressed'), 'true');
   await ctx.close();
 });
