@@ -225,6 +225,21 @@
       "reviewed_by": null,
       "reviewed_at": null,
       "evidence": "Written from scratch for this project. Level layouts are original. Graphics are drawn with the Canvas API and sounds generated with the Web Audio API. No third-party code, art, fonts or audio."
+    },
+    {
+      "id": "rights-chess",
+      "kind": "game",
+      "title": "Chess (rules engine, AI, UI code, thumbnail)",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "pending",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "evidence": "Chess is a public-domain game. The rules engine (verified against published perft counts), AI and interface were written from scratch for this project. Pieces are standard Unicode chess symbols rendered with the visitor's system fonts. No third-party code, art, fonts or audio."
     }
   ]
 }

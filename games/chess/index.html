@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Chess</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<main class="app" id="app" hidden>
+  <div class="bar">
+    <p class="status" id="status">White to move</p>
+    <button type="button" class="icon-btn" data-mute></button>
+    <button type="button" class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+  </div>
+  <div class="layout">
+    <div class="board" id="board" role="grid" aria-label="Chess board"></div>
+    <aside class="side">
+      <div class="row">
+        <button type="button" class="ghost" id="undoBtn">↶ Undo</button>
+        <button type="button" class="ghost" id="flipBtn">⇅ Flip</button>
+        <button type="button" class="ghost" id="resignBtn">Resign</button>
+      </div>
+      <ol class="moves" id="moves" aria-label="Move history"></ol>
+    </aside>
+  </div>
+</main>
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">CHESS</h1>
+    <div><p class="label">Opponent</p>
+      <div class="seg" role="group" aria-label="Opponent">
+        <button type="button" data-opp="ai" aria-pressed="true">Computer</button>
+        <button type="button" data-opp="local" aria-pressed="false">Friend, same device</button>
+      </div></div>
+    <div id="aiOpts">
+      <p class="label">Computer strength</p>
+      <div class="seg" role="group" aria-label="Computer strength">
+        <button type="button" data-level="1" aria-pressed="false">Casual</button>
+        <button type="button" data-level="2" aria-pressed="true">Normal</button>
+        <button type="button" data-level="3" aria-pressed="false">Strong</button>
+      </div>
+      <p class="label" style="margin-top:10px">You play</p>
+      <div class="seg" role="group" aria-label="Your colour">
+        <button type="button" data-color="w" aria-pressed="true">White</button>
+        <button type="button" data-color="b" aria-pressed="false">Black</button>
+      </div>
+    </div>
+    <button type="button" class="big" id="playBtn" data-start>Start game</button>
+    <p class="hint">Full rules: castling, en passant, promotion, check, checkmate, stalemate and draws by repetition, the 50-move rule and insufficient material.</p>
+  </div>
+</div>
+<div class="overlay" id="menu" hidden>
+  <div class="panel"><h2>Menu</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="newBtn">Restart game</button>
+    <button type="button" class="ghost" id="toTitleBtn">Change opponent</button></div>
+</div>
+<div class="overlay" id="promo" hidden role="dialog" aria-labelledby="promoTitle">
+  <div class="panel"><h2 id="promoTitle">Promote pawn to</h2>
+    <div class="row promo">
+      <button type="button" class="ghost" data-promo="q">♛ Queen</button><button type="button" class="ghost" data-promo="r">♜ Rook</button>
+      <button type="button" class="ghost" data-promo="b">♝ Bishop</button><button type="button" class="ghost" data-promo="n">♞ Knight</button>
+    </div></div>
+</div>
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel"><h2 id="overTitle">Checkmate</h2><p id="overMsg"></p>
+    <button type="button" class="big" id="againBtn">New game</button>
+    <button type="button" class="ghost" id="reviewBtn">Look at the board</button>
+    <button type="button" class="ghost" id="toTitleBtn2">Change opponent</button></div>
+</div>
+<noscript><p>Chess needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="chess-rules.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

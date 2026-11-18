@@ -680,6 +680,55 @@
       "orientation": "portrait",
       "date_added": "2026-11-18",
       "multiplayer_model": "shared-challenge"
+    },
+    {
+      "id": "gl-015",
+      "status": "published",
+      "entry": "play/chess/index.html",
+      "source_dir": "games/chess",
+      "thumbnail": "thumb.svg",
+      "saves_progress": false,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": true,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 2
+      },
+      "rights_id": "rights-chess",
+      "slug": "chess",
+      "title": "Chess",
+      "categories": [
+        "board",
+        "strategy",
+        "multiplayer"
+      ],
+      "tags": [
+        "chess",
+        "vs AI",
+        "two player",
+        "classic"
+      ],
+      "short_description": "Full-rules chess against the computer or a friend on the same device, with move history and undo.",
+      "description": "Play complete chess in your browser: castling, en passant, promotion to any piece, check, checkmate, stalemate, and draws by threefold repetition, the 50-move rule and insufficient material are all handled. Tap a piece to see its legal moves. Play the computer at casual, normal or strong level as white or black, or play a friend on one device with a flippable board. The full move list is shown in standard notation.",
+      "instructions": [
+        "Tap or click one of your pieces: its legal moves are marked. Tap a marked square to move.",
+        "All standard rules apply: castling (move the king two squares), en passant and promotion (you choose the new piece).",
+        "Checkmate wins. Stalemate, threefold repetition, the 50-move rule and insufficient material are draws.",
+        "Undo takes back your last move (against the computer it takes back both your move and its reply). Flip turns the board around.",
+        "Choose the computer's strength and your colour before you start, or play a friend on the same device."
+      ],
+      "controls": {
+        "desktop": "Click a piece, then click where it should go. Or move around the board with the arrow keys and press Enter/Space. Esc opens the menu.",
+        "mobile": "Tap a piece, then tap a highlighted square."
+      },
+      "orientation": "square",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "turn-based"
     }
   ]
 }

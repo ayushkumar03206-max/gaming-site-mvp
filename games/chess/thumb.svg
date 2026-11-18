@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#0b0d1a"/>
+  <defs><pattern id="ck" width="80" height="80" patternUnits="userSpaceOnUse"><rect width="80" height="80" fill="#5b6596"/><rect width="40" height="40" fill="#c9cfe8"/><rect x="40" y="40" width="40" height="40" fill="#c9cfe8"/></pattern></defs>
+  <rect x="160" y="10" width="320" height="320" fill="url(#ck)" stroke="#2b3266" stroke-width="6"/>
+  <g font-family="Segoe UI Symbol, DejaVu Sans, sans-serif" font-size="34" text-anchor="middle">
+    <text x="220" y="78" fill="#11131f">♚</text><text x="340" y="118" fill="#11131f">♛</text><text x="420" y="78" fill="#11131f">♜</text><text x="260" y="158" fill="#11131f">♟</text><text x="380" y="198" fill="#11131f">♞</text>
+    <text x="300" y="238" fill="#fff" stroke="#000" stroke-width="1.5">♛</text><text x="220" y="278" fill="#fff" stroke="#000" stroke-width="1.5">♚</text><text x="420" y="278" fill="#fff" stroke="#000" stroke-width="1.5">♜</text><text x="340" y="318" fill="#fff" stroke="#000" stroke-width="1.5">♝</text>
+  </g>
+  <rect x="320" y="90" width="40" height="40" fill="#ffd23f" fill-opacity=".35"/>
+  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#ffd23f" letter-spacing="2">CHESS</text>
+</svg>

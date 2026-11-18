@@ -118,6 +118,16 @@ const INTERACT = {
     const st = await frame.evaluate(() => GLDebug.state());
     assert.strictEqual(st.state, 'parked', JSON.stringify(st));
   },
+  'chess': async (page, frame) => {
+    // vs computer as white: play e2-e4 with clicks, the computer must answer with a legal move
+    await frame.click('[data-sq="e2"]'); await frame.click('[data-sq="e4"]');
+    await frame.waitForFunction(() => GLDebug.state().moves.length === 2, null, { timeout: 8000 });
+    const st = await frame.evaluate(() => GLDebug.state());
+    assert.strictEqual(st.moves[0], 'e4'); assert.strictEqual(st.turn, 'w');
+    // an illegal click sequence changes nothing
+    await frame.click('[data-sq="e1"]'); await frame.click('[data-sq="e3"]');
+    assert.strictEqual((await frame.evaluate(() => GLDebug.state())).moves.length, 2);
+  },
   'fruit-slice': async (page, frame) => {
     const b = await frameBox(page);
     for (let i = 0; i < 30; i++) {
