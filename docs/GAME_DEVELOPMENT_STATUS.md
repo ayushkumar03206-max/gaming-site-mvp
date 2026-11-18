@@ -62,3 +62,23 @@ plus a real-input check on desktop). Emulated viewports in desktop Chrome, **not
 |---|---|
 | `server/` unit + real-socket tests (`npm test`) | 22/22 pass: codes, every join error, host-only start, single start, countdown, turn/legality checks, server-decided results, rematch role swap, reconnect within grace, forfeit after grace, host close, expiry, room cap, rate limit, origin refusal, no token/password leaks |
 | `tests/e2e/online.e2e.js` (two browser contexts, local server) | 4/4 pass: full Tic Tac Toe match + rematch lobby; invite link prefill + leave; online button hidden when the server is unreachable; full Chess game to checkmate with a page reload mid-game resuming the same seat and match. Skipped (not passed) when `MP_SERVER` is not set. |
+
+## Last-game replay (2026-11-18)
+
+After a run ends, canvas games built on the kit show **▶ Watch replay** on their game-over / result
+screen. Games: Highway Rush, Brick Breaker, Fruit Slice, Space Shooter, Snake Arena, Tower Builder,
+Bubble Shooter, Car Parking.
+
+- How: `GLKit.replay` (in `games/_kit/gl-kit.js`) records the game canvas with `canvas.captureStream()` +
+  `MediaRecorder`. It is driven by `K.screens.show()`, so the games themselves did not change:
+  playing records, pause/level-clear screens pause, `over`/`result` finish the run, `title` discards.
+- Storage: the video is kept **only in page memory** as a Blob URL. Nothing goes to localStorage,
+  IndexedDB or any server. Closing or reloading the page removes it; a new run replaces the old one.
+- Limits: about 1 Mbit/s; long runs keep only the last 3 minutes (three 60 s parts that play in order),
+  so memory stays under roughly 25 MB.
+- Not covered: DOM-based games (Chess, Tic Tac Toe, Memory Match, Tile Fusion) and the three original
+  games (Pathforge, Neon Dodge, Chroma Shift), which do not use the kit's screens. Browsers without
+  `MediaRecorder`/`captureStream` simply show no button.
+- Evidence: `tests/e2e/replay.e2e.js` (desktop Chrome via Playwright): a real run is recorded in the site
+  iframe, the video loads and has frames, nothing is put in storage, a reload leaves no replay, pause
+  pauses the recorder, and a DOM game shows no button. Not tested on real phones or Safari.

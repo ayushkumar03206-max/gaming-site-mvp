@@ -77,3 +77,8 @@ html:not(.has-touch) .touch-pad, html:not(.has-touch) .touch { display: none !im
 @keyframes mpspin { to { transform: rotate(1turn); } }
 .mp-conn { position: fixed; z-index: 40; left: 50%; top: 8px; transform: translateX(-50%); background: #5a1f2b; color: #ffd6de; border-radius: 999px; padding: 6px 14px; font-weight: 800; font-size: .85rem; }
 .big:disabled { opacity: .45; cursor: default; }
+
+/* Last-game replay player (see GLKit.replay) */
+.replay-ov { z-index: 40; background: rgba(5, 6, 14, .85); }
+.replay-panel { width: min(640px, 100%); gap: 10px; padding: 16px; }
+.replay-panel video { width: 100%; max-height: calc(100vh - 230px); min-height: 120px; object-fit: contain; border-radius: 12px; background: #000; border: 1px solid var(--line); }
