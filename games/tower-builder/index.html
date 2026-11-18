@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Tower Builder</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<style>:root { --accent: #29b6ff; --accent2: #b6ff3b; --bg: #0b0d1a; }</style>
+</head>
+<body>
+<div class="stage"><canvas id="c" tabindex="-1" role="img" aria-label="Tower Builder: tap to drop the moving block"></canvas></div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<div class="hud" id="hud" hidden>
+  <span class="pill"><small>FLOORS</small><span id="hFloors">0</span></span>
+  <span class="pill"><small>SCORE</small><span id="hScore">0</span></span>
+  <span class="pill"><small>PERFECT</small><span id="hStreak">–</span></span>
+  <span class="grow"></span>
+  <button type="button" class="icon-btn" data-mute></button>
+</div>
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">TOWER<span> BUILDER</span></h1>
+    <p>A block slides across the top of your tower. Drop it so it lands on the floor below. Any overhang is sliced off, so your blocks get narrower.</p>
+    <p>Line it up exactly for a <b>perfect</b> drop: more points, and three perfects in a row widen your block again.</p>
+    <p class="best" id="bestTitle"></p>
+    <button type="button" class="big" id="playBtn" data-start>Build</button>
+    <p class="hint"><span class="kbd-only">Click or press <span class="kb">Space</span> to drop</span><span class="touch">Tap anywhere to drop</span></p>
+  </div>
+</div>
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel">
+    <h2 id="overTitle">Tower complete</h2>
+    <p class="final"><span id="finalScore">0</span><small>points</small></p>
+    <div class="stats"><div><b id="oFloors">0</b><span>floors</span></div><div><b id="oPerfect">0</b><span>perfect drops</span></div><div><b id="oStreak">0</b><span>best streak</span></div></div>
+    <p class="best" id="bestOver"></p>
+    <button type="button" class="big" id="againBtn">Build again</button>
+  </div>
+</div>
+<noscript><p>Tower Builder needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="tower-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

@@ -534,6 +534,54 @@
       "orientation": "portrait",
       "date_added": "2026-11-18",
       "multiplayer_model": "shared-challenge"
+    },
+    {
+      "id": "gl-012",
+      "status": "published",
+      "entry": "play/tower-builder/index.html",
+      "source_dir": "games/tower-builder",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "rights_id": "rights-tower-builder",
+      "slug": "tower-builder",
+      "title": "Tower Builder",
+      "categories": [
+        "skill",
+        "arcade"
+      ],
+      "tags": [
+        "stacking",
+        "timing",
+        "one tap",
+        "high score"
+      ],
+      "short_description": "Time each drop to stack sliding blocks into the tallest tower you can. Overhangs get sliced off.",
+      "description": "Tower Builder is a one-tap timing game. A block slides back and forth above your tower; drop it so it lands on the floor below. Whatever hangs over the edge is sliced off and falls away, so each mistake leaves you a narrower block to work with. Line a block up exactly for a perfect drop, which scores bonus points, and chain three perfects to widen your block again. The blocks slide faster as the tower grows.",
+      "instructions": [
+        "Tap, click or press Space to drop the sliding block.",
+        "Only the part that lands on the floor below stays. The overhang is sliced off.",
+        "A perfect drop (almost exactly lined up) keeps the full width and earns a streak bonus of up to +5.",
+        "Three perfect drops in a row make your block a little wider again.",
+        "Miss the tower completely and the game ends. Blocks speed up as you build higher."
+      ],
+      "controls": {
+        "desktop": "Click anywhere or press Space / Enter / Down arrow to drop.",
+        "mobile": "Tap anywhere to drop."
+      },
+      "orientation": "portrait",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "alternating-turns"
     }
   ]
 }

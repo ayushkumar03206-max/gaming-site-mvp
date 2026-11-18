@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2550"/><stop offset="1" stop-color="#0b0d1a"/></linearGradient></defs>
+  <rect width="640" height="400" fill="url(#sky)"/>
+  <rect y="330" width="640" height="70" fill="#1b2a1f"/>
+  <g>
+    <rect x="200" y="300" width="240" height="30" fill="hsl(200 70% 55%)"/>
+    <rect x="210" y="270" width="230" height="30" fill="hsl(209 70% 55%)"/>
+    <rect x="210" y="240" width="210" height="30" fill="hsl(218 70% 55%)"/>
+    <rect x="222" y="210" width="198" height="30" fill="hsl(227 70% 55%)"/>
+    <rect x="222" y="180" width="180" height="30" fill="hsl(236 70% 55%)"/>
+    <rect x="236" y="150" width="166" height="30" fill="hsl(245 70% 55%)"/>
+    <rect x="236" y="120" width="166" height="30" fill="hsl(254 70% 55%)" stroke="#fff" stroke-width="3"/>
+  </g>
+  <rect x="300" y="60" width="166" height="30" fill="hsl(263 70% 55%)"/>
+  <path d="M290 75h-40M290 66h-24M290 84h-30" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
+  <rect x="440" y="200" width="22" height="30" fill="hsl(227 70% 55%)" transform="rotate(25 451 215)"/>
+  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#29b6ff" letter-spacing="2">TOWER<tspan fill="#b6ff3b"> BUILDER</tspan></text>
+</svg>

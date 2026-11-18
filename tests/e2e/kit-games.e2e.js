@@ -88,6 +88,16 @@ const INTERACT = {
     await frame.click('#undoBtn');
     assert.strictEqual((await frame.evaluate(() => GLDebug.state())).undosLeft, 2);
   },
+  'tower-builder': async (page, frame) => {
+    // drop with real clicks when the slider is close to the floor below
+    for (let i = 0; i < 3; i++) {
+      await frame.waitForFunction(() => { const o = GLDebug.offset(); return o !== null && Math.abs(o) < 6; }, null, { timeout: 8000, polling: 'raf' });
+      await page.mouse.click((await frameBox(page)).x + 40, (await frameBox(page)).y + 200);
+      await page.waitForTimeout(60);
+    }
+    const st = await frame.evaluate(() => GLDebug.state());
+    assert.ok(st.floors >= 3 && !st.over, 'stacked 3 floors: ' + JSON.stringify(st));
+  },
   'fruit-slice': async (page, frame) => {
     const b = await frameBox(page);
     for (let i = 0; i < 30; i++) {
