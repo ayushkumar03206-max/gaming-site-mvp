@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1840"/><stop offset="1" stop-color="#120a20"/></linearGradient></defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <circle cx="150" cy="210" r="38" fill="#ff5d6c" fill-opacity=".35"/>
+  <g transform="rotate(-25 170 170)"><path d="M120 170 a50 50 0 0 0 100 0z" fill="#3ddc84"/><path d="M128 170 a42 42 0 0 0 84 0z" fill="#ff5d6c"/></g>
+  <g transform="rotate(-25 190 140)"><path d="M140 140 a50 50 0 0 1 100 0z" fill="#3ddc84"/><path d="M148 140 a42 42 0 0 1 84 0z" fill="#ff5d6c"/></g>
+  <circle cx="360" cy="120" r="40" fill="#ffa024"/><circle cx="346" cy="106" r="11" fill="#fff" fill-opacity=".35"/>
+  <circle cx="470" cy="210" r="34" fill="#ff3f5a"/><ellipse cx="478" cy="174" rx="10" ry="4" fill="#2f9e44" transform="rotate(-30 478 174)"/>
+  <polygon points="300,230 309,252 333,252 314,266 321,290 300,275 279,290 286,266 267,252 291,252" fill="#ffd23f"/>
+  <circle cx="560" cy="110" r="28" fill="#1b1d2a" stroke="#ff4d6d" stroke-width="4"/><text x="560" y="121" text-anchor="middle" font-family="Segoe UI, Arial" font-weight="900" font-size="30" fill="#ff4d6d">✕</text>
+  <path d="M60 300 Q 250 120 600 60" stroke="#e6faff" stroke-width="8" stroke-linecap="round" fill="none" stroke-opacity=".85"/>
+  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#3ddc84" letter-spacing="2">FRUIT<tspan fill="#ffd23f"> SLICE</tspan></text>
+</svg>

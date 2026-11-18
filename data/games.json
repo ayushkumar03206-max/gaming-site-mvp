@@ -242,6 +242,54 @@
       "orientation": "portrait",
       "date_added": "2026-11-18",
       "multiplayer_model": "score-competition"
+    },
+    {
+      "id": "gl-006",
+      "status": "published",
+      "entry": "play/fruit-slice/index.html",
+      "source_dir": "games/fruit-slice",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": false,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 1
+      },
+      "rights_id": "rights-fruit-slice",
+      "slug": "fruit-slice",
+      "title": "Fruit Slice",
+      "categories": [
+        "action",
+        "arcade"
+      ],
+      "tags": [
+        "swipe",
+        "combo",
+        "timed",
+        "high score"
+      ],
+      "short_description": "Swipe through flying fruit for 60 seconds, chain combos and dodge the bombs.",
+      "description": "Fruit Slice is a 60-second swipe game. Fruit is tossed up from the bottom of the screen in growing waves; slash through it with your finger or mouse. Slicing several pieces in one quick swipe builds a combo multiplier of up to five times, and rare star fruit is worth triple. Bombs appear more often as the round goes on, and each one you hit takes five seconds off the clock.",
+      "instructions": [
+        "Swipe across fruit to slice it. Each fruit is worth 1 point; star fruit is worth 3.",
+        "Slice fruit in quick succession for a combo: the second piece scores x2, the third x3, up to x5.",
+        "Bombs (dark circles marked ✕) cost 5 seconds and reset your combo.",
+        "The round lasts 60 seconds. Your best score is saved on this device.",
+        "Press P or Esc to pause."
+      ],
+      "controls": {
+        "desktop": "Hold the left mouse button and swipe across fruit. P / Esc to pause. Enter or R to play again.",
+        "mobile": "Swipe with your finger across the fruit."
+      },
+      "orientation": "landscape",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "score-competition"
     }
   ]
 }

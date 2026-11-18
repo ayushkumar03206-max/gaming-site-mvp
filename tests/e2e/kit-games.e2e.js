@@ -22,6 +22,32 @@ const VIEWPORTS = {
   narrow: { viewport: { width: 320, height: 640 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 }
 };
 
+/** Real input checks per game (desktop only): drive the game with mouse/keyboard and assert an effect. */
+async function frameBox(page) { return page.locator('[data-player] iframe').boundingBox(); }
+const INTERACT = {
+  'highway-rush': async (page, frame) => {
+    const x0 = (await frame.evaluate(() => GLDebug.state())).x;
+    await page.keyboard.down('ArrowRight'); await page.waitForTimeout(250); await page.keyboard.up('ArrowRight');
+    const x1 = (await frame.evaluate(() => GLDebug.state())).x;
+    assert.ok(x1 > x0 || (await frame.evaluate(() => GLDebug.state())).mode === 'over', `steered right ${x0} -> ${x1}`);
+  },
+  'brick-breaker': async (page, frame) => {
+    await page.keyboard.press('Space'); await page.waitForTimeout(2500);
+    const st = await frame.evaluate(() => GLDebug.state());
+    assert.ok(st.score > 0 || st.lives < 3, 'ball launched and interacted: ' + JSON.stringify(st));
+  },
+  'fruit-slice': async (page, frame) => {
+    const b = await frameBox(page);
+    for (let i = 0; i < 30; i++) {
+      const y = b.y + b.height * (0.25 + (i % 5) * 0.12);
+      await page.mouse.move(b.x + 5, y); await page.mouse.down();
+      await page.mouse.move(b.x + b.width - 5, y, { steps: 12 }); await page.mouse.up();
+      if ((await frame.evaluate(() => GLDebug.state())).sliced > 0) break;
+    }
+    assert.ok((await frame.evaluate(() => GLDebug.state())).sliced > 0, 'mouse swipe sliced fruit');
+  }
+};
+
 let browser;
 test.before(async () => { browser = await chromium.launch({ channel: CHANNEL, headless: true }); });
 test.after(async () => { if (browser) await browser.close(); });
@@ -71,6 +97,7 @@ for (const slug of GAMES) {
         // no horizontal overflow inside the game
         const overflow = await frame.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
         assert.ok(overflow <= 1, 'horizontal overflow ' + overflow + 'px');
+        if (INTERACT[slug] && kind === 'desktop') await INTERACT[slug](page, frame);
         if (process.env.SHOTS) await page.screenshot({ path: path.join(process.env.SHOTS, `${slug}-${kind}.png`) });
         assert.deepStrictEqual(problems, []);
       } finally { await ctx.close(); }

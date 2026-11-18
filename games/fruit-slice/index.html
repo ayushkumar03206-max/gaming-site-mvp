@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Fruit Slice</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<style>:root { --accent: #3ddc84; --accent2: #ffd23f; --bg: #120a20; } .hud .warn { border-color: #ff4d6d; color: #ff8fa3; }</style>
+</head>
+<body>
+<div class="stage"><canvas id="c" tabindex="-1" role="img" aria-label="Fruit Slice play field"></canvas></div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<div class="hud" id="hud" hidden>
+  <span class="pill"><small>SCORE</small><span id="hScore">0</span></span>
+  <span class="pill"><small>TIME</small><span id="hTime">60</span></span>
+  <span class="pill"><small>COMBO</small><span id="hCombo">–</span></span>
+  <span class="grow"></span>
+  <button type="button" class="icon-btn" data-mute></button>
+  <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
+</div>
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">FRUIT<span> SLICE</span></h1>
+    <p>Swipe through flying fruit for 60 seconds. Slice several in one swipe for a combo multiplier (up to x5). Rare star fruit is worth 3.</p>
+    <p>Avoid the <b style="color:#ff4d6d">✕ bombs</b>: each one costs 5 seconds.</p>
+    <p class="best" id="bestTitle"></p>
+    <button type="button" class="big" id="playBtn" data-start>Start round</button>
+    <p class="hint"><span class="kbd-only">Hold the mouse button and swipe · <span class="kb">P</span> pause</span><span class="touch">Swipe with your finger</span></p>
+  </div>
+</div>
+<div class="overlay" id="paused" hidden>
+  <div class="panel"><h2>Paused</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="restartBtn">Restart round</button></div>
+</div>
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel">
+    <h2 id="overTitle">Time's up!</h2>
+    <p class="final"><span id="finalScore">0</span><small>points</small></p>
+    <div class="stats"><div><b id="oSliced">0</b><span>sliced</span></div><div><b id="oCombo">0</b><span>best combo</span></div><div><b id="oBombs">0</b><span>bombs hit</span></div></div>
+    <p class="best" id="bestOver"></p>
+    <button type="button" class="big" id="againBtn">Play again</button>
+  </div>
+</div>
+<noscript><p>Fruit Slice needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="slice-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
