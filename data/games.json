@@ -341,6 +341,55 @@
       "orientation": "portrait",
       "date_added": "2026-11-18",
       "multiplayer_model": "cooperative"
+    },
+    {
+      "id": "gl-008",
+      "status": "published",
+      "entry": "play/memory-match/index.html",
+      "source_dir": "games/memory-match",
+      "thumbnail": "thumb.svg",
+      "saves_progress": true,
+      "featured": false,
+      "curated_trending": false,
+      "modes": {
+        "single": true,
+        "local": true,
+        "online": false
+      },
+      "players": {
+        "min": 1,
+        "max": 2
+      },
+      "rights_id": "rights-memory-match",
+      "slug": "memory-match",
+      "title": "Memory Match",
+      "categories": [
+        "brain",
+        "puzzle",
+        "multiplayer"
+      ],
+      "tags": [
+        "memory",
+        "cards",
+        "pairs",
+        "two player"
+      ],
+      "short_description": "Flip cards two at a time and find every pair, alone against the clock or against a friend.",
+      "description": "Memory Match is a classic card-pairs game with three board sizes. Every symbol has its own shape and colour, so you never need to tell colours apart. Play solo to beat your best score, which rewards fewer moves and a faster time, or pass the device back and forth with a friend: find a pair and you go again, miss and it's their turn.",
+      "instructions": [
+        "Flip two cards. If they show the same symbol they stay face up; if not, they turn back over.",
+        "Find every pair to finish the board.",
+        "Solo: fewer moves and a faster time give a higher score. Finish within the move target for 3 stars.",
+        "2 players: take turns on one device. Finding a pair earns a point and another turn. Most pairs wins.",
+        "Boards: Easy 4×3 (6 pairs), Medium 4×4 (8 pairs), Hard 6×5 (15 pairs)."
+      ],
+      "controls": {
+        "desktop": "Click a card to flip it, or use the arrow keys to move between cards and Enter/Space to flip. Esc or P opens the menu.",
+        "mobile": "Tap a card to flip it."
+      },
+      "orientation": "square",
+      "date_added": "2026-11-18",
+      "multiplayer_model": "turn-based"
     }
   ]
 }

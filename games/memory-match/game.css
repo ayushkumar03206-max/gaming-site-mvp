@@ -1,0 +1,23 @@
+:root { --accent: #b66dff; --accent2: #29f0ff; --bg: #0e0b22; --p1: #29f0ff; --p2: #ff8a3d; }
+body { overflow: auto; }
+.app { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 8px; gap: 6px; }
+.bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-weight: 800; }
+.bar .grow { flex: 1; }
+.pill { background: rgba(18, 22, 50, .8); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: .9rem; white-space: nowrap; }
+.pill small { color: var(--muted); margin-right: 4px; }
+.pill.p1.on { border-color: var(--p1); box-shadow: 0 0 0 2px var(--p1) inset; }
+.pill.p2.on { border-color: var(--p2); box-shadow: 0 0 0 2px var(--p2) inset; }
+.turn { margin: 0; text-align: center; font-weight: 800; }
+.board { flex: 1; display: grid; gap: clamp(4px, 1.4vmin, 10px); align-content: center; justify-content: center; min-height: 0; }
+.card { position: relative; border: 0; padding: 0; background: transparent; perspective: 600px; aspect-ratio: 3 / 4; min-width: 0; }
+.card .in { position: absolute; inset: 0; transition: transform .35s; transform-style: preserve-3d; }
+.card.up .in, .card.matched .in { transform: rotateY(180deg); }
+.card .face { position: absolute; inset: 0; border-radius: 12px; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: grid; place-items: center; }
+.card .back { background: linear-gradient(135deg, #2b2066, #3b1f5e); border: 2px solid #4a3a8f; }
+.card .back::after { content: ""; width: 38%; aspect-ratio: 1; border-radius: 50%; border: 3px solid rgba(182, 109, 255, .5); }
+.card .front { background: #f4f2ff; transform: rotateY(180deg); border: 2px solid #d7d0ff; }
+.card .front svg { width: 72%; height: 72%; }
+.card.matched .front { background: #e6fff1; border-color: #3ddc84; opacity: .75; }
+.card:focus-visible { outline: 3px solid #ffe066; outline-offset: 3px; border-radius: 12px; }
+.stars { font-size: 2rem; color: var(--gold) !important; letter-spacing: .2em; margin: 0; }
+@media (prefers-reduced-motion: reduce) { .card .in { transition: none; } }

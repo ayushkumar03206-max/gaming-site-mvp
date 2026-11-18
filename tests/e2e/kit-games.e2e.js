@@ -46,6 +46,20 @@ const INTERACT = {
     const st = await frame.evaluate(() => GLDebug.state());
     assert.ok(st.wave >= 1 && (st.kills > 0 || st.score > 0), 'auto-fire destroyed enemies: ' + JSON.stringify(st));
   },
+  'memory-match': async (page, frame) => {
+    // one deliberate miss, then click every pair for real
+    const pairs = await frame.evaluate(() => GLDebug.pairsOf());
+    const a = pairs.indexOf(0), b = pairs.indexOf(1);
+    await frame.click(`.card[data-i="${a}"]`); await frame.click(`.card[data-i="${b}"]`);
+    await page.waitForTimeout(1100);
+    assert.strictEqual((await frame.evaluate(() => GLDebug.state())).moves, 1);
+    const seen = {};
+    pairs.forEach((p, i) => (seen[p] = seen[p] || []).push(i));
+    for (const [x, y] of Object.values(seen)) { await frame.click(`.card[data-i="${x}"]`); await frame.click(`.card[data-i="${y}"]`); }
+    await frame.waitForSelector('#over:not([hidden])', { timeout: 5000 });
+    const st = await frame.evaluate(() => GLDebug.state());
+    assert.ok(st.over && st.matched === st.pairs, JSON.stringify(st));
+  },
   'fruit-slice': async (page, frame) => {
     const b = await frameBox(page);
     for (let i = 0; i < 30; i++) {

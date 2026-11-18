@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Memory Match</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../_kit/gl-kit.css">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<main class="app" id="app" hidden>
+  <div class="bar">
+    <span class="pill" id="pMoves"><small>MOVES</small><span id="hMoves">0</span></span>
+    <span class="pill" id="pTime"><small>TIME</small><span id="hTime">0:00</span></span>
+    <span class="pill p1" id="pP1" hidden><small>P1</small><span id="hP1">0</span></span>
+    <span class="pill p2" id="pP2" hidden><small>P2</small><span id="hP2">0</span></span>
+    <span class="grow"></span>
+    <button type="button" class="icon-btn" data-mute></button>
+    <button type="button" class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+  </div>
+  <p class="turn" id="turn" hidden></p>
+  <div class="board" id="board" role="grid" aria-label="Cards"></div>
+</main>
+
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1 class="logo">MEMORY<span> MATCH</span></h1>
+    <p>Flip two cards at a time and find every matching pair.</p>
+    <div><p class="label">Board</p>
+      <div class="seg" role="group" aria-label="Board size">
+        <button type="button" data-level="easy" aria-pressed="true">Easy 4×3</button>
+        <button type="button" data-level="medium" aria-pressed="false">Medium 4×4</button>
+        <button type="button" data-level="hard" aria-pressed="false">Hard 6×5</button>
+      </div></div>
+    <div><p class="label">Players</p>
+      <div class="seg" role="group" aria-label="Players">
+        <button type="button" data-players="1" aria-pressed="true">Solo</button>
+        <button type="button" data-players="2" aria-pressed="false">2 players, one device</button>
+      </div></div>
+    <p class="best" id="bestTitle"></p>
+    <button type="button" class="big" id="playBtn" data-start>Deal cards</button>
+    <p class="hint"><span class="kbd-only">Arrow keys move, Enter/Space flips.</span><span class="touch">Tap a card to flip it.</span></p>
+  </div>
+</div>
+<div class="overlay" id="menu" hidden>
+  <div class="panel"><h2>Paused</h2>
+    <button type="button" class="big" id="resumeBtn">Resume</button>
+    <button type="button" class="ghost" id="redealBtn">New deal</button>
+    <button type="button" class="ghost" id="toTitleBtn">Change board or players</button></div>
+</div>
+<div class="overlay" id="over" hidden role="dialog" aria-labelledby="overTitle">
+  <div class="panel">
+    <h2 id="overTitle">All pairs found!</h2>
+    <p class="final" id="finalWrap"><span id="finalScore">0</span><small id="finalUnit">points</small></p>
+    <p class="stars" id="stars" aria-label=""></p>
+    <div class="stats"><div><b id="oMoves">0</b><span>moves</span></div><div><b id="oTime">0:00</b><span>time</span></div><div><b id="oStreak">0</b><span>best streak</span></div></div>
+    <p class="best" id="bestOver"></p>
+    <button type="button" class="big" id="againBtn">Play again</button>
+    <button type="button" class="ghost" id="toTitleBtn2">Change board or players</button>
+  </div>
+</div>
+<noscript><p>Memory Match needs JavaScript enabled.</p></noscript>
+<script src="../_kit/gl-kit.js"></script>
+<script src="memory-logic.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

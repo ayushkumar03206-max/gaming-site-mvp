@@ -120,6 +120,21 @@
       "reviewed_by": null,
       "reviewed_at": null,
       "evidence": "Written from scratch for this project. Graphics are drawn with the Canvas API and sounds generated with the Web Audio API. No third-party code, art, fonts or audio."
+    },
+    {
+      "id": "rights-memory-match",
+      "kind": "game",
+      "title": "Memory Match (code, 15 inline-SVG card symbols, synthesised sounds, thumbnail)",
+      "owner": "Gridlight Arcade",
+      "origin": "original",
+      "license": "proprietary-owned",
+      "license_url": null,
+      "source_url": null,
+      "third_party_components": [],
+      "status": "pending",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "evidence": "Written from scratch for this project. The card symbols are simple original SVG shapes defined in game.js. No third-party code, art, fonts or audio."
     }
   ]
 }
