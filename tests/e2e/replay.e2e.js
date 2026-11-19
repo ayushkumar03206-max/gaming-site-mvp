@@ -24,6 +24,7 @@ async function launch(page) {
   await page.click('[data-play]');
   const frame = await (await page.waitForSelector('[data-player] iframe')).contentFrame();
   await frame.waitForSelector('[data-start]');
+  await frame.waitForFunction(() => !!(window.GLKit && window.GLDebug)); // scripts load after the markup
   return frame;
 }
 
