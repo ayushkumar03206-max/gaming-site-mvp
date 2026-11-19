@@ -123,16 +123,21 @@ test('online: invite link opens the join form with the code filled in; leaving f
   } finally { await host.ctx.close(); }
 });
 
-test('online: without a reachable server the online button stays hidden (no fake multiplayer)', { skip }, async () => {
+test('online: without a reachable server the online button is never usable and ends hidden (no fake multiplayer)', { skip }, async () => {
   const ctx = await browser.newContext();
+  await ctx.addInitScript(() => { window.GL_MP_WAKE_MS = 6000; }); // shorten the cold-start wait
   const page = await ctx.newPage();
   await page.route(MP.replace(/\/$/, '') + '/health', r => r.abort());
   await page.goto(BASE + 'games/tic-tac-toe/index.html');
   await page.click('[data-play]');
   const frame = await (await page.waitForSelector('[data-player] iframe')).contentFrame();
   await frame.waitForFunction(() => !!window.GLDebug);
-  await page.waitForTimeout(1500);
-  assert.ok(await frame.isHidden('#onlineBtn'));
+  // while it may still be waking: either hidden or disabled, never clickable
+  for (let i = 0; i < 6; i++) {
+    assert.ok(await frame.evaluate(() => { const b = document.getElementById('onlineBtn'); return b.hidden || b.disabled; }));
+    await page.waitForTimeout(1000);
+  }
+  await frame.waitForSelector('#onlineBtn[hidden]', { state: 'attached', timeout: 20000 });
   await ctx.close();
 });
 
@@ -177,4 +182,20 @@ test('online chess: server-checked moves to checkmate; a page reload mid-game re
     await guest.frame.waitForSelector('#over:not([hidden])');
     assert.match(await guest.frame.textContent('#overTitle'), /You won/);
   } finally { await host.ctx.close(); await guest.ctx.close(); }
+});
+
+test('sleeping server (free host cold start): button shows a waking state, then enables', { skip }, async () => {
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await ctx.newPage();
+  let fails = 3; // the first /health checks fail, like a host that is still waking up
+  await ctx.route('**/health', route => (fails-- > 0 ? route.abort('connectionrefused') : route.continue()));
+  try {
+    await page.goto(BASE + 'games/chess/index.html');
+    await page.click('[data-play]');
+    const frame = await (await page.waitForSelector('[data-player] iframe')).contentFrame();
+    await frame.waitForSelector('#onlineBtn:not([hidden])[disabled]', { timeout: 10000 });
+    assert.match(await frame.textContent('#onlineBtn'), /Starting online server/);
+    await frame.waitForSelector('#onlineBtn:not([hidden]):not([disabled])', { timeout: 30000 });
+    assert.strictEqual((await frame.textContent('#onlineBtn')).trim(), 'Play with a friend online');
+  } finally { await ctx.close(); }
 });

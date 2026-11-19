@@ -173,7 +173,7 @@
   $('againBtn').addEventListener('click', function () { if (online) { GLMP.showLobby(); return; } newGame(); });
   $('newBtn').addEventListener('click', function () { if (online) { mode = 'play'; screens.show(null); return; } newGame(); });
   $('onlineBtn').addEventListener('click', startOnline);
-  if (window.GLMP) GLMP.available('chess').then(function (yes) { $('onlineBtn').hidden = !yes; if (yes && GLMP.inviteCode()) startOnline(); });
+  if (window.GLMP) GLMP.wireButton($('onlineBtn'), 'chess', function () { if (GLMP.inviteCode()) startOnline(); });
   $('menuBtn').addEventListener('click', function () {
     if (mode !== 'play') return;
     mode = 'menu'; clearTimeout(aiTimer);

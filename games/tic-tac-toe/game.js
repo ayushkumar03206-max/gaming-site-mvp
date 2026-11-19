@@ -85,9 +85,8 @@
       onMatch: onlineMatch, onExit: function () { online = null; toTitle(); } });
   }
   $('onlineBtn').addEventListener('click', startOnline);
-  if (window.GLMP) GLMP.available('tic-tac-toe').then(function (yes) {
-    $('onlineBtn').hidden = !yes;
-    if (yes && GLMP.inviteCode()) startOnline(); // opened from an invite link
+  if (window.GLMP) GLMP.wireButton($('onlineBtn'), 'tic-tac-toe', function () {
+    if (GLMP.inviteCode()) startOnline(); // opened from an invite link
   });
 
   function newRound() {

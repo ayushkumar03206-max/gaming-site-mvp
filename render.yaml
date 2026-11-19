@@ -1,0 +1,31 @@
+# Render Blueprint for the Gridlight Arcade multiplayer server (server/).
+# The static website stays on GitHub Pages; this only runs the Socket.IO room server.
+# In Render: New -> Blueprint -> pick this repo. No secrets are needed.
+#
+# The server reuses the browser games' rules modules (games/*/...-logic.js, chess-rules.js),
+# so it runs from the repo root instead of setting rootDir to server/.
+services:
+  - type: web
+    name: gridlight-mp
+    runtime: node
+    plan: free
+    branch: main
+    buildCommand: cd server && npm ci --omit=dev
+    startCommand: cd server && npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - server/**
+        - games/**/*-logic.js
+        - games/**/*-rules.js
+        - render.yaml
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: ALLOWED_ORIGINS
+        value: https://ayushkumar03206-max.github.io
+      - key: TRUST_PROXY
+        value: "1"

@@ -52,6 +52,21 @@ choosing.** Free tiers often put idle services to sleep, which means the first v
 the health check may fail briefly; the site then simply hides online play. If a paid plan is needed, decide that
 before creating the account; nothing in this repo requires a paid service.
 
+### Render (free plan) — the chosen host
+
+`render.yaml` at the repo root is a Render Blueprint for this server: free plan, Node 22, the build/start commands
+above, `/health` as the health check, and the environment variables (no secrets). It redeploys only when
+`server/**`, the shared rules files or `render.yaml` change, so ordinary site pushes do not restart rooms.
+
+1. Sign in at render.com with GitHub (the owner does this; no card is needed for the free plan).
+2. Give Render access to this repository only.
+3. **New → Blueprint**, pick this repository, keep the service name `gridlight-mp`, and apply.
+4. When the deploy is live, open `https://<service>.onrender.com/health`.
+
+Free-plan behaviour: the service sleeps after about 15 minutes without traffic and needs up to about a minute to
+wake. The game shows a disabled "Starting online server… (up to a minute)" button while it keeps checking
+`/health` (up to 100 s), then enables it, or hides it if the server never answers.
+
 ### After deploying
 
 1. Open `https://<your-server>/health`: it must return `{"ok":true,...}`.

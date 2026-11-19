@@ -22,13 +22,42 @@
   // ---------------------------------------------------------------- availability
   M.configured = function (gameId) { return !!CFG.serverUrl && CFG.games.indexOf(gameId) >= 0; };
   /** Resolves true only when online play is configured for this game AND the server answers /health. */
-  M.available = function (gameId) {
-    if (!M.configured(gameId) || !window.fetch) return Promise.resolve(false);
+  function probe(ms) {
     var ctl = window.AbortController ? new AbortController() : null;
-    var t = setTimeout(function () { if (ctl) ctl.abort(); }, 4000);
+    var t = setTimeout(function () { if (ctl) ctl.abort(); }, ms);
     return fetch(CFG.serverUrl + '/health', { signal: ctl ? ctl.signal : undefined, cache: 'no-store' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) { clearTimeout(t); return !!(j && j.ok); }, function () { clearTimeout(t); return false; });
+  }
+  /** A free-tier host may be asleep: after a failed quick check, keep trying for up to WAKE_MS. */
+  M.WAKE_MS = window.GL_MP_WAKE_MS || 100000; // tests may shorten it
+  M.available = function (gameId, onWaking) {
+    if (!M.configured(gameId) || !window.fetch) return Promise.resolve(false);
+    return probe(4000).then(function (ok) {
+      if (ok) return true;
+      if (onWaking) onWaking();
+      var until = Date.now() + M.WAKE_MS;
+      return new Promise(function (res) {
+        (function again() {
+          probe(15000).then(function (ok2) {
+            if (ok2) return res(true);
+            if (Date.now() >= until) return res(false);
+            setTimeout(again, 4000);
+          });
+        })();
+      });
+    });
+  };
+  /** Wires a game's "Play with a friend online" button: hidden when online play is off, a disabled
+   *  "waking" label while a sleeping server starts, enabled once /health answers. */
+  M.wireButton = function (btn, gameId, onReady) {
+    var label = btn.textContent;
+    M.available(gameId, function () {
+      btn.hidden = false; btn.disabled = true; btn.textContent = 'Starting online server… (up to a minute)';
+    }).then(function (yes) {
+      btn.disabled = false; btn.textContent = label; btn.hidden = !yes;
+      if (yes && onReady) onReady();
+    });
   };
 
   function loadClient() {
