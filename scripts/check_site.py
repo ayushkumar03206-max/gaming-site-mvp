@@ -52,6 +52,10 @@ class PageParser(HTMLParser):
             self.ext_scripts.append(a["src"])
 
 
+# Third-party scripts the site is allowed to load (Google AdSense, configured in data/site.json).
+ALLOWED_SCRIPT_PREFIXES = ("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",)
+
+
 def is_external(url: str) -> bool:
     return url.startswith(("http://", "https://", "//", "mailto:", "tel:", "data:", "javascript:")) or url.startswith("#")
 
@@ -85,6 +89,8 @@ def check(out: Path, base_path: str | None = None) -> list[str]:
         if p.img_no_alt:
             problems.append(f"{rel}: {p.img_no_alt} <img> without alt")
         for s in p.ext_scripts:
+            if s.startswith(ALLOWED_SCRIPT_PREFIXES):
+                continue
             problems.append(f"{rel}: external script {s}")
         for tag, url in p.links:
             if is_external(url):

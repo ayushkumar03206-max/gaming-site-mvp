@@ -1,8 +1,8 @@
 {
   "name": "Gridlight Arcade",
   "tagline": "Original browser games. No downloads, no sign-up.",
-  "base_url": "https://ayushkumar03206-max.github.io/gaming-site-mvp",
-  "base_path": "/gaming-site-mvp/",
+  "base_url": "https://gridlightarcade.games",
+  "base_path": "/",
   "contact_email": "hello@example.com",
   "operator": "Gridlight Arcade",
   "default_locale": "en",
@@ -10,5 +10,9 @@
   "multiplayer": {
     "server_url": "https://gridlight-mp.onrender.com",
     "_note": "Set server_url to the deployed multiplayer server (https://...) to enable online play. Leave empty until the server is live."
+  },
+  "adsense": {
+    "client": "ca-pub-8005198757488209",
+    "_note": "Google AdSense publisher ID. Adds the AdSense script to every page and writes ads.txt. Set client to empty to turn ads off."
   }
 }

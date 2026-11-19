@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import sys
 from datetime import date, datetime
@@ -85,11 +86,24 @@ LOGO_SVG = (
 )
 
 
+def adsense_client(ctx: Ctx) -> str:
+    """AdSense publisher ID from data/site.json, or "" when ads are off. Never on preview builds."""
+    client = ((ctx.site.get("adsense") or {}).get("client") or "").strip()
+    if ctx.preview or not re.fullmatch(r"ca-pub-\d{10,20}", client):
+        return ""
+    return client
+
+
 def head(ctx: Ctx, root: str, title: str, desc: str, rel_path: str, extra_head: str = "", og_image: str | None = None) -> str:
     site = ctx.site
     full_title = title if title == site["name"] else f"{title} | {site['name']}"
     canonical = ctx.url(rel_path)
     og = f'<meta property="og:image" content="{e(ctx.url(og_image))}">' if og_image else ""
+    ads = ""
+    client = adsense_client(ctx)
+    if client:
+        ads = (f'<meta name="google-adsense-account" content="{e(client)}">\n'
+               f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={e(client)}" crossorigin="anonymous"></script>')
     return f"""<!doctype html>
 <html lang="{e(site.get('default_locale', 'en'))}">
 <head>
@@ -108,6 +122,7 @@ def head(ctx: Ctx, root: str, title: str, desc: str, rel_path: str, extra_head: 
 <meta name="theme-color" content="#0b0d1a">{'<meta name="robots" content="noindex">' if ctx.preview else ''}
 <link rel="icon" href="{root}assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{root}assets/site.css">
+{ads}
 {extra_head}
 </head>"""
 
@@ -537,9 +552,18 @@ def build_info_pages(ctx: Ctx) -> None:
 <li>Other players in your room see your display name. Please don't use your full name or other personal details as a display name.</li>
 <li>The multiplayer server is hosted by Render (render.com). Like most hosts, Render may keep technical logs such as IP addresses and request times for security and reliability.</li></ul>
 """
+    ads_section = ""
+    if adsense_client(ctx):
+        ads_section = """
+<h2>Advertising</h2>
+<p>We use Google AdSense to show ads. Google and its partners, as third-party vendors, use cookies and similar technologies to serve ads based on your prior visits to this website and other websites. Google's use of advertising cookies enables it and its partners to serve ads to you based on your visits to this site and/or other sites on the internet.</p>
+<ul><li>You can opt out of personalised advertising in <a href="https://adssettings.google.com" rel="noopener">Google Ads Settings</a>, or opt out of some third-party vendors' cookies at <a href="https://www.aboutads.info/choices/" rel="noopener">aboutads.info</a>.</li>
+<li>Learn <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">how Google uses information from sites that use its services</a>.</li>
+<li>Visitors in the European Economic Area, the UK and Switzerland are asked for consent through Google's consent message before personalised ads are shown.</li></ul>
+"""
     text_page(ctx, "privacy", "Privacy policy", "What data this site stores and why.", f"""
 <p class="muted">Last updated {updated}. This is a template. Have it reviewed for your jurisdiction (for example GDPR, UK GDPR or India's DPDP Act) before launch.</p>
-<h2>Summary</h2><p>No accounts. No advertising trackers. Game progress stays in your own browser.</p>
+<h2>Summary</h2><p>No accounts. Game progress stays in your own browser. {"The site is free because it shows ads from Google." if adsense_client(ctx) else "No advertising trackers."}</p>
 <h2>Data stored on your device</h2>
 <p>We use your browser's <code>localStorage</code> for strictly functional purposes:</p>
 <ul><li>Game progress and high scores (for example unlocked levels and best scores).</li>
@@ -548,7 +572,7 @@ def build_info_pages(ctx: Ctx) -> None:
 <p>You can clear this at any time by clearing site data in your browser.</p>
 <h2>Optional analytics</h2>
 <p>Optional analytics scripts are only loaded if you opt in through <button type="button" class="linklike" data-consent-open>Privacy settings</button>. At the moment no optional scripts are enabled.</p>
-{online_section}<h2>Server logs</h2><p>Our hosting provider may keep standard access logs (IP address, time, page requested) for security and reliability.</p>
+{ads_section}{online_section}<h2>Server logs</h2><p>Our hosting provider may keep standard access logs (IP address, time, page requested) for security and reliability.</p>
 <h2>Children</h2><p>Our games are designed to be suitable for a general audience. We don't knowingly collect personal data from anyone.</p>
 <h2>Contact</h2><p>Questions: {mail}.</p>""")
 
@@ -657,6 +681,10 @@ def build_meta(ctx: Ctx) -> None:
     (ctx.out / "robots.txt").write_text(
         f"User-agent: *\n{'Disallow: /' if ctx.preview else 'Allow: /'}\nSitemap: {ctx.site['base_url'].rstrip('/')}/sitemap.xml\n", encoding="utf-8")
     (ctx.out / ".nojekyll").write_text("", encoding="utf-8")
+    client = adsense_client(ctx)
+    if client:
+        (ctx.out / "ads.txt").write_text(
+            f"google.com, {client.removeprefix('ca-')}, DIRECT, f08c47fec0942fa0\n", encoding="utf-8")
 
 
 def build(out: Path, data_dir: Path = None, strict: bool = False, today: date | None = None,
