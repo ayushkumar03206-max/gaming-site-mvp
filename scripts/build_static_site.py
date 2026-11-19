@@ -77,13 +77,9 @@ class Ctx:
 # --------------------------------------------------------------------------
 # Building blocks
 # --------------------------------------------------------------------------
-LOGO_SVG = (
-    '<svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true">'
-    '<rect x="2" y="2" width="28" height="28" rx="8" fill="url(#lg)"/>'
-    '<path d="M9 11h6v6H9zM17 15h6v6h-6zM9 19h4v4H9zM19 9h4v4h-4z" fill="#0b0d1a"/>'
-    '<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">'
-    '<stop offset="0" stop-color="#29f0ff"/><stop offset="1" stop-color="#ff3fb4"/></linearGradient></defs></svg>'
-)
+def logo(ctx: Ctx, root: str) -> str:
+    """Brand logo (site_src/logo.webp, 357x96: icon + "Gridlight Arcade" wordmark). The alt text carries the name."""
+    return f'<img class="logo" src="{root}assets/logo.webp" width="357" height="96" alt="{e(ctx.site["name"])}">'
 
 
 def adsense_client(ctx: Ctx) -> str:
@@ -98,7 +94,7 @@ def head(ctx: Ctx, root: str, title: str, desc: str, rel_path: str, extra_head: 
     site = ctx.site
     full_title = title if title == site["name"] else f"{title} | {site['name']}"
     canonical = ctx.url(rel_path)
-    og = f'<meta property="og:image" content="{e(ctx.url(og_image))}">' if og_image else ""
+    og = f'<meta property="og:image" content="{e(ctx.url(og_image or "assets/og-image.png"))}">'
     ads = ""
     client = adsense_client(ctx)
     if client:
@@ -120,7 +116,8 @@ def head(ctx: Ctx, root: str, title: str, desc: str, rel_path: str, extra_head: 
 {og}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0b0d1a">{'<meta name="robots" content="noindex">' if ctx.preview else ''}
-<link rel="icon" href="{root}assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{root}assets/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="{root}assets/icon-180.png">
 <link rel="stylesheet" href="{root}assets/site.css">
 {ads}
 {extra_head}
@@ -141,7 +138,7 @@ def header(ctx: Ctx, root: str, active: str) -> str:
 {banner}<a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="{root}index.html">{LOGO_SVG}<span>{e(ctx.site['name'])}</span></a>
+    <a class="brand" href="{root}index.html">{logo(ctx, root)}</a>
     <form class="search" role="search" action="{root}search/index.html" method="get">
       <label class="sr" for="q">Search games</label>
       <input id="q" name="q" type="search" placeholder="Search games or categories" autocomplete="off">
@@ -167,7 +164,7 @@ def footer(ctx: Ctx, root: str, extra_js: str = "") -> str:
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div>
-      <a class="brand" href="{root}index.html">{LOGO_SVG}<span>{e(ctx.site['name'])}</span></a>
+      <a class="brand" href="{root}index.html">{logo(ctx, root)}</a>
       <p class="muted">{e(ctx.site['tagline'])}</p>
     </div>
     <div><h2>Play</h2><ul>

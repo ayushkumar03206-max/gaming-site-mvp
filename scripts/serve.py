@@ -12,9 +12,16 @@ Usage:
 from __future__ import annotations
 
 import functools
+import mimetypes
 import sys
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+
+
+# Windows' registry often lacks these, which makes Chrome download the file instead of showing it
+mimetypes.add_type("image/webp", ".webp")
+mimetypes.add_type("image/svg+xml", ".svg")
+mimetypes.add_type("text/javascript", ".js")
 
 
 class Server(ThreadingHTTPServer):
