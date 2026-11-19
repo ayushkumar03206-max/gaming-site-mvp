@@ -1,0 +1,213 @@
+{
+  "_comment": "Extra editorial content for game pages: strategy tips and a short FAQ. Keyed by game slug. Keep every statement consistent with the game's own rules in games.json.",
+  "pathforge": {
+    "tips": [
+      "Count both routes before every turn. If your shortest path is already shorter than your rival's, moving is usually better than forging.",
+      "Save blocks for the endgame. A single block placed when your rival is two steps from their goal can add several moves to their route.",
+      "Place blocks where they force a long detour, such as next to an existing wall, rather than in open space where the runner simply steps around.",
+      "Spark cells are worth a short detour early in the game, because every extra block becomes more valuable later.",
+      "Use the H key to show your shortest path and check that a block you are about to forge really lengthens your rival's route."
+    ],
+    "faq": [
+      ["Can I trap my rival completely?", "No. A block that would cut off every route to a goal is not allowed, and those cells are not highlighted. You can only make the route longer."],
+      ["What does vaulting do?", "When your rival stands directly next to you and the cell behind them is free, you can jump straight over them. It is a quick way to get past a runner who is blocking a corridor."],
+      ["How do I play with a friend?", "Choose the two-player mode and take turns on the same device. Cyan heads for the top row and magenta for the bottom row."]
+    ]
+  },
+  "neon-dodge": {
+    "tips": [
+      "Stay near the middle of the arena. It gives you room to escape in every direction when bars and shards arrive together.",
+      "Watch for the flashing laser warning and move away early. Waiting until the last moment gets harder as the game speeds up.",
+      "Only chase an energy core when the path to it is clear. A +50 bonus is not worth ending the run.",
+      "Make small, controlled movements. Big sweeps across the arena often steer you straight into the next obstacle.",
+      "Pause with P or Esc if you need a break. The pace rises every 15 seconds, so a fresh focus helps on long runs."
+    ],
+    "faq": [
+      ["How is the score calculated?", "Your score grows every second you survive, and each energy core you collect adds a 50-point bonus."],
+      ["Does the game get harder?", "Yes. The speed increases every 15 seconds, so obstacles arrive faster the longer you last."],
+      ["Is my best score saved?", "Yes. Your personal best is stored in your browser on this device."]
+    ]
+  },
+  "chroma-shift": {
+    "tips": [
+      "Pick a target colour early. Usually the colour that already covers most of the board is the cheapest one to finish with.",
+      "Remember that every tap changes five tiles: the one you tap and its four neighbours. Corner and edge tiles change fewer tiles, which makes them useful for small fixes.",
+      "Work row by row. Fixing the top rows first and pushing the remaining differences downward keeps the board easier to read.",
+      "Tapping the same tile repeatedly cycles it around the whole colour wheel, so sometimes going 'past' a colour is the shortest route.",
+      "Try a level once without hints. A hint helps when you are stuck, but it limits that level to two stars."
+    ],
+    "faq": [
+      ["Do I have to match a particular colour?", "No. Any colour counts, as long as every tile on the board ends up the same."],
+      ["How do stars work?", "Clearing a level within the move limit completes it, and using fewer moves earns more stars. Using a hint caps the level at two stars."],
+      ["Can I play if I find some colours hard to tell apart?", "Yes. Every colour has its own symbol, so you can solve every level by symbol alone."]
+    ]
+  },
+  "highway-rush": {
+    "tips": [
+      "Look at the rows furthest up the screen, not the car right in front of you. At high speed you need to pick your gap early.",
+      "Avoid zig-zagging across all four lanes. Moving one lane at a time keeps you in control and makes the next gap easier to reach.",
+      "Near misses are worth +5 each, so passing close to cars in the next lane adds up, but only take them when the lane ahead is clear.",
+      "Coins are worth +25. Collect them when they sit in your planned lane, and skip ones that force a risky swerve.",
+      "Each difficulty keeps its own best score, so practise reading traffic on an easier level before chasing a record on the hardest one."
+    ],
+    "faq": [
+      ["Is there always a way through the traffic?", "Yes. Every row of traffic leaves at least one gap that you can reach."],
+      ["How is my score worked out?", "Your score is the distance you drive in metres plus bonuses: +25 for each coin and +5 for each near miss."],
+      ["Does the car get faster?", "Yes. Your speed keeps increasing the longer you drive, which is what makes long runs difficult."]
+    ]
+  },
+  "brick-breaker": {
+    "tips": [
+      "Use the edges of the paddle to aim. Hitting the ball off-centre sends it sideways, which is the best way to reach bricks behind steel blocks.",
+      "Try to get the ball above the bricks. Once it is bouncing between the top wall and the bricks it clears many of them without you touching it.",
+      "Prioritise the multi-ball and slower-ball power-ups when several fall at once. Extra balls clear levels fast, and a slower ball buys you time.",
+      "Do not chase every power-up. Losing your last ball while reaching for one costs a life.",
+      "Steel bricks never break, so plan angles around them instead of hitting them repeatedly."
+    ],
+    "faq": [
+      ["What do the brick colours mean?", "Orange bricks break in one hit, yellow in two and red in three. Grey steel bricks never break, and green bricks always drop a power-up."],
+      ["What do the power-ups do?", "W makes the paddle wider, M adds two extra balls, S slows the ball down and the heart gives an extra life, up to five lives."],
+      ["How do I finish a level?", "Clear every breakable brick. Steel bricks do not need to be broken."]
+    ]
+  },
+  "fruit-slice": {
+    "tips": [
+      "Wait for fruit to bunch together near the top of its arc, then slice several in one quick swipe to build your combo.",
+      "Your combo can reach x5, so a single swipe through five pieces scores far more than five separate slices.",
+      "Keep your swipes short and deliberate when bombs are on screen. Hitting one costs five seconds and resets your combo.",
+      "Star fruit is worth three points before the multiplier, so include it in combos whenever you can.",
+      "Bombs appear more often later in the round, so take more risks in the first half and play carefully near the end."
+    ],
+    "faq": [
+      ["How long is a round?", "Each round lasts 60 seconds. Hitting a bomb takes five seconds off the clock."],
+      ["How do combos work?", "Slice fruit in quick succession: the second piece scores double, the third triple, and so on up to five times."],
+      ["Is my best score saved?", "Yes. Your best score is stored in your browser on this device."]
+    ]
+  },
+  "space-shooter": {
+    "tips": [
+      "Pick one weapon and keep collecting it. Grabbing the same pick-up again upgrades it, up to level 3.",
+      "The pulse cannon pierces through enemies, which makes it strong against lines of drones and armoured tanks.",
+      "Stay low on the screen and move sideways to dodge. You have more time to react to zig-zaggers' shots from further away.",
+      "Save shields and repair kits for boss waves when you can. Every fifth wave is a boss, and it changes its attack when its health drops below half.",
+      "Avoid heavy hits: they can knock a level off your weapon, so dodging well also protects your firepower."
+    ],
+    "faq": [
+      ["Do I have to keep pressing fire?", "No. Auto-fire is on by default. You can turn it off on the title screen or with F, and then fire with Space."],
+      ["What do the pick-up letters mean?", "B is the rapid blaster, S the wide spread gun, P the piercing pulse cannon, + is a repair kit and O is a shield."],
+      ["When do bosses appear?", "Every fifth wave. When a boss's health bar falls below half, it switches to a second attack pattern."]
+    ]
+  },
+  "memory-match": {
+    "tips": [
+      "Flip cards in a fixed order, row by row, so it is easier to remember where each symbol was.",
+      "When you turn over a new card, check whether you have already seen its match before flipping a random second card.",
+      "Say the symbol and its position to yourself, for example 'star, top left'. Naming things helps memory.",
+      "Start with the Easy 4×3 board to learn a system, then move up to Medium and Hard.",
+      "In two-player games, remember the cards your friend reveals too. Their misses are free information for you."
+    ],
+    "faq": [
+      ["How is the solo score calculated?", "Fewer moves and a faster time give a higher score. Finishing within the move target earns three stars."],
+      ["How does two-player mode work?", "Players take turns on one device. Finding a pair earns a point and another turn; a miss passes the turn. Whoever finds the most pairs wins."],
+      ["How big are the boards?", "Easy is 4×3 with 6 pairs, Medium is 4×4 with 8 pairs and Hard is 6×5 with 15 pairs."]
+    ]
+  },
+  "tic-tac-toe": {
+    "tips": [
+      "If you move first, take the centre or a corner. Both give you the most ways to make three in a row.",
+      "Always check whether your opponent can win on their next move, and block it before going for your own line.",
+      "Look for a 'fork': a move that creates two possible winning lines at once. Your opponent can only block one of them.",
+      "When your opponent takes a corner first, answering in the centre is the safest reply.",
+      "Against Hard, the computer plays perfectly. A draw means you made no mistakes."
+    ],
+    "faq": [
+      ["Can I beat the Hard computer?", "No. Hard plays perfectly and never loses, so a draw is the best possible result."],
+      ["Who goes first?", "The first move alternates every round, so both players get the same number of starts."],
+      ["How do I play with a friend online?", "Create a private room, send your friend the 6-character code or invite link, and both press Ready. The host then starts the game, and the server checks every move."]
+    ]
+  },
+  "snake-arena": {
+    "tips": [
+      "Keep your snake moving along the walls in long loops when it gets big. It leaves open space in the middle and avoids tight turns.",
+      "Plan an escape route before you grab food in a corner, especially as the snake gets longer.",
+      "Gold bonus food is worth +50 points but adds three segments at once, so make sure you have room before taking it.",
+      "The snake speeds up every four meals. Practise on relaxed speed to learn safe paths before trying classic or fast.",
+      "Use pause (P, Space or Esc) to look at the board when the arena is crowded."
+    ],
+    "faq": [
+      ["What ends the game?", "Hitting a wall or any part of your own body. You cannot turn straight back into yourself."],
+      ["How do points work?", "Each normal meal is worth 10 points and adds one segment. Every fifth meal a gold bonus appears for a few seconds, worth 50 points and three segments."],
+      ["Are scores saved for each speed?", "Yes. Relaxed, classic and fast each keep their own best score on your device."]
+    ]
+  },
+  "tile-fusion": {
+    "tips": [
+      "Keep your highest tile in one corner and build the rest of the row next to it in descending order.",
+      "Mainly use two or three directions. Pressing the fourth direction often pulls your big tile out of its corner.",
+      "Keep at least one row or column full so it does not slide unexpectedly when you move.",
+      "Think one move ahead about where the new 2 or 4 might appear, and avoid leaving a single empty cell next to your big tiles.",
+      "Save your three undos for real mistakes late in the game, when one bad move can end a long run."
+    ],
+    "faq": [
+      ["What happens when I reach 2048?", "You win the game, and you can keep playing afterwards to push your score higher."],
+      ["How is the score calculated?", "Every time two tiles fuse, the value of the new tile is added to your score."],
+      ["Will I lose my game if I close the page?", "No. An unfinished game is saved on your device so you can continue later."]
+    ]
+  },
+  "tower-builder": {
+    "tips": [
+      "Watch the block's rhythm for one or two passes before tapping. Timing a regular movement is easier than reacting to it.",
+      "Tap when the block is directly above the tower, not when it is about to arrive. Your reaction time adds a small delay.",
+      "Aim for perfect drops: they keep your width and three in a row make your block wider again.",
+      "When your block becomes narrow, focus on safe drops rather than perfect ones. Any overlap keeps the game going.",
+      "The blocks speed up as the tower grows, so stay calm and keep a steady tapping rhythm."
+    ],
+    "faq": [
+      ["What counts as a perfect drop?", "A block that lands almost exactly on top of the one below. It keeps the full width and earns a streak bonus of up to +5."],
+      ["How can I make my block wider again?", "Land three perfect drops in a row."],
+      ["When does the game end?", "When a block misses the tower completely."]
+    ]
+  },
+  "bubble-shooter": {
+    "tips": [
+      "Aim for bubbles that hold up large groups. Popping them makes everything below fall for +20 per bubble.",
+      "Use the side walls for bank shots. The dotted guide shows exactly where a bounced shot will travel.",
+      "Swap your current bubble with the next one when the current colour has no good target.",
+      "Watch the shot counter: five shots in a row without a pop lower the ceiling, so do not waste shots near the red line.",
+      "Save bomb bubbles for dense clusters, and use rainbow bubbles to complete a group that is one bubble short."
+    ],
+    "faq": [
+      ["When does the game end?", "When any bubble reaches the red line at the bottom of the board."],
+      ["What do the special bubbles do?", "A bomb bubble pops everything it touches. A rainbow bubble takes the colour of the first bubble it touches."],
+      ["Can I play if I find some colours hard to tell apart?", "Yes. Every colour also has its own symbol."]
+    ]
+  },
+  "car-parking": {
+    "tips": [
+      "Drive slowly. Small, controlled movements make it much easier to line up with the bay.",
+      "Remember the car turns with its front wheels. Swing wide before a turn so the back of the car clears corners and other cars.",
+      "Use reverse to straighten up. A short reverse with the wheels turned can fix a crooked approach.",
+      "For parallel parking, stop beside the bay, reverse with full steering, then straighten the wheels as the car slides in.",
+      "Get a clean finish first, then replay a level to beat the par time for three stars."
+    ],
+    "faq": [
+      ["How do I complete a level?", "Drive into the green bay marked P, line the car up with it and stop. Hold still for a moment to finish."],
+      ["What fails a level?", "Touching a wall, a barrier or another car. Press R or Retry to start again instantly."],
+      ["Can every level be solved?", "Yes. Every level has been checked by an automatic solver to make sure it can be completed."]
+    ]
+  },
+  "chess": {
+    "tips": [
+      "In the opening, control the centre with your pawns and develop your knights and bishops before moving the same piece twice.",
+      "Castle early to keep your king safe and connect your rooks.",
+      "Before every move, check which of your pieces are attacked and which are undefended.",
+      "Tap a piece to see its legal moves. It is an easy way to spot captures and checks you might otherwise miss.",
+      "Start against the casual computer and move up to normal and strong as your play improves."
+    ],
+    "faq": [
+      ["Are all the official rules included?", "Yes: castling, en passant, promotion to any piece, check, checkmate, stalemate, and draws by threefold repetition, the 50-move rule and insufficient material."],
+      ["How does undo work against the computer?", "Undo takes back your last move and the computer's reply, so it is your turn again."],
+      ["Can I play chess with a friend online?", "Yes. Create a private room and share the code or invite link. Colours swap every game, and you can offer a draw or resign."]
+    ]
+  }
+}

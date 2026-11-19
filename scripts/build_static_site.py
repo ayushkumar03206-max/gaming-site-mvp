@@ -51,6 +51,8 @@ class Ctx:
         self.categories = load("categories.json")["categories"]
         self.cat_by_slug = {c["slug"]: c for c in self.categories}
         self.tracking = load("tracking.json")
+        guides_path = DATA / "game_guides.json"
+        self.guides = json.loads(guides_path.read_text(encoding="utf-8")) if guides_path.exists() else {}
         gate = rights_gate.evaluate(load("games.json"), load("assets.json"), allow_pending=preview_pending)
         self.gate = gate
         self.games = sorted(gate.publishable, key=lambda g: (g.get("date_added", ""), g["title"]), reverse=True)
@@ -430,6 +432,13 @@ def build_game_pages(ctx: Ctx) -> None:
         slug = g["slug"]
         cats = "".join(f'<a class="chip" href="{root}categories/{c}/index.html">{e(cat_name(ctx, c))}</a>' for c in g["categories"])
         steps = "".join(f"<li>{e(s)}</li>" for s in g.get("instructions", []))
+        guide = ctx.guides.get(slug) or {}
+        guide_html = ""
+        if guide.get("tips"):
+            guide_html += f"<h2>Tips &amp; strategy</h2>\n    <ul class=\"tips\">{''.join(f'<li>{e(t)}</li>' for t in guide['tips'])}</ul>"
+        if guide.get("faq"):
+            guide_html += f"\n    <h2>{e(g['title'])} FAQ</h2>\n    <div class=\"faq\">" + "".join(
+                f"<h3>{e(q)}</h3><p>{e(a)}</p>" for q, a in guide["faq"]) + "</div>"
         rec = ctx.assets.get(g["rights_id"], {})
         related = related_for(ctx, g)
         ld = {"@context": "https://schema.org", "@type": "VideoGame", "name": g["title"], "description": g["description"],
@@ -472,6 +481,7 @@ def build_game_pages(ctx: Ctx) -> None:
     <ol class="steps">{steps}</ol>
     <h2>Controls</h2>
     <dl class="controls"><dt>Desktop</dt><dd>{e(g['controls']['desktop'])}</dd><dt>Mobile &amp; tablet</dt><dd>{e(g['controls']['mobile'])}</dd></dl>
+    {guide_html}
   </article>
   <aside class="detail-side">
     <h2>Game details</h2>
@@ -605,7 +615,11 @@ def build_info_pages(ctx: Ctx) -> None:
         ("Why don't you show play counts or ratings?", "We won't display numbers we can't verify. Sections like “Trending” are picked by our team and labelled that way."),
         ("A game won't load. What can I do?", "Press “Try again”, then reload the page. If it still fails, tell us your browser and device via the Contact page."),
         ("Can I put your games on my website?", "Not without permission. Contact us about licensing."),
+        ("Who makes these games?", "Our own small team designs and codes every game. Each game page lists who made it and links to its rights record on the Game licensing page."),
+        ("How often are new games added?", "We add a game when it is finished, tested on desktop and mobile, and has passed our rights review. New games are marked “New” for their first weeks on the site."),
     ]
+    if adsense_client(ctx):
+        faqs.append(("Why are there ads?", "Ads from Google keep every game free to play. Ads are shown on the website pages, not inside the games while you play. See the Privacy policy for how ad cookies work and how to opt out of personalised ads."))
     items = "".join(f"<details><summary>{e(q)}</summary><p>{e(a)}</p></details>" for q, a in faqs)
     ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs]}

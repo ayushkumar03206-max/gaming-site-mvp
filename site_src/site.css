@@ -202,6 +202,9 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
 .detail-main h2 + p, .detail-main ol { color: #d4d8f5; }
 .detail-main h2:not(:first-child) { margin-top: 1.2em; }
 .steps { padding-left: 1.3em; display: grid; gap: 6px; }
+.tips { padding-left: 1.3em; display: grid; gap: 6px; color: #d4d8f5; }
+.faq h3 { font-size: 1rem; margin: 1em 0 .3em; }
+.faq p { color: #d4d8f5; margin: 0; }
 .controls, .facts-list { display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; margin: 0; }
 .controls dt, .facts-list dt { font-weight: 700; color: var(--muted); }
 .controls dd, .facts-list dd { margin: 0; }
