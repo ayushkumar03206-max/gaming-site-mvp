@@ -113,7 +113,10 @@ test('car parking: 3 players take turns on the same level, then a ranking', asyn
   const rows = await rankRows(frame);
   assert.strictEqual(rows.length, 3);
   assert.match(rows[2], /Player 2.*Crashed/);
-  assert.match(await frame.textContent('#gl-party-res h2'), /Player 1 wins/, 'player 1 parked faster');
+  // the winner is whichever parked player had the lower recorded time
+  const runs = (await st(frame)).runs, fastest = runs[0].time <= runs[2].time ? 1 : 3;
+  assert.match(await frame.textContent('#gl-party-res h2'), new RegExp('Player ' + fastest + ' wins'), JSON.stringify(runs));
+  assert.match(rows[0], new RegExp('Player ' + fastest));
   assert.deepStrictEqual(errors, []);
   await ctx.close();
 });
