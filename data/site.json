@@ -8,7 +8,7 @@
   "default_locale": "en",
   "new_game_window_days": 60,
   "multiplayer": {
-    "server_url": "",
+    "server_url": "https://gridlight-mp.onrender.com",
     "_note": "Set server_url to the deployed multiplayer server (https://...) to enable online play. Leave empty until the server is live."
   }
 }

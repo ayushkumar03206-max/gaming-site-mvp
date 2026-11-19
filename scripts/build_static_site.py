@@ -518,6 +518,17 @@ def build_info_pages(ctx: Ctx) -> None:
 <p class="callout">Email: {mail}</p>
 <p class="muted small">We don't run a contact form, so we don't store your message on this website.</p>""")
 
+    online_section = ""
+    if (ctx.site.get("multiplayer") or {}).get("server_url"):
+        online_section = """
+<h2>Online play with friends</h2>
+<p>Some games let you play with a friend online. This only happens if you choose “Play with a friend online”. When you do:</p>
+<ul><li>Your browser connects to our multiplayer server. The server receives the <strong>display name</strong> you type (it does not need to be your real name), the room code, your moves, and, like any internet connection, your <strong>IP address</strong>.</li>
+<li>Rooms exist only in the server's memory. They are deleted about 10 minutes after everyone has left, and in any case after 3 hours. We do not keep match history or store your moves in a database.</li>
+<li>The server does not use cookies. Your browser remembers your display name in <code>localStorage</code>, and a temporary reconnect key in <code>sessionStorage</code> (deleted when you close the tab) so you can rejoin after a dropped connection.</li>
+<li>Other players in your room see your display name. Please don't use your full name or other personal details as a display name.</li>
+<li>The multiplayer server is hosted by Render (render.com). Like most hosts, Render may keep technical logs such as IP addresses and request times for security and reliability.</li></ul>
+"""
     text_page(ctx, "privacy", "Privacy policy", "What data this site stores and why.", f"""
 <p class="muted">Last updated {updated}. This is a template. Have it reviewed for your jurisdiction (for example GDPR, UK GDPR or India's DPDP Act) before launch.</p>
 <h2>Summary</h2><p>No accounts. No advertising trackers. Game progress stays in your own browser.</p>
@@ -529,7 +540,7 @@ def build_info_pages(ctx: Ctx) -> None:
 <p>You can clear this at any time by clearing site data in your browser.</p>
 <h2>Optional analytics</h2>
 <p>Optional analytics scripts are only loaded if you opt in through <button type="button" class="linklike" data-consent-open>Privacy settings</button>. At the moment no optional scripts are enabled.</p>
-<h2>Server logs</h2><p>Our hosting provider may keep standard access logs (IP address, time, page requested) for security and reliability.</p>
+{online_section}<h2>Server logs</h2><p>Our hosting provider may keep standard access logs (IP address, time, page requested) for security and reliability.</p>
 <h2>Children</h2><p>Our games are designed to be suitable for a general audience. We don't knowingly collect personal data from anyone.</p>
 <h2>Contact</h2><p>Questions: {mail}.</p>""")
 

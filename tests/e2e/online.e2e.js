@@ -16,7 +16,29 @@ const CHANNEL = process.env.PW_CHANNEL || 'chrome';
 const skip = MP ? false : 'set MP_SERVER to run online tests';
 
 let browser;
-test.before(async () => { if (!skip) browser = await chromium.launch({ channel: CHANNEL, headless: true }); });
+// SERVE_DIR: answer requests for BASE from a local build instead of the network. This lets a build that is
+// not deployed yet run under the real site origin (e.g. https://user.github.io), which the deployed
+// multiplayer server already allows, without adding localhost to its ALLOWED_ORIGINS.
+const SERVE_DIR = process.env.SERVE_DIR;
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.json': 'application/json', '.png': 'image/png', '.xml': 'application/xml', '.txt': 'text/plain', '.webmanifest': 'application/manifest+json' };
+async function serveLocal(ctx) {
+  const fs = require('node:fs'), path = require('node:path');
+  await ctx.route(BASE + '**', route => {
+    let rel = decodeURIComponent(new URL(route.request().url()).pathname.slice(new URL(BASE).pathname.length));
+    let file = path.join(SERVE_DIR, rel);
+    if (!rel || rel.endsWith('/') || (fs.existsSync(file) && fs.statSync(file).isDirectory())) file = path.join(file, 'index.html');
+    if (!fs.existsSync(file)) return route.fulfill({ status: 404, body: 'not found' });
+    return route.fulfill({ status: 200, body: fs.readFileSync(file), contentType: TYPES[path.extname(file)] || 'application/octet-stream' });
+  });
+}
+test.before(async () => {
+  if (skip) return;
+  browser = await chromium.launch({ channel: CHANNEL, headless: true });
+  if (SERVE_DIR) {
+    const orig = browser.newContext.bind(browser);
+    browser.newContext = async (o) => { const c = await orig(o); await serveLocal(c); return c; };
+  }
+});
 test.after(async () => { if (browser) await browser.close(); });
 
 async function person(kind, url) {

@@ -19,8 +19,9 @@ class BuildTests(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = Path(tempfile.mkdtemp())
         cls.out = cls.tmp / "dist"
-        # preview build: includes games whose rights are still pending, so every registered game is checked
-        cls.ctx = build_static_site.build(cls.out, data_dir=ROOT / "data", today=date(2026, 11, 18), preview_pending=True)
+        # preview build: includes games whose rights are still pending, so every registered game is checked.
+        # Multiplayer is forced off here (mp_server="") so the "off" behaviour is tested whatever site.json says.
+        cls.ctx = build_static_site.build(cls.out, data_dir=ROOT / "data", today=date(2026, 11, 18), preview_pending=True, mp_server="")
         cls.registry = json.loads((ROOT / "data" / "games.json").read_text(encoding="utf-8"))["games"]
 
     @classmethod
@@ -143,6 +144,7 @@ class BuildTests(unittest.TestCase):
             self.assertNotIn("Online with a friend", text, page)
         self.assertIn("2P same device", self.read("games/chess/index.html"))
         self.assertIn("Online play not available yet", self.read("games/chess/index.html"))
+        self.assertNotIn("Online play with friends", self.read("privacy/index.html"))
 
     def test_preview_build_is_marked_and_not_indexable(self):
         self.assertIn("Preview build, not for publishing", self.read("index.html"))
@@ -173,6 +175,9 @@ class BuildTests(unittest.TestCase):
             self.assertNotIn("neon-dodge", js)
             page = (out / "games" / "chess" / "index.html").read_text(encoding="utf-8")
             self.assertIn("Online with a friend", page)
+            privacy = (out / "privacy" / "index.html").read_text(encoding="utf-8")
+            self.assertIn("Online play with friends", privacy)  # the policy explains online play once it is on
+            self.assertIn("display name", privacy); self.assertIn("IP address", privacy)
             with self.assertRaises(SystemExit):  # plain http is refused except for localhost
                 build_static_site.build(self.tmp / "mp2", data_dir=ROOT / "data", preview_pending=True, mp_server="http://mp.example.test")
         finally:
