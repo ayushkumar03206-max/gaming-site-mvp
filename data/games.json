@@ -358,7 +358,7 @@
       },
       "players": {
         "min": 1,
-        "max": 2
+        "max": 4
       },
       "rights_id": "rights-memory-match",
       "slug": "memory-match",
@@ -452,12 +452,12 @@
       "curated_trending": false,
       "modes": {
         "single": true,
-        "local": false,
+        "local": true,
         "online": false
       },
       "players": {
         "min": 1,
-        "max": 1
+        "max": 2
       },
       "rights_id": "rights-snake-arena",
       "slug": "snake-arena",
@@ -547,12 +547,12 @@
       "curated_trending": false,
       "modes": {
         "single": true,
-        "local": false,
+        "local": true,
         "online": false
       },
       "players": {
         "min": 1,
-        "max": 1
+        "max": 4
       },
       "rights_id": "rights-tower-builder",
       "slug": "tower-builder",
@@ -644,12 +644,12 @@
       "curated_trending": false,
       "modes": {
         "single": true,
-        "local": false,
+        "local": true,
         "online": false
       },
       "players": {
         "min": 1,
-        "max": 1
+        "max": 4
       },
       "rights_id": "rights-car-parking",
       "slug": "car-parking",

@@ -15,6 +15,7 @@
   <span class="pill"><small>FLOORS</small><span id="hFloors">0</span></span>
   <span class="pill"><small>SCORE</small><span id="hScore">0</span></span>
   <span class="pill"><small>PERFECT</small><span id="hStreak">–</span></span>
+  <span class="pill turn-pill" id="hTurn" hidden></span>
   <span class="grow"></span>
   <button type="button" class="icon-btn" data-mute></button>
 </div>
@@ -23,6 +24,8 @@
     <h1 class="logo">TOWER<span> BUILDER</span></h1>
     <p>A block slides across the top of your tower. Drop it so it lands on the floor below. Any overhang is sliced off, so your blocks get narrower.</p>
     <p>Line it up exactly for a <b>perfect</b> drop: more points, and three perfects in a row widen your block again.</p>
+    <div class="party-pick" id="partyPick"></div>
+    <p class="hint" id="partyHint" hidden>One tower, players take turns dropping blocks. Miss the tower and you lose; the others are ranked by their points.</p>
     <p class="best" id="bestTitle"></p>
     <button type="button" class="big" id="playBtn" data-start>Build</button>
     <p class="hint"><span class="kbd-only">Click or press <span class="kb">Space</span> to drop</span><span class="touch">Tap anywhere to drop</span></p>

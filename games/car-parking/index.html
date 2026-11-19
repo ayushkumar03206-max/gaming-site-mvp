@@ -24,6 +24,7 @@
   <span class="pill" id="hLevel">1</span>
   <span class="pill"><small>TIME</small><span id="hTime">0.0</span></span>
   <span class="pill"><small>PAR</small><span id="hPar">0</span></span>
+  <span class="pill turn-pill" id="hTurn" hidden></span>
   <span class="grow"></span>
   <button type="button" class="icon-btn" data-mute></button>
   <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
@@ -36,6 +37,8 @@
   <div class="panel">
     <h1 class="logo">CAR<span> PARKING</span></h1>
     <p>Drive into the green bay, line up with it and stop. Don't touch walls or other cars. Beat the par time for 3 stars.</p>
+    <div class="party-pick" id="partyPick"></div>
+    <p class="hint" id="partyHint" hidden>Pick a level. Each player parks on it in turn on this device; the fastest clean park wins.</p>
     <div id="levels"></div>
     <p class="hint"><span class="kbd-only"><span class="kb">↑</span> drive · <span class="kb">↓</span> reverse · <span class="kb">←</span><span class="kb">→</span> steer · <span class="kb">Space</span> brake · <span class="kb">R</span> retry</span><span class="touch">Left buttons steer · right buttons drive forward / reverse</span></p>
   </div>

@@ -94,6 +94,18 @@
   function stars(g) { return g.time <= g.def.par ? 3 : g.time <= g.def.par * 1.6 ? 2 : 1; }
   function score(g) { return Math.max(100, Math.round(1000 - Math.max(0, g.time - g.def.par) * 25)) * (stars(g) === 3 ? 1.5 : 1) | 0; }
 
-  return { W: W, H: H, LEVELS: LEVELS, CAR_W: CAR_W, CAR_L: CAR_L, WHEELBASE: WHEELBASE, MAX_STEER: MAX_STEER, createGame: createGame, step: step, overlap: overlap, corners: corners,
+  /** Party mode (2-4 players take turns on the same level). runs: [{ok, time}] per player.
+   *  Parked cars rank by time (fastest first); crashed cars come after and share the last place. */
+  function partyRank(runs) {
+    var rows = runs.map(function (r, i) { return { player: i, ok: !!r.ok, time: r.ok ? r.time : null }; });
+    rows.sort(function (a, b) { return (b.ok - a.ok) || (a.ok ? a.time - b.time : 0) || (a.player - b.player); });
+    rows.forEach(function (r, i) {
+      var prev = rows[i - 1];
+      r.place = prev && prev.ok === r.ok && (!r.ok || prev.time === r.time) ? prev.place : i + 1;
+    });
+    return rows;
+  }
+
+  return { partyRank: partyRank, W: W, H: H, LEVELS: LEVELS, CAR_W: CAR_W, CAR_L: CAR_L, WHEELBASE: WHEELBASE, MAX_STEER: MAX_STEER, createGame: createGame, step: step, overlap: overlap, corners: corners,
     pointIn: pointIn, parkedOk: parkedOk, stars: stars, score: score, angleDiff: angleDiff };
 });

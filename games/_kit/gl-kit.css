@@ -82,3 +82,17 @@ html:not(.has-touch) .touch-pad, html:not(.has-touch) .touch { display: none !im
 .replay-ov { z-index: 40; background: rgba(5, 6, 14, .85); }
 .replay-panel { width: min(640px, 100%); gap: 10px; padding: 16px; }
 .replay-panel video { width: 100%; max-height: calc(100vh - 230px); min-height: 120px; object-fit: contain; border-radius: 12px; background: #000; border: 1px solid var(--line); }
+
+/* Party mode (several players on one device), see GLKit.party */
+.party-ov { z-index: 30; }
+.party-ov .panel { gap: 10px; }
+.party-ov h2 { font-size: 1.5rem; }
+.party-next { font-size: 1.1rem; color: var(--ink) !important; }
+.party-next b { color: var(--pc); }
+.party-rank { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; text-align: left; }
+.party-rank li { display: grid; grid-template-columns: 2em 1fr auto; align-items: center; gap: 4px 8px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--line); border-left: 6px solid var(--pc); }
+.party-rank .pos { font-weight: 900; font-size: 1.2rem; color: var(--gold); }
+.party-rank .val { font-weight: 800; }
+.party-rank small { grid-column: 2 / -1; color: var(--muted); }
+.party-pick { margin: 0; }
+.turn-pill { border-width: 2px !important; }

@@ -13,6 +13,13 @@
 .dpad button { width: 58px; height: 52px; border-radius: 14px; border: 1px solid var(--line); background: rgba(18, 22, 50, .6); font-size: 1.2rem; touch-action: none; }
 @media (max-width: 300px) { .dpad button { width: 50px; } }
 html:not(.has-touch) .dpad { display: none !important; }
+/* 2 players on one touch screen: a small cross pad in each bottom corner */
+.vpad { position: fixed; z-index: 10; bottom: max(8px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(2, 40px); gap: 4px; }
+.vpad.p1 { left: 8px; } .vpad.p2 { right: 8px; }
+.vpad button { border-radius: 12px; border: 2px solid var(--pc); background: rgba(18, 22, 50, .6); font-size: 1rem; touch-action: none; color: var(--pc); }
+.vpad [data-d=up] { grid-column: 2; grid-row: 1; } .vpad [data-d=left] { grid-column: 1; grid-row: 2; }
+.vpad [data-d=down] { grid-column: 2; grid-row: 2; } .vpad [data-d=right] { grid-column: 3; grid-row: 2; }
+html:not(.has-touch) .vpad { display: none !important; }
 </style>
 </head>
 <body>
@@ -21,7 +28,9 @@ html:not(.has-touch) .dpad { display: none !important; }
 <div class="hud" id="hud" hidden>
   <span class="pill"><small>SCORE</small><span id="hScore">0</span></span>
   <span class="pill"><small>LENGTH</small><span id="hLen">3</span></span>
-  <span class="pill"><small>SPEED</small><span id="hSpeed">8</span></span>
+  <span class="pill" id="pSpeed"><small>SPEED</small><span id="hSpeed">8</span></span>
+  <span class="pill turn-pill" id="hP1" hidden style="color:#29f0ff;border-color:#29f0ff"></span>
+  <span class="pill turn-pill" id="hP2" hidden style="color:#ff8a3d;border-color:#ff8a3d"></span>
   <span class="grow"></span>
   <button type="button" class="icon-btn" data-mute></button>
   <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
@@ -31,6 +40,14 @@ html:not(.has-touch) .dpad { display: none !important; }
   <button type="button" data-dir="up" aria-label="Up">▲</button>
   <button type="button" data-dir="down" aria-label="Down">▼</button>
   <button type="button" data-dir="right" aria-label="Right">▶</button>
+</div>
+<div class="vpad p1" id="vpad1" hidden style="--pc:#29f0ff" aria-label="Player 1 direction buttons">
+  <button type="button" data-p="0" data-d="up" aria-label="Player 1 up">▲</button><button type="button" data-p="0" data-d="left" aria-label="Player 1 left">◀</button>
+  <button type="button" data-p="0" data-d="down" aria-label="Player 1 down">▼</button><button type="button" data-p="0" data-d="right" aria-label="Player 1 right">▶</button>
+</div>
+<div class="vpad p2" id="vpad2" hidden style="--pc:#ff8a3d" aria-label="Player 2 direction buttons">
+  <button type="button" data-p="1" data-d="up" aria-label="Player 2 up">▲</button><button type="button" data-p="1" data-d="left" aria-label="Player 2 left">◀</button>
+  <button type="button" data-p="1" data-d="down" aria-label="Player 2 down">▼</button><button type="button" data-p="1" data-d="right" aria-label="Player 2 right">▶</button>
 </div>
 <div class="overlay" id="title">
   <div class="panel">
@@ -42,6 +59,8 @@ html:not(.has-touch) .dpad { display: none !important; }
         <button type="button" data-speed="classic" aria-pressed="true">Classic</button>
         <button type="button" data-speed="fast" aria-pressed="false">Fast</button>
       </div></div>
+    <div class="party-pick" id="partyPick"></div>
+    <p class="hint" id="partyHint" hidden>Two snakes, one arena. Hit a wall, any snake body or the other head and you lose the round.<span class="kbd-only"> Player 1: <span class="kb">W</span><span class="kb">A</span><span class="kb">S</span><span class="kb">D</span> · Player 2: arrow keys.</span><span class="touch"> Player 1 uses the left pad, Player 2 the right pad.</span></p>
     <p class="best" id="bestTitle"></p>
     <button type="button" class="big" id="playBtn" data-start>Play</button>
     <p class="hint"><span class="kbd-only">Arrows / WASD to steer · <span class="kb">P</span> or <span class="kb">Space</span> pause</span><span class="touch">Swipe on the arena or use the arrow pad</span></p>

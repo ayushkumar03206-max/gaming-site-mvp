@@ -1,4 +1,4 @@
-/* Memory Match: card-pair memory game, solo or 2 players on one device. DOM + inline SVG symbols. */
+/* Memory Match: card-pair memory game, solo or 2-4 players taking turns on one device. DOM + inline SVG symbols. */
 (function () {
   'use strict';
   var K = window.GLKit, M = window.MemoryLogic, $ = K.$;
@@ -28,7 +28,8 @@
     return '<svg viewBox="0 0 100 100" aria-hidden="true" fill="' + s[0] + '" stroke="' + s[0] + '">' + s[2] + '</svg>';
   }
 
-  var level = K.load('gl_memory_level', 'easy'), players = K.load('gl_memory_players', 1);
+  var level = K.load('gl_memory_level', 'easy'), players = Math.max(1, Math.min(4, K.load('gl_memory_players', 1) | 0 || 1));
+  var PCOL = ['var(--p1)', 'var(--p2)', 'var(--p3)', 'var(--p4)'];
   var g = null, mode = 'title', t0 = 0, elapsed = 0, timer = null, focusIdx = 0, settleTimer = null;
   var bests = {}; Object.keys(M.LEVELS).forEach(function (k) { bests[k] = K.best('gl_memory_best_' + k); });
   var screens = K.screens(['title', 'menu', 'over']);
@@ -38,6 +39,7 @@
     Array.prototype.forEach.call(document.querySelectorAll('[data-players]'), function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-players') === players)); });
     var b = bests[level].get();
     $('bestTitle').textContent = players === 1 && b ? 'Best on ' + level + ': ' + b : '';
+    $('partyHint').hidden = players === 1;
   }
   Array.prototype.forEach.call(document.querySelectorAll('[data-level]'), function (b) { b.addEventListener('click', function () { level = b.getAttribute('data-level'); K.save('gl_memory_level', level); segSync(); }); });
   Array.prototype.forEach.call(document.querySelectorAll('[data-players]'), function (b) { b.addEventListener('click', function () { players = +b.getAttribute('data-players'); K.save('gl_memory_players', players); segSync(); }); });
@@ -58,7 +60,8 @@
     g = M.createGame(level, { players: players });
     mode = 'play'; t0 = 0; elapsed = 0; focusIdx = 0;
     $('app').hidden = false; screens.show(null);
-    $('pTime').hidden = players === 2; $('pP1').hidden = $('pP2').hidden = players !== 2; $('turn').hidden = players !== 2;
+    $('pTime').hidden = players > 1; $('turn').hidden = players === 1;
+    for (var p = 0; p < 4; p++) $('pP' + (p + 1)).hidden = p >= players || players === 1;
     var board = $('board'); board.innerHTML = '';
     g.cards.forEach(function (c, i) {
       var b = document.createElement('button');
@@ -68,7 +71,7 @@
       board.appendChild(b);
     });
     layout(); render();
-    K.announce((players === 2 ? 'Two players. Player 1 starts. ' : '') + g.pairs + ' pairs dealt.');
+    K.announce((players > 1 ? players + ' players. Player 1 starts. ' : '') + g.pairs + ' pairs dealt.');
   }
 
   function render() {
@@ -79,9 +82,9 @@
       n.setAttribute('aria-label', c.state === 'down' ? 'Card ' + (i + 1) + ', face down' : 'Card ' + (i + 1) + ', ' + SHAPES[c.pair % SHAPES.length][1] + (c.state === 'matched' ? ', matched' : ''));
       n.setAttribute('aria-disabled', String(c.state !== 'down'));
     });
-    $('hMoves').textContent = g.moves; $('hP1').textContent = g.scores[0]; $('hP2').textContent = g.scores[1];
-    $('pP1').classList.toggle('on', players === 2 && g.turn === 0); $('pP2').classList.toggle('on', players === 2 && g.turn === 1);
-    $('turn').textContent = 'Player ' + (g.turn + 1) + "'s turn"; $('turn').style.color = g.turn ? 'var(--p2)' : 'var(--p1)';
+    $('hMoves').textContent = g.moves;
+    for (var p = 0; p < 4; p++) { $('hP' + (p + 1)).textContent = g.scores[p] || 0; $('pP' + (p + 1)).classList.toggle('on', players > 1 && g.turn === p); }
+    $('turn').textContent = 'Player ' + (g.turn + 1) + "'s turn"; $('turn').style.color = PCOL[g.turn];
   }
 
   function tap(i) {
@@ -92,21 +95,22 @@
     K.sound.play('blip');
     render();
     if (r.result === 'match') {
-      K.sound.play('coin'); K.announce('Match! ' + SHAPES[r.pair % SHAPES.length][1] + (players === 2 ? '. Player ' + (g.turn + 1) + ' goes again.' : ''));
+      K.sound.play('coin'); K.announce('Match! ' + SHAPES[r.pair % SHAPES.length][1] + (players > 1 ? '. Player ' + (g.turn + 1) + ' goes again.' : ''));
       if (r.over) setTimeout(finish, 450);
     } else if (r.result === 'miss') {
       K.announce('No match.');
-      settleTimer = setTimeout(function () { M.settle(g); render(); if (players === 2) K.announce('Player ' + (g.turn + 1) + "'s turn"); }, K.reduceMotion ? 700 : 900);
+      settleTimer = setTimeout(function () { M.settle(g); render(); if (players > 1) K.announce('Player ' + (g.turn + 1) + "'s turn"); }, K.reduceMotion ? 700 : 900);
     }
   }
 
   function finish() {
     mode = 'over'; tick();
     $('oMoves').textContent = g.moves; $('oTime').textContent = fmt(elapsed); $('oStreak').textContent = g.streak;
-    if (players === 2) {
-      var w = M.winner(g);
-      $('overTitle').textContent = w === 'draw' ? "It's a draw!" : 'Player ' + (w + 1) + ' wins!';
-      $('finalScore').textContent = g.scores[0] + ' – ' + g.scores[1]; $('finalUnit').textContent = 'pairs';
+    $('rank').hidden = players === 1; $('finalWrap').hidden = players > 1;
+    if (players > 1) {
+      var w = M.winner(g), r = M.ranking(g), top = r.filter(function (x) { return x.place === 1; });
+      $('overTitle').textContent = w === 'draw' ? (top.length === players ? "It's a draw!" : top.map(function (x) { return 'P' + (x.player + 1); }).join(' & ') + ' share the win!') : 'Player ' + (w + 1) + ' wins!';
+      $('rank').innerHTML = r.map(function (x) { return '<li style="--pc:' + K.party.COLORS[x.player] + '"><span class="pos">' + x.place + '</span><b>Player ' + (x.player + 1) + '</b><span class="val">' + x.pairs + (x.pairs === 1 ? ' pair' : ' pairs') + '</span></li>'; }).join('');
       $('stars').textContent = ''; $('bestOver').textContent = ''; $('oTime').parentNode.hidden = true;
     } else {
       var sc = M.score(g, elapsed), st = M.stars(g), isBest = bests[level].submit(sc);

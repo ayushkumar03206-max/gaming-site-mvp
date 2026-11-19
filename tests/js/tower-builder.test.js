@@ -54,3 +54,18 @@ test('tower: the slider sweeps across the whole tower and speeds up', () => {
   for (let i = 0; i < 10; i++) { alignTo(g, 0); T.drop(g); }
   assert.ok(T.speed(g) > s0);
 });
+
+test('tower: party ranking puts the player who missed last, others by points, ties share a place', () => {
+  assert.deepStrictEqual(T.partyRank([30, 50], 1).map(r => [r.player, r.place, r.out]), [[0, 1, false], [1, 2, true]]);
+  const r = T.partyRank([20, 40, 40, 90], 3);
+  assert.deepStrictEqual(r.map(x => [x.player, x.place]), [[1, 1], [2, 1], [0, 3], [3, 4]], 'missing loses even with the most points');
+});
+
+test('tower: shared tower credits each drop to the player whose turn it is', () => {
+  const g = T.createGame(), pts = [0, 0, 0]; let turn = 0;
+  for (let i = 0; i < 6; i++) { alignTo(g, 0); const before = g.score; T.drop(g); pts[turn] += g.score - before; turn = (turn + 1) % 3; }
+  assert.strictEqual(pts.reduce((a, b) => a + b), g.score);
+  assert.ok(pts.every(p => p > 0));
+  alignTo(g, T.START_W + 5); assert.strictEqual(T.drop(g).result, 'miss');
+  assert.strictEqual(T.partyRank(pts, turn)[2].player, turn);
+});

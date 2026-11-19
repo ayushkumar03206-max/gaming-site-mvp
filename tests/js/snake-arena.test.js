@@ -67,3 +67,43 @@ test('snake: a greedy bot survives and collects food', () => {
   }
   assert.ok(s.eaten >= 10, 'ate ' + s.eaten);
 });
+
+test('snake versus: two snakes start apart; a wall crash ends the round with the other as winner', () => {
+  const m = S.createMatch({ seed: 3 });
+  assert.strictEqual(m.snakes.length, 2);
+  const a = m.snakes[0].body[0], b = m.snakes[1].body[0];
+  assert.ok(Math.abs(a.x - b.x) > 8 && a.y !== b.y);
+  S.turnP(m, 0, 'up'); // player 1 heads for the top wall, player 2 turns away from its wall
+  let ev = [];
+  for (let i = 0; i < 30 && !m.over; i++) { if (i === 2) S.turnP(m, 1, 'up'); ev = ev.concat(S.tickMatch(m)); }
+  assert.ok(m.over); assert.strictEqual(m.winner, 1);
+  assert.ok(ev.some(e => e.type === 'crash' && e.player === 0 && e.cause === 'wall'));
+  assert.deepStrictEqual(S.tickMatch(m), [], 'no events after the round');
+});
+
+test('snake versus: running into the other body loses; head-on (same cell or swap) is a draw', () => {
+  let m = S.createMatch({ seed: 1 });
+  m.snakes[0].body = [{ x: 5, y: 4 }, { x: 4, y: 4 }, { x: 3, y: 4 }]; m.snakes[0].dir = 'down';
+  m.snakes[1].body = [{ x: 7, y: 5 }, { x: 6, y: 5 }, { x: 5, y: 5 }, { x: 4, y: 5 }]; m.snakes[1].dir = 'right';
+  S.tickMatch(m); assert.strictEqual(m.winner, 1, 'P1 ran into P2 body');
+  m = S.createMatch({ seed: 1 });
+  m.snakes[0].body = [{ x: 5, y: 5 }, { x: 4, y: 5 }, { x: 3, y: 5 }]; m.snakes[0].dir = 'right';
+  m.snakes[1].body = [{ x: 7, y: 5 }, { x: 8, y: 5 }, { x: 9, y: 5 }]; m.snakes[1].dir = 'left';
+  S.tickMatch(m); assert.strictEqual(m.winner, 'draw', 'same cell');
+  m = S.createMatch({ seed: 1 });
+  m.snakes[0].body = [{ x: 5, y: 5 }, { x: 4, y: 5 }, { x: 3, y: 5 }]; m.snakes[0].dir = 'right';
+  m.snakes[1].body = [{ x: 6, y: 5 }, { x: 7, y: 5 }, { x: 8, y: 5 }]; m.snakes[1].dir = 'left';
+  S.tickMatch(m); assert.strictEqual(m.winner, 'draw', 'heads swap places');
+});
+
+test('snake versus: either snake can eat; a tail that moves away frees its cell', () => {
+  const m = S.createMatch({ seed: 7 });
+  const h = m.snakes[1].body[0]; m.food = { x: h.x - 1, y: h.y };
+  const ev = S.tickMatch(m);
+  assert.ok(ev.some(e => e.type === 'eat' && e.player === 1)); assert.strictEqual(m.snakes[1].eaten, 1);
+  const m2 = S.createMatch({ seed: 1 });
+  m2.snakes[0].body = [{ x: 5, y: 5 }, { x: 5, y: 6 }, { x: 6, y: 6 }, { x: 6, y: 5 }]; m2.snakes[0].dir = 'right'; // chasing its own tail
+  m2.snakes[1].body = [{ x: 15, y: 15 }, { x: 16, y: 15 }, { x: 17, y: 15 }]; m2.snakes[1].dir = 'left';
+  m2.food = { x: 0, y: 0 };
+  S.tickMatch(m2); assert.strictEqual(m2.over, false);
+});

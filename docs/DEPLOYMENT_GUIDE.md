@@ -107,3 +107,13 @@ python scripts/serve.py 8765 dist
 ```
 
 Open `http://localhost:8765/games/tic-tac-toe/` in two different browsers (or one normal + one private window).
+
+### Local browser tests now that `server_url` is set
+
+`data/site.json` points at the Render server, which only accepts the real site origin. A local build served from
+`http://localhost:8765` would therefore log CORS errors and fail the "no console errors" checks. For local e2e runs,
+build with online play switched off, and test online play separately with `SERVE_DIR` (see `tests/e2e/online.e2e.js`):
+
+```bash
+python scripts/build_static_site.py --mp-server ""
+```

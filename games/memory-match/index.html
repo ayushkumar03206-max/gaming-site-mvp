@@ -16,6 +16,8 @@
     <span class="pill" id="pTime"><small>TIME</small><span id="hTime">0:00</span></span>
     <span class="pill p1" id="pP1" hidden><small>P1</small><span id="hP1">0</span></span>
     <span class="pill p2" id="pP2" hidden><small>P2</small><span id="hP2">0</span></span>
+    <span class="pill p3" id="pP3" hidden><small>P3</small><span id="hP3">0</span></span>
+    <span class="pill p4" id="pP4" hidden><small>P4</small><span id="hP4">0</span></span>
     <span class="grow"></span>
     <button type="button" class="icon-btn" data-mute></button>
     <button type="button" class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
@@ -37,8 +39,11 @@
     <div><p class="label">Players</p>
       <div class="seg" role="group" aria-label="Players">
         <button type="button" data-players="1" aria-pressed="true">Solo</button>
-        <button type="button" data-players="2" aria-pressed="false">2 players, one device</button>
+        <button type="button" data-players="2" aria-pressed="false">2 players</button>
+        <button type="button" data-players="3" aria-pressed="false">3 players</button>
+        <button type="button" data-players="4" aria-pressed="false">4 players</button>
       </div></div>
+    <p class="hint" id="partyHint" hidden>Players take turns on this device. Find a pair and you go again.</p>
     <p class="best" id="bestTitle"></p>
     <button type="button" class="big" id="playBtn" data-start>Deal cards</button>
     <p class="hint"><span class="kbd-only">Arrow keys move, Enter/Space flips.</span><span class="touch">Tap a card to flip it.</span></p>
@@ -55,6 +60,7 @@
     <h2 id="overTitle">All pairs found!</h2>
     <p class="final" id="finalWrap"><span id="finalScore">0</span><small id="finalUnit">points</small></p>
     <p class="stars" id="stars" aria-label=""></p>
+    <ol class="party-rank" id="rank" hidden></ol>
     <div class="stats"><div><b id="oMoves">0</b><span>moves</span></div><div><b id="oTime">0:00</b><span>time</span></div><div><b id="oStreak">0</b><span>best streak</span></div></div>
     <p class="best" id="bestOver"></p>
     <button type="button" class="big" id="againBtn">Play again</button>

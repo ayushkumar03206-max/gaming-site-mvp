@@ -1,4 +1,4 @@
-/* Tower Builder: tap to drop sliding blocks and stack the tallest tower. Canvas 2D. */
+/* Tower Builder: tap to drop sliding blocks and stack the tallest tower. Solo, or 2-4 players taking turns on one tower. Canvas 2D. */
 (function () {
   'use strict';
   var K = window.GLKit, T = window.TowerLogic, $ = K.$;
@@ -11,17 +11,39 @@
 
   var mode = 'title', g = null, cam = 0, falling = [], flashes = [], best = K.best('gl_tower_best');
   var screens = K.screens(['title', 'over']);
+  var pick = K.party.picker($('partyPick'), 'gl_tower_players', 4, syncParty), players = 1, turn = 0, pts = [0, 0, 0, 0];
+  function syncParty() { $('partyHint').hidden = pick.get() === 1; $('playBtn').textContent = pick.get() === 1 ? 'Build' : 'Build together'; }
 
   function hue(i) { return (200 + i * 9) % 360; }
   function syncBest() { $('bestTitle').textContent = best.get() ? 'Your best: ' + best.get() + ' points' : ''; }
   function start() {
     g = T.createGame(); cam = 0; falling = []; flashes = [];
+    players = pick.get(); turn = 0; pts = [0, 0, 0, 0]; K.party.hide();
     mode = 'play'; screens.show(null); $('hud').hidden = false; hud();
     last = performance.now(); try { canvas.focus(); } catch (e) { /* ignore */ }
-    K.announce('Tap, click or press Space to drop each block.');
+    K.announce(players > 1 ? players + ' players, one tower. Player 1 drops first.' : 'Tap, click or press Space to drop each block.');
   }
-  function hud() { $('hFloors').textContent = T.height(g); $('hScore').textContent = g.score; $('hStreak').textContent = g.streak > 1 ? '×' + g.streak : '–'; }
+  function hud() {
+    $('hFloors').textContent = T.height(g); $('hScore').textContent = players > 1 ? pts[turn] : g.score; $('hStreak').textContent = g.streak > 1 ? '×' + g.streak : '–';
+    var t = $('hTurn'); t.hidden = players === 1;
+    if (players > 1) { t.textContent = 'P' + (turn + 1) + ' drops'; t.style.borderColor = t.style.color = K.party.COLORS[turn]; }
+  }
+  function finishParty() {
+    mode = 'over';
+    var rows = T.partyRank(pts.slice(0, players), turn);
+    var top = rows.filter(function (r) { return r.place === 1; });
+    K.sound.play('lose'); K.announce('Player ' + (turn + 1) + ' missed.');
+    setTimeout(function () {
+      if (mode !== 'over') return;
+      K.party.results({
+        title: top.length > 1 ? top.map(function (r) { return 'P' + (r.player + 1); }).join(' & ') + ' share the win!' : 'Player ' + (top[0].player + 1) + ' wins!',
+        rows: rows.map(function (r) { return { player: r.player, place: r.place, value: r.points + ' pts', note: r.out ? 'Missed the tower' : '' }; }),
+        again: 'Build again', onAgain: start, back: 'Change players', onBack: function () { mode = 'title'; $('hud').hidden = true; screens.show('title'); }
+      });
+    }, 900);
+  }
   function finish() {
+    if (players > 1) return finishParty();
     mode = 'over'; var isBest = best.submit(g.score);
     $('finalScore').textContent = g.score; $('oFloors').textContent = T.height(g); $('oPerfect').textContent = g.perfects; $('oStreak').textContent = g.bestStreak;
     $('overTitle').textContent = isBest && g.score > 0 ? 'New best!' : 'Tower complete';
@@ -31,10 +53,12 @@
   }
   function drop() {
     if (mode !== 'play') return;
-    var r = T.drop(g), top = T.height(g);
+    var before = g.score, r = T.drop(g), top = T.height(g);
+    if (players > 1) pts[turn] += g.score - before;
     if (r.result === 'perfect') { K.sound.play('coin'); flashes.push({ floor: top, age: 0 }); K.announce('Perfect! Streak ' + r.streak); }
     else if (r.result === 'cut') { K.sound.play('place'); falling.push({ x: r.cut.x, w: r.cut.w, floor: top, y: 0, vy: 0, vr: (r.cut.x > r.kept.x ? 1 : -1) * 1.5, rot: 0, h: hue(top) }); }
     else if (r.result === 'miss') { falling.push({ x: r.cut.x, w: r.cut.w, floor: top + 1, y: 0, vy: 0, vr: 0.8, rot: 0, h: hue(top + 1) }); finish(); }
+    if (players > 1 && r.result !== 'miss' && r.result !== 'none') { turn = (turn + 1) % players; K.announce('Player ' + (turn + 1) + ' next.'); }
     hud();
   }
   $('playBtn').addEventListener('click', start); $('againBtn').addEventListener('click', start);
@@ -68,7 +92,13 @@
     ctx.fillStyle = '#1b2a1f'; ctx.fillRect(0, gy, view.W, H - gy);
     if (!g) { drawBlock((T.W - T.START_W) / 2, T.START_W, 0, hue(0)); return; }
     g.floors.forEach(function (f, i) { var y = blockY(i); if (y > -FH && y < H + FH) drawBlock(f.x, f.w, i, hue(i)); });
-    if (g.moving && mode === 'play') drawBlock(g.moving.x, g.moving.w, g.floors.length, hue(g.floors.length));
+    if (g.moving && mode === 'play') {
+      drawBlock(g.moving.x, g.moving.w, g.floors.length, hue(g.floors.length));
+      if (players > 1) { // outline the sliding block in the colour of the player whose turn it is
+        ctx.strokeStyle = K.party.COLORS[turn]; ctx.lineWidth = 3;
+        ctx.strokeRect(OX + g.moving.x * S, blockY(g.floors.length) - FH, g.moving.w * S, FH);
+      }
+    }
     falling.forEach(function (p) {
       var px = OX + p.x * S, pw = p.w * S, py = blockY(p.floor) + p.y;
       ctx.save(); ctx.translate(px + pw / 2, py - FH / 2); ctx.rotate(p.rot);
@@ -91,10 +121,10 @@
     requestAnimationFrame(frame);
   }
   window.addEventListener('resize', resize);
-  resize(); syncBest(); screens.show('title');
+  resize(); syncBest(); syncParty(); screens.show('title');
   requestAnimationFrame(frame);
   window.GLDebug = {
-    state: function () { return g ? { mode: mode, floors: T.height(g), score: g.score, streak: g.streak, over: g.over, width: g.floors[g.floors.length - 1].w } : { mode: mode }; },
+    state: function () { return g ? { mode: mode, floors: T.height(g), score: g.score, streak: g.streak, over: g.over, width: g.floors[g.floors.length - 1].w, players: players, turn: turn, points: pts.slice(0, players) } : { mode: mode }; },
     offset: function () { return g && g.moving ? g.moving.x - g.floors[g.floors.length - 1].x : null; } // QA helper for timing drops
   };
   K.ready();

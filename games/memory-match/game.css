@@ -1,4 +1,4 @@
-:root { --accent: #b66dff; --accent2: #29f0ff; --bg: #0e0b22; --p1: #29f0ff; --p2: #ff8a3d; }
+:root { --accent: #b66dff; --accent2: #29f0ff; --bg: #0e0b22; --p1: #29f0ff; --p2: #ff8a3d; --p3: #b6ff3b; --p4: #ff5d8f; }
 body { overflow: auto; }
 .app { position: fixed; inset: 0; display: flex; flex-direction: column; padding: 8px; gap: 6px; }
 .bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-weight: 800; }
@@ -7,6 +7,9 @@ body { overflow: auto; }
 .pill small { color: var(--muted); margin-right: 4px; }
 .pill.p1.on { border-color: var(--p1); box-shadow: 0 0 0 2px var(--p1) inset; }
 .pill.p2.on { border-color: var(--p2); box-shadow: 0 0 0 2px var(--p2) inset; }
+.pill.p3.on { border-color: var(--p3); box-shadow: 0 0 0 2px var(--p3) inset; }
+.pill.p4.on { border-color: var(--p4); box-shadow: 0 0 0 2px var(--p4) inset; }
+.bar { flex-wrap: wrap; }
 .turn { margin: 0; text-align: center; font-weight: 800; }
 .board { flex: 1; display: grid; gap: clamp(4px, 1.4vmin, 10px); align-content: center; justify-content: center; min-height: 0; }
 .card { position: relative; border: 0; padding: 0; background: transparent; perspective: 600px; aspect-ratio: 3 / 4; min-width: 0; }

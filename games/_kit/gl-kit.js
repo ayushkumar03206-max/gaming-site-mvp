@@ -157,7 +157,7 @@
    * localStorage/IndexedDB, and it is gone when the page is closed or reloaded.
    * Long runs keep only the last SEG_KEEP segments of SEG_MS each, so memory stays bounded
    * (about 1 Mbit/s, i.e. at most ~25 MB for a 3-minute tail). */
-  var R = { SEG_MS: 60000, SEG_KEEP: 3, BITRATE: 1000000, FPS: 30, END_SCREENS: ['over', 'result'] };
+  var R = { SEG_MS: 60000, SEG_KEEP: 3, BITRATE: 1000000, FPS: 30, END_SCREENS: ['over', 'result', 'gl-party', 'gl-party-res'] };
   var rs = { run: null, last: [], ui: null, player: null };
   function pickMime() {
     var M = window.MediaRecorder;
@@ -303,6 +303,70 @@
   R.open = openPlayer; R.close = closePlayer;
   window.addEventListener('pagehide', function () { if (rs.run) endRun(false); release(); });
   K.replay = R;
+
+  /* ---- Party: several players on ONE device (pass-and-play or shared turns).
+   * K.party.picker(el, key, max, onChange)  -> renders "Solo · 2 · 3 · 4" buttons, remembers the choice per game
+   * K.party.handoff(opts)                   -> "Pass to Player N" screen between turns
+   * K.party.results(opts)                   -> final ranking screen
+   * Both screens count as "end of a run" for the replay recorder, so the last player's run can be watched. */
+  var party = {
+    COLORS: ['#29f0ff', '#ff8a3d', '#b6ff3b', '#ff5d8f'],
+    name: function (i) { return 'Player ' + (i + 1); },
+    picker: function (el, key, max, onChange) {
+      var n = Math.max(1, Math.min(max, K.load(key, 1) | 0 || 1));
+      el.innerHTML = '<p class="label">Players</p><div class="seg" role="group" aria-label="Players"></div>';
+      var seg = el.querySelector('.seg');
+      for (var i = 1; i <= max; i++) {
+        var b = document.createElement('button'); b.type = 'button'; b.setAttribute('data-party', String(i));
+        b.textContent = i === 1 ? 'Solo' : i + ' players'; seg.appendChild(b);
+      }
+      function sync() { Array.prototype.forEach.call(seg.children, function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-party') === n)); }); }
+      seg.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-party]'); if (!b) return;
+        n = +b.getAttribute('data-party'); K.save(key, n); sync(); if (onChange) onChange(n);
+      });
+      sync();
+      return { get: function () { return n; } };
+    }
+  };
+  function partyOverlay(id) {
+    var ov = K.$(id);
+    if (!ov) {
+      ov = document.createElement('div'); ov.className = 'overlay party-ov'; ov.id = id; ov.hidden = true;
+      ov.setAttribute('role', 'dialog'); ov.innerHTML = '<div class="panel"></div>';
+      document.body.appendChild(ov);
+    }
+    return ov;
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  /** opts: {title, lines: [text], player: index of who plays next, button, onGo} */
+  party.handoff = function (opts) {
+    var ov = partyOverlay('gl-party'), p = ov.querySelector('.panel'), c = party.COLORS[opts.player % 4];
+    p.innerHTML = '<h2>' + esc(opts.title) + '</h2>' + (opts.lines || []).map(function (l) { return '<p>' + esc(l) + '</p>'; }).join('') +
+      '<p class="party-next" style="--pc:' + c + '">Next: <b>' + esc(party.name(opts.player)) + '</b></p>' +
+      '<button type="button" class="big" data-go>' + esc(opts.button || party.name(opts.player) + ', start') + '</button>';
+    ov.hidden = false; K.replay.onScreen('gl-party');
+    var go = p.querySelector('[data-go]');
+    go.addEventListener('click', function () { ov.hidden = true; opts.onGo(); });
+    try { go.focus(); } catch (e) { /* ignore */ }
+    K.announce(opts.title + '. Next: ' + party.name(opts.player));
+  };
+  /** opts: {title, rows: [{player, value, note}] in ranking order, again, onAgain, back, onBack} */
+  party.results = function (opts) {
+    var ov = partyOverlay('gl-party-res'), p = ov.querySelector('.panel');
+    p.innerHTML = '<h2>' + esc(opts.title) + '</h2><ol class="party-rank">' + opts.rows.map(function (r, i) {
+      return '<li style="--pc:' + party.COLORS[r.player % 4] + '"><span class="pos">' + (r.place || i + 1) + '</span><b>' + esc(party.name(r.player)) + '</b>' +
+        '<span class="val">' + esc(r.value) + '</span>' + (r.note ? '<small>' + esc(r.note) + '</small>' : '') + '</li>';
+    }).join('') + '</ol><button type="button" class="big" data-again>' + esc(opts.again || 'Play again') + '</button>' +
+      (opts.onBack ? '<button type="button" class="ghost" data-back>' + esc(opts.back || 'Back') + '</button>' : '');
+    ov.hidden = false; K.replay.onScreen('gl-party-res');
+    p.querySelector('[data-again]').addEventListener('click', function () { ov.hidden = true; opts.onAgain(); });
+    if (opts.onBack) p.querySelector('[data-back]').addEventListener('click', function () { ov.hidden = true; opts.onBack(); });
+    try { p.querySelector('[data-again]').focus(); } catch (e) { /* ignore */ }
+    K.announce(opts.title);
+  };
+  party.hide = function () { ['gl-party', 'gl-party-res'].forEach(function (id) { var o = K.$(id); if (o) o.hidden = true; }); };
+  K.party = party;
 
   K.clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
   K.rand = function (a, b) { return a + Math.random() * (b - a); };

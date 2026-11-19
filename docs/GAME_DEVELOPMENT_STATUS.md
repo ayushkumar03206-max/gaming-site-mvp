@@ -82,3 +82,14 @@ Bubble Shooter, Car Parking.
 - Evidence: `tests/e2e/replay.e2e.js` (desktop Chrome via Playwright): a real run is recorded in the site
   iframe, the video loads and has frames, nothing is put in storage, a reload leaves no replay, pause
   pauses the recorder, and a DOM game shows no button. Not tested on real phones or Safari.
+
+## Batch A: several players on one device (2026-11-19)
+
+- Shared kit: `GLKit.party` in `games/_kit/gl-kit.js` (player picker, "Pass to Player N" screen, ranking screen).
+  Party screens also end a replay recording, so the last player's run can be watched.
+- Memory Match 2–4 players (was 2), Tower Builder 2–4 (shared tower), Car Parking 2–4 (pass and play, one attempt
+  each), Snake Arena 2 (two snakes, one arena; keyboard WASD/arrows, a pad per player on touch screens).
+- Registry: `modes.local` and `players.max` updated; the site shows "2–4P same device" / "2–4 players on one device".
+- Evidence: logic tests for 3–4 player Memory turns and ranking, Tower and Parking rankings, Snake versus
+  collisions (`tests/js`); browser tests in `tests/e2e/party.e2e.js` play each mode for real (desktop Chrome,
+  plus a 375 px touch-emulated viewport for the Snake pads). Not tested on real phones.

@@ -1,4 +1,5 @@
-/* Car Parking Challenge: top-down parking with steering physics, 9 levels in 3 difficulties. Canvas 2D. */
+/* Car Parking Challenge: top-down parking with steering physics, 9 levels in 3 difficulties. Solo, or 2-4 players
+ * taking turns on the same level (fastest clean park wins). Canvas 2D. */
 (function () {
   'use strict';
   var K = window.GLKit, P = window.ParkingLogic, $ = K.$;
@@ -16,6 +17,9 @@
   var mode = 'title', g = null, keys = {}, hold = {}, levelIdx = 0;
   var progress = K.load('gl_parking_stars', {}); // {levelIndex: stars}
   var screens = K.screens(['title', 'paused', 'result']);
+  var pick = K.party.picker($('partyPick'), 'gl_parking_players', 4, syncParty), players = 1, cur = 0, runs = [];
+  function syncParty() { $('partyHint').hidden = pick.get() === 1; }
+  function carColor() { return players > 1 ? K.party.COLORS[cur] : '#ffb020'; }
 
   function buildLevelList() {
     var wrap = $('levels'); wrap.innerHTML = '';
@@ -37,17 +41,43 @@
     });
   }
 
-  function start(i) {
-    levelIdx = i; g = P.createGame(i); keys = {}; hold.left = hold.right = hold.gas = hold.rev = false;
+  /** From the level list: a fresh solo run, or a fresh party round on level i. */
+  function start(i) { players = pick.get(); cur = 0; runs = []; begin(i); }
+  function begin(i) {
+    levelIdx = i; g = P.createGame(i); K.party.hide(); keys = {}; hold.left = hold.right = hold.gas = hold.rev = false;
     mode = 'play'; screens.show(null); $('hud').hidden = false; $('pad').hidden = false;
     $('hLevel').textContent = (i + 1) + ' · ' + g.def.name; $('hPar').textContent = g.def.par + 's';
     last = performance.now(); try { canvas.focus(); } catch (e) { /* ignore */ }
-    K.announce('Level ' + (i + 1) + ': ' + g.def.name + '. Park inside the green bay and stop.');
+    var t = $('hTurn'); t.hidden = players === 1;
+    if (players > 1) { t.textContent = 'P' + (cur + 1); t.style.borderColor = t.style.color = carColor(); }
+    $('restartBtn').hidden = players > 1; // in a party round every player gets one attempt
+    K.announce((players > 1 ? 'Player ' + (cur + 1) + '. ' : '') + 'Level ' + (i + 1) + ': ' + g.def.name + '. Park inside the green bay and stop.');
   }
   function pause() { if (mode !== 'play') return; mode = 'paused'; keys = {}; screens.show('paused'); }
   function resume() { if (mode !== 'paused') return; mode = 'play'; screens.show(null); last = performance.now(); }
   function toTitle() { mode = 'title'; g = null; $('hud').hidden = true; $('pad').hidden = true; buildLevelList(); screens.show('title'); }
+  function partyResult(ok) {
+    mode = 'result'; $('pad').hidden = true;
+    runs[cur] = { ok: ok, time: g.time };
+    K.sound.play(ok ? 'win' : 'boom');
+    var line = 'Player ' + (cur + 1) + (ok ? ' parked in ' + g.time.toFixed(1) + 's' : ' crashed');
+    setTimeout(function () {
+      if (mode !== 'result') return;
+      if (cur < players - 1) {
+        K.party.handoff({ title: ok ? 'Parked!' : 'Crashed!', lines: [line], player: cur + 1, onGo: function () { cur++; begin(levelIdx); } });
+        return;
+      }
+      var rows = P.partyRank(runs), top = rows.filter(function (r) { return r.place === 1 && r.ok; });
+      K.party.results({
+        title: !top.length ? 'Everyone crashed!' : top.length > 1 ? top.map(function (r) { return 'P' + (r.player + 1); }).join(' & ') + ' tie!' : 'Player ' + (top[0].player + 1) + ' wins!',
+        rows: rows.map(function (r) { return { player: r.player, place: r.place, value: r.ok ? r.time.toFixed(1) + 's' : 'Crashed' }; }),
+        again: 'Same level again', onAgain: function () { start(levelIdx); },
+        back: 'Level select', onBack: toTitle
+      });
+    }, ok ? 300 : 700);
+  }
   function result(ok) {
+    if (players > 1) return partyResult(ok);
     mode = 'result'; $('pad').hidden = true;
     if (ok) {
       var st = P.stars(g); if (!progress[levelIdx] || st > progress[levelIdx]) { progress[levelIdx] = st; K.save('gl_parking_stars', progress); }
@@ -63,7 +93,7 @@
   }
 
   $('retryBtn').addEventListener('click', function () { start(levelIdx); });
-  $('restartBtn').addEventListener('click', function () { start(levelIdx); });
+  $('restartBtn').addEventListener('click', function () { begin(levelIdx); });
   $('nextBtn').addEventListener('click', function () { start(levelIdx + 1); });
   $('menuBtn').addEventListener('click', toTitle); $('menuBtn2').addEventListener('click', toTitle);
   $('resumeBtn').addEventListener('click', resume); $('pauseBtn').addEventListener('click', pause);
@@ -73,7 +103,7 @@
   window.addEventListener('keydown', function (e) {
     if (KEYMAP[e.code]) { keys[KEYMAP[e.code]] = true; e.preventDefault(); }
     if (e.code === 'KeyP' || e.code === 'Escape') { if (mode === 'play') pause(); else if (mode === 'paused') resume(); }
-    if (e.code === 'KeyR' && (mode === 'play' || mode === 'result')) start(levelIdx);
+    if (e.code === 'KeyR' && players === 1 && (mode === 'play' || mode === 'result')) start(levelIdx);
   });
   window.addEventListener('keyup', function (e) { if (KEYMAP[e.code]) keys[KEYMAP[e.code]] = false; });
 
@@ -115,7 +145,7 @@
       rect(g.bay, ok ? 'rgba(61,220,132,.35)' : 'rgba(61,220,132,.15)', '#3ddc84');
       ctx.save(); ctx.translate(g.bay.x, g.bay.y); ctx.rotate(g.bay.a); ctx.fillStyle = 'rgba(61,220,132,.7)'; ctx.font = '900 5px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('P', 0, 0); ctx.restore();
       g.def.obstacles.forEach(function (o) { if (o.parked) drawCar(o, '#5a6478'); else rect(o, '#474d5e', '#6b7394'); });
-      drawCar(g.car, g.state === 'crashed' ? '#ff4d6d' : '#ffb020', true);
+      drawCar(g.car, g.state === 'crashed' ? '#ff4d6d' : carColor(), true);
       if (g.hold > 0) { ctx.strokeStyle = '#3ddc84'; ctx.lineWidth = 0.8; ctx.beginPath(); ctx.arc(g.car.x, g.car.y, 7, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * Math.min(1, g.hold / 0.6)); ctx.stroke(); }
     }
     ctx.restore();
@@ -124,8 +154,11 @@
   var last = performance.now();
   function frame(now) { var dt = Math.min(0.033, (now - last) / 1000); last = now; if (mode === 'play') update(dt); draw(); requestAnimationFrame(frame); }
   window.addEventListener('resize', resize);
-  resize(); buildLevelList(); screens.show('title');
+  resize(); buildLevelList(); syncParty(); screens.show('title');
   requestAnimationFrame(frame);
-  window.GLDebug = { state: function () { return g ? { mode: mode, level: levelIdx, state: g.state, x: g.car.x, y: g.car.y, a: g.car.a, speed: g.car.speed, time: g.time } : { mode: mode }; } };
+  window.GLDebug = {
+    state: function () { return g ? { mode: mode, level: levelIdx, state: g.state, x: g.car.x, y: g.car.y, a: g.car.a, speed: g.car.speed, time: g.time, players: players, cur: cur, runs: runs.slice() } : { mode: mode }; },
+    finish: function (ok) { if (mode === 'play') result(ok); } // QA helper: end the current attempt (tests cannot drive real parking reliably)
+  };
   K.ready();
 })();

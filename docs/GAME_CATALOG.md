@@ -1,8 +1,8 @@
 # Game catalog
 
 All 15 games are original code written for Gridlight Arcade. `data/games.json` is the source of truth;
-this table summarises it. "Local 2P" means two players on one device. Online play is built for Tic Tac Toe and
-Chess but is **not live**: no multiplayer server is deployed yet (see `DEPLOYMENT_GUIDE.md`).
+this table summarises it. "Local 2P" / "local 2–4P" means players sharing one device. Online play is live for
+Tic Tac Toe and Chess (server on Render, see `DEPLOYMENT_GUIDE.md`).
 
 | # | Game | Slug | Category | Modes today | Rights record |
 |---|---|---|---|---|---|
@@ -13,14 +13,14 @@ Chess but is **not live**: no multiplayer server is deployed yet (see `DEPLOYMEN
 | 05 | Brick Breaker | `brick-breaker` | Arcade | Solo, 8 levels | approved by owner (2026-11-18) |
 | 06 | Fruit Slice | `fruit-slice` | Action | Solo, 60 s rounds | approved by owner (2026-11-18) |
 | 07 | Space Shooter | `space-shooter` | Shooting | Solo, endless waves + bosses | approved by owner (2026-11-18) |
-| 08 | Memory Match | `memory-match` | Brain | Solo, local 2P, 3 boards | approved by owner (2026-11-18) |
-| 09 | Tic Tac Toe | `tic-tac-toe` | Board | Solo vs AI (3 levels), local 2P, online (local only) | approved by owner (2026-11-18) |
-| 10 | Snake Arena | `snake-arena` | Arcade | Solo, 3 speeds | approved by owner (2026-11-18) |
+| 08 | Memory Match | `memory-match` | Brain | Solo, local 2–4P (turns), 3 boards | approved by owner (2026-11-18) |
+| 09 | Tic Tac Toe | `tic-tac-toe` | Board | Solo vs AI (3 levels), local 2P, online 2P | approved by owner (2026-11-18) |
+| 10 | Snake Arena | `snake-arena` | Arcade | Solo, local 2P (two snakes, one arena), 3 speeds | approved by owner (2026-11-18) |
 | 11 | Tile Fusion | `tile-fusion` | Puzzle | Solo (requested as "2048") | approved by owner (2026-11-18) |
-| 12 | Tower Builder | `tower-builder` | Skill | Solo | approved by owner (2026-11-18) |
+| 12 | Tower Builder | `tower-builder` | Skill | Solo, local 2–4P (shared tower) | approved by owner (2026-11-18) |
 | 13 | Bubble Shooter | `bubble-shooter` | Puzzle | Solo, levels | approved by owner (2026-11-18) |
-| 14 | Car Parking Challenge | `car-parking` | Simulation | Solo, 9 levels in 3 difficulties | approved by owner (2026-11-18) |
-| 15 | Chess | `chess` | Board | Solo vs AI (3 levels), local 2P, online (local only) | approved by owner (2026-11-18) |
+| 14 | Car Parking Challenge | `car-parking` | Simulation | Solo, local 2–4P (pass and play), 9 levels in 3 difficulties | approved by owner (2026-11-18) |
+| 15 | Chess | `chess` | Board | Solo vs AI (3 levels), local 2P, online 2P | approved by owner (2026-11-18) |
 
 ## Naming note: Tile Fusion
 

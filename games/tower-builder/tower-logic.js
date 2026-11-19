@@ -63,5 +63,17 @@
     return { result: 'cut', kept: kept, cut: cut };
   }
 
-  return { W: W, START_W: START_W, PERFECT: PERFECT, createGame: createGame, step: step, drop: drop, speed: speed, height: height };
+  /** Shared-tower party mode (2-4 players drop in turn). The player who misses loses; everyone else is ranked
+   *  by the points their own drops scored. Returns [{player, points, out, place}] best first; ties share a place. */
+  function partyRank(points, loser) {
+    var rows = points.map(function (p, i) { return { player: i, points: p, out: i === loser }; });
+    rows.sort(function (a, b) { return (a.out - b.out) || (b.points - a.points) || (a.player - b.player); });
+    rows.forEach(function (r, i) {
+      var prev = rows[i - 1];
+      r.place = prev && prev.out === r.out && prev.points === r.points ? prev.place : i + 1;
+    });
+    return rows;
+  }
+
+  return { W: W, START_W: START_W, PERFECT: PERFECT, createGame: createGame, step: step, drop: drop, speed: speed, height: height, partyRank: partyRank };
 });

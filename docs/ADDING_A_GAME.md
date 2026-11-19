@@ -59,6 +59,7 @@ before a server is actually deployed and connected.
 - [ ] Pause and restart, plus a game-over or win state
 - [ ] Doesn't scroll the page and fits a 320 px wide phone screen
 - [ ] Respects `prefers-reduced-motion` where it animates heavily (`GLKit.reduceMotion`)
+- [ ] Same-device multiplayer uses `GLKit.party` (picker, handoff, results) and sets `modes.local` + `players.max` in the registry
 - [ ] Doesn't rely on colour alone
 - [ ] No external network requests, no third-party assets
 - [ ] localStorage keys namespaced `gl_<slug>_...`, accessed through `GLKit.load/save` (never throws)

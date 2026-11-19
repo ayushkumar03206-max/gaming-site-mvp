@@ -221,13 +221,19 @@ def online_live(ctx: Ctx, g) -> bool:
     return modes(g)["online"] and bool((ctx.site.get("multiplayer") or {}).get("server_url"))
 
 
+def local_max(g) -> int:
+    """Most players supported on one device (registry players.max, at least 2 when local play exists)."""
+    return max(2, int((g.get("players") or {}).get("max", 2)))
+
+
 def badges(ctx: Ctx, g) -> str:
     m = modes(g)
     out = ['<span class="badge badge-play">Playable now</span>']
     if m["single"]:
         out.append('<span class="badge">1 player</span>')
     if m["local"]:
-        out.append('<span class="badge">2P same device</span>')
+        n = local_max(g)
+        out.append('<span class="badge">2P same device</span>' if n == 2 else f'<span class="badge">2–{n}P same device</span>')
     if online_live(ctx, g):
         out.append('<span class="badge badge-new">Online</span>')
     if ctx.is_new(g):
@@ -239,7 +245,9 @@ def badges(ctx: Ctx, g) -> str:
 
 def mode_text(ctx: Ctx, g) -> str:
     m = modes(g)
-    parts = (["Single player"] if m["single"] else []) + (["2 players on one device"] if m["local"] else [])
+    n = local_max(g)
+    local = "2 players on one device" if n == 2 else f"2–{n} players on one device"
+    parts = (["Single player"] if m["single"] else []) + ([local] if m["local"] else [])
     parts.append("Online with a friend" if online_live(ctx, g) else "Online play not available yet")
     return " · ".join(parts)
 

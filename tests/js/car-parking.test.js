@@ -84,3 +84,10 @@ test('parking: start positions are clear of obstacles', () => {
     assert.ok(!g.obstacles.some(o => P.overlap(Object.assign({}, g.bay, { w: g.bay.w - 0.2, h: g.bay.h - 0.2 }), o)), 'bay clear on level ' + (i + 1));
   });
 });
+
+test('parking: party ranking orders parked cars by time and puts crashes last together', () => {
+  const r = P.partyRank([{ ok: true, time: 14.2 }, { ok: false, time: 3 }, { ok: true, time: 9.8 }, { ok: false, time: 20 }]);
+  assert.deepStrictEqual(r.map(x => [x.player, x.place]), [[2, 1], [0, 2], [1, 3], [3, 3]]);
+  const tie = P.partyRank([{ ok: true, time: 10 }, { ok: true, time: 10 }]);
+  assert.deepStrictEqual(tie.map(x => x.place), [1, 1]);
+});

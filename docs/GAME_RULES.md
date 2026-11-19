@@ -1,3 +1,15 @@
+# Multiplayer game rules
+
+## Same device (live)
+
+| Game | Players | How it works | Who wins |
+|---|---|---|---|
+| Memory Match | 2–4 | One board, players take turns. A pair keeps the turn; a miss passes it to the next player. | Most pairs; equal top scores share the win. |
+| Tower Builder | 2–4 | One shared tower. Players drop blocks in turn; each drop's points go to the player who dropped it. | The player whose block misses the tower loses; the others rank by their points. |
+| Car Parking | 2–4 | Pick a level; each player gets one attempt on it, passing the device in between. | Fastest clean park; crashes rank last together. |
+| Snake Arena | 2 | Two snakes in one arena at the same time. Player 1: WASD or the left pad; Player 2: arrow keys or the right pad. | A snake dies on a wall, any snake body or a head-on collision; the survivor wins the round, both dying on the same tick is a draw. Round wins are tallied until you leave. |
+| Tic Tac Toe, Chess, Pathforge | 2 | Players alternate on one board. | Normal game rules. |
+
 # Online game rules
 
 The brief requires each game to have written multiplayer rules before online play is enabled. Games marked
