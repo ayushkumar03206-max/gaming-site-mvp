@@ -26,6 +26,6 @@ services:
       - key: NODE_VERSION
         value: "22"
       - key: ALLOWED_ORIGINS
-        value: https://ayushkumar03206-max.github.io
+        value: https://gridlightarcade.games,https://www.gridlightarcade.games,https://ayushkumar03206-max.github.io
       - key: TRUST_PROXY
         value: "1"
