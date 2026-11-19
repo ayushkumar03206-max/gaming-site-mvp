@@ -528,7 +528,7 @@ def build_info_pages(ctx: Ctx) -> None:
 <h2>What we believe</h2>
 <ul><li><strong>Honest presentation.</strong> No invented play counts, ratings or reviews.</li>
 <li><strong>Rights first.</strong> Every game passes a recorded rights review before it is published. See <a href="../licensing/index.html">Game licensing</a>.</li>
-<li><strong>Light and fast.</strong> No heavy frameworks, no tracking unless you opt in.</li>
+<li><strong>Light and fast.</strong> No heavy frameworks and no analytics trackers. Ads are served by Google AdSense, as explained in our <a href="../privacy/index.html">Privacy policy</a>.</li>
 <li><strong>Playable by more people.</strong> Keyboard and touch controls, readable contrast, and color-independent cues where color matters.</li></ul>
 <h2>The games</h2><p>We currently have {len(ctx.games)} games, and we add new ones as they are finished and reviewed.</p>""", "about")
 
@@ -562,7 +562,7 @@ def build_info_pages(ctx: Ctx) -> None:
 <li>Visitors in the European Economic Area, the UK and Switzerland are asked for consent through Google's consent message before personalised ads are shown.</li></ul>
 """
     text_page(ctx, "privacy", "Privacy policy", "What data this site stores and why.", f"""
-<p class="muted">Last updated {updated}. This is a template. Have it reviewed for your jurisdiction (for example GDPR, UK GDPR or India's DPDP Act) before launch.</p>
+<p class="muted">Last updated {updated}.</p>
 <h2>Summary</h2><p>No accounts. Game progress stays in your own browser. {"The site is free because it shows ads from Google." if adsense_client(ctx) else "No advertising trackers."}</p>
 <h2>Data stored on your device</h2>
 <p>We use your browser's <code>localStorage</code> for strictly functional purposes:</p>
@@ -577,7 +577,7 @@ def build_info_pages(ctx: Ctx) -> None:
 <h2>Contact</h2><p>Questions: {mail}.</p>""")
 
     text_page(ctx, "terms", "Terms & conditions", "Rules for using this website.", f"""
-<p class="muted">Last updated {updated}. This is a template. Have it reviewed before launch.</p>
+<p class="muted">Last updated {updated}.</p>
 <h2>Use of the site</h2><p>You may play the games for personal, non-commercial entertainment. Please don't copy, rehost, scrape or modify the games or website without written permission.</p>
 <h2>Ownership</h2><p>All games, code, artwork and text on this site are owned by {e(s['operator'])} unless stated otherwise on the <a href="../licensing/index.html">licensing page</a>.</p>
 <h2>No warranty</h2><p>Games are provided “as is”. We work hard to keep them bug-free but can't guarantee uninterrupted availability. Locally saved progress can be lost if you clear your browser data.</p>
