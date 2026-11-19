@@ -7,5 +7,4 @@
     <text x="300" y="238" fill="#fff" stroke="#000" stroke-width="1.5">♛</text><text x="220" y="278" fill="#fff" stroke="#000" stroke-width="1.5">♚</text><text x="420" y="278" fill="#fff" stroke="#000" stroke-width="1.5">♜</text><text x="340" y="318" fill="#fff" stroke="#000" stroke-width="1.5">♝</text>
   </g>
   <rect x="320" y="90" width="40" height="40" fill="#ffd23f" fill-opacity=".35"/>
-  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#ffd23f" letter-spacing="2">CHESS</text>
 </svg>

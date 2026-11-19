@@ -11,5 +11,4 @@
   <circle cx="230" cy="250" r="10" fill="#fff"/>
   <path d="M232 250 L330 130" stroke="#fff" stroke-opacity=".25" stroke-width="3" stroke-dasharray="6 8"/>
   <rect x="180" y="300" width="120" height="16" rx="8" fill="#ffb020"/>
-  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#ff7a3d" letter-spacing="2">BRICK<tspan fill="#ffd23f"> BREAKER</tspan></text>
 </svg>

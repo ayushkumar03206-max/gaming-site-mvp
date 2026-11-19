@@ -10,5 +10,4 @@
     <rect x="302" y="190" width="96" height="128" rx="12" fill="#f4f2ff"/><path d="M350 222l-24 64h48z" fill="#2e9e4f"/>
     <rect x="418" y="190" width="96" height="128" rx="12" fill="#2b2066" stroke="#4a3a8f" stroke-width="3"/><circle cx="466" cy="254" r="18" fill="none" stroke="#b66dff" stroke-opacity=".5" stroke-width="4"/>
   </g>
-  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#b66dff" letter-spacing="2">MEMORY<tspan fill="#29f0ff"> MATCH</tspan></text>
 </svg>

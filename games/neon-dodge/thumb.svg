@@ -21,5 +21,4 @@
   <circle cx="300" cy="140" r="11" fill="#ffd23f" filter="url(#gl)"/>
   <circle cx="330" cy="262" r="24" fill="url(#orb)" filter="url(#gl)"/>
   <g stroke="#29f0ff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"><path d="M290 270h-30M292 258h-44M296 282h-24"/></g>
-  <text x="34" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#b6ff3b" letter-spacing="3">NEON<tspan fill="#ff3fb4">DODGE</tspan></text>
 </svg>

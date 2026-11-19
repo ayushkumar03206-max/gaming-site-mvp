@@ -13,5 +13,4 @@
     <rect x="326" y="230" width="60" height="60" rx="9" fill="hsl(28 70% 47%)"/><text x="356" y="268" font-size="20">128</text>
     <rect x="394" y="230" width="60" height="60" rx="9" fill="hsl(76 70% 42%)"/><text x="424" y="267" font-size="16">2048</text>
   </g>
-  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#7aa2ff" letter-spacing="2">TILE<tspan fill="#29f0ff"> FUSION</tspan></text>
 </svg>

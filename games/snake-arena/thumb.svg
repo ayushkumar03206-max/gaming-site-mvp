@@ -9,5 +9,4 @@
   <rect x="402" y="162" width="40" height="40" rx="11" fill="#b6ff3b"/><circle cx="430" cy="174" r="4" fill="#081210"/><circle cx="430" cy="190" r="4" fill="#081210"/>
   <circle cx="460" cy="102" r="15" fill="#ff4d6d"/><rect x="458" y="82" width="4" height="9" fill="#3ddc84"/>
   <circle cx="200" cy="80" r="16" fill="#ffd23f"/>
-  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#3ddc84" letter-spacing="2">SNAKE<tspan fill="#b6ff3b"> ARENA</tspan></text>
 </svg>

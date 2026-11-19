@@ -30,5 +30,4 @@
     <circle cx="173" cy="273" r="17" fill="url(#c0)" filter="url(#gl)"/>
     <circle cx="223" cy="73" r="17" fill="url(#c1)" filter="url(#gl)"/>
   </g>
-  <text x="34" y="372" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#29f0ff" letter-spacing="3">PATH<tspan fill="#ff3fb4">FORGE</tspan></text>
 </svg>

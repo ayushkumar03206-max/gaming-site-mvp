@@ -14,5 +14,4 @@
   <rect x="300" y="60" width="166" height="30" fill="hsl(263 70% 55%)"/>
   <path d="M290 75h-40M290 66h-24M290 84h-30" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
   <rect x="440" y="200" width="22" height="30" fill="hsl(227 70% 55%)" transform="rotate(25 451 215)"/>
-  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#29b6ff" letter-spacing="2">TOWER<tspan fill="#b6ff3b"> BUILDER</tspan></text>
 </svg>

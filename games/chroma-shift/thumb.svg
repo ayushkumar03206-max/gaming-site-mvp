@@ -16,7 +16,4 @@
     <rect x="96" y="192" width="86" height="86" rx="16" fill="#9b7bff"/><text x="139" y="247">★</text>
     <rect x="192" y="192" width="86" height="86" rx="16" fill="#29f0ff"/><text x="235" y="247">●</text>
   </g>
-  <text x="34" y="200" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="54" fill="url(#t)" letter-spacing="2">CHROMA</text>
-  <text x="34" y="256" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="54" fill="url(#t)" letter-spacing="2">SHIFT</text>
-  <text x="36" y="296" font-family="Segoe UI, Arial, sans-serif" font-weight="600" font-size="20" fill="#b0a9e0">Make it one color.</text>
 </svg>

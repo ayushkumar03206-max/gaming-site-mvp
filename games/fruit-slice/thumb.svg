@@ -9,5 +9,4 @@
   <polygon points="300,230 309,252 333,252 314,266 321,290 300,275 279,290 286,266 267,252 291,252" fill="#ffd23f"/>
   <circle cx="560" cy="110" r="28" fill="#1b1d2a" stroke="#ff4d6d" stroke-width="4"/><text x="560" y="121" text-anchor="middle" font-family="Segoe UI, Arial" font-weight="900" font-size="30" fill="#ff4d6d">✕</text>
   <path d="M60 300 Q 250 120 600 60" stroke="#e6faff" stroke-width="8" stroke-linecap="round" fill="none" stroke-opacity=".85"/>
-  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#3ddc84" letter-spacing="2">FRUIT<tspan fill="#ffd23f"> SLICE</tspan></text>
 </svg>

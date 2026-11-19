@@ -14,5 +14,4 @@
   <circle cx="286" cy="150" r="12" fill="#ffd23f"/>
   <g><rect x="266" y="250" width="40" height="78" rx="10" fill="#ff5d3a"/><rect x="272" y="264" width="28" height="15" rx="4" fill="#141c2d" fill-opacity=".85"/><rect x="273" y="300" width="26" height="11" rx="4" fill="#141c2d" fill-opacity=".85"/></g>
   <g stroke="#ffb020" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"><path d="M276 340v22M296 340v30M286 340v16"/></g>
-  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#ffb020" letter-spacing="2">HIGHWAY<tspan fill="#ff5d3a"> RUSH</tspan></text>
 </svg>

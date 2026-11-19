@@ -9,5 +9,4 @@
   <line x1="170" y1="290" x2="470" y2="290" stroke="#ff4d6d" stroke-opacity=".6" stroke-dasharray="8 8" stroke-width="3"/>
   <g fill="#fff" fill-opacity=".6"><circle cx="330" cy="300" r="3"/><circle cx="344" cy="268" r="3"/><circle cx="358" cy="236" r="3"/><circle cx="372" cy="204" r="3"/><circle cx="386" cy="172" r="3"/><circle cx="400" cy="140" r="3"/></g>
   <circle cx="320" cy="320" r="20" fill="#3ddc84"/><circle cx="370" cy="322" r="13" fill="#ff4d6d"/>
-  <text x="24" y="384" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="40" fill="#29b6ff" letter-spacing="2">BUBBLE<tspan fill="#ff4d6d"> SHOOTER</tspan></text>
 </svg>
