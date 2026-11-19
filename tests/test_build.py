@@ -89,11 +89,13 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(problems, [], "\n".join(problems))
 
     def test_placeholder_contact_email_is_never_rendered(self):
-        # site.json ships with hello@example.com until the owner sets a real address
+        # a placeholder address is replaced by a notice, never shown as a mailto link
+        for placeholder in ("hello@example.com", ""):
+            html = build_static_site.contact_html({"contact_email": placeholder})
+            self.assertNotIn("example.com", html)
+            self.assertIn("contact email not yet published", html)
         for rel in ("contact/index.html", "privacy/index.html", "terms/index.html", "licensing/index.html"):
-            html = self.read(rel)
-            self.assertNotIn("example.com", html, rel)
-            self.assertIn("contact email not yet published", html, rel)
+            self.assertNotIn("example.com", self.read(rel), rel)
 
     def test_real_contact_email_is_linked(self):
         site = {"contact_email": "owner@realdomain.test", "base_url": "https://x.test"}
