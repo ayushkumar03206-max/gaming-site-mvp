@@ -9,6 +9,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright-core');
 
+// Google AdSense (data/site.json) loads its own frames from these hosts; they are cancelled when a test navigates
+// away, which is not a site problem. Failures of the site's own files still count.
+const AD_HOSTS = /^https:\/\/([a-z0-9-]+\.)*(googlesyndication\.com|doubleclick\.net|adtrafficquality\.google|google\.com\/recaptcha|googleadservices\.com|gstatic\.com)\//;
 const BASE = (process.env.BASE_URL || 'http://localhost:8765/').replace(/\/?$/, '/');
 const CHANNEL = process.env.PW_CHANNEL || 'chrome';
 const ROOT = path.resolve(__dirname, '..', '..');
@@ -150,7 +153,7 @@ async function open(kind) {
   const problems = [];
   page.on('console', m => { if (m.type() === 'error') problems.push('console: ' + m.text()); });
   page.on('pageerror', e => problems.push('pageerror: ' + e.message));
-  page.on('requestfailed', r => problems.push('requestfailed: ' + r.url()));
+  page.on('requestfailed', r => { if (!AD_HOSTS.test(r.url())) problems.push('requestfailed: ' + r.url()); });
   page.on('response', r => { if (r.status() >= 400 && r.url().startsWith(BASE)) problems.push('http ' + r.status() + ': ' + r.url()); });
   return { ctx, page, problems };
 }
