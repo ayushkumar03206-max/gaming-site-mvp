@@ -92,6 +92,22 @@ def adsense_client(ctx: Ctx) -> str:
     return client
 
 
+_CSS = None
+
+
+def inline_css() -> str:
+    """site.css, minified lightly and inlined into every page: no render-blocking stylesheet request before the
+    first paint (the biggest cost on slow mobile connections). assets/site.css is still published for anything
+    that links it directly."""
+    global _CSS
+    if _CSS is None:
+        css = (SITE_SRC / "site.css").read_text(encoding="utf-8")
+        css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)          # comments
+        css = re.sub(r"\s*\n\s*", "\n", css).strip()            # indentation and blank lines
+        _CSS = css.replace("</", "<\\/")                        # never close the <style> element early
+    return _CSS
+
+
 def head(ctx: Ctx, root: str, title: str, desc: str, rel_path: str, extra_head: str = "", og_image: str | None = None) -> str:
     site = ctx.site
     full_title = title if title == site["name"] else f"{title} | {site['name']}"
@@ -120,7 +136,7 @@ def head(ctx: Ctx, root: str, title: str, desc: str, rel_path: str, extra_head: 
 <meta name="theme-color" content="#0b0d1a">{'<meta name="robots" content="noindex">' if ctx.preview else ''}
 <link rel="icon" href="{root}assets/icon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="{root}assets/icon-180.png">
-<link rel="stylesheet" href="{root}assets/site.css">
+<style>{inline_css()}</style>
 {ads}
 {extra_head}
 </head>"""
@@ -356,7 +372,7 @@ def build_home(ctx: Ctx) -> None:
     <ul class="hero-points"><li>Runs in your browser</li><li>Touch &amp; keyboard</li><li>Progress saved on your device</li></ul>
   </div>
   <a class="hero-card" href="games/{hg['slug']}/index.html">
-    <img src="play/{hg['slug']}/{hg['thumbnail']}" alt="{e(hg['title'])} artwork" width="640" height="400">
+    <img src="play/{hg['slug']}/{hg['thumbnail']}" alt="{e(hg['title'])} artwork" width="640" height="400" fetchpriority="high" decoding="async">
     <span class="hero-card-label"><strong>{e(hg['title'])}</strong><span>{e(hg['short_description'])}</span></span>
   </a>
 </div></section>"""
